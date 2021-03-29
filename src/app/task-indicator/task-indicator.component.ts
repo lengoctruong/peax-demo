@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, AfterViewInit, ViewChild, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-task-indicator',
   templateUrl: './task-indicator.component.html',
   styleUrls: ['./task-indicator.component.scss']
 })
-export class TaskIndicatorComponent implements OnInit, AfterViewInit, OnChanges {
+export class TaskIndicatorComponent implements OnInit, AfterViewInit {
   @Input() currentTask: any;
   constructor() { }
 
@@ -22,14 +22,12 @@ export class TaskIndicatorComponent implements OnInit, AfterViewInit, OnChanges 
       el.addEventListener('animationend', (e) => this.playNext(e));
     });
   }
-  ngOnChanges(changes: any) {
-    console.log(changes);
+  // ngOnChanges(changes: any) {
+  //   if(changes) {
+  //     this.ngAfterViewInit()
+  //   }
     
-    if(changes) {
-      this.ngAfterViewInit()
-    }
-    
-  }
+  // }
 
   playNext = (e?: any) => {
     const current = e && e.target;
