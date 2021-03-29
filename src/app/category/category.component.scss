@@ -1,0 +1,43 @@
+.row {
+  box-sizing: border-box;
+  padding: 20px 20px;
+  .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: grid;
+    justify-content: center;
+    border: 2px solid #8bc6cd;
+    margin: 0 10px;
+    position: relative;
+    cursor: pointer;
+
+    img {
+      align-self: center;
+    }
+
+    span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      background: #7ed321;
+      border-radius: 50%;
+      line-height: 20px;
+    }
+  }
+
+  .icon:first-child {
+    margin-left: 0;
+  }
+
+  .icon:hover {
+    border: 2px solid #188e9b;
+  }
+
+  .icon:first-child {
+    border: 2px solid #188e9b;
+  }
+}

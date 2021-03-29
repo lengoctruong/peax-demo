@@ -1,0 +1,39 @@
+.tasks {
+  display: flex;
+  justify-content: space-around;
+}
+.row {
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+.task {
+  background: #fff;
+  border-radius: 10px;
+  height: 20px;
+  width: 100%;
+  position: relative;
+  margin-right: 10px;
+
+  .task_timer {
+    position: absolute;
+    width: 30%;
+    background: #e4e4e4;
+    height: 20px;
+    border-radius: 20px;
+  }
+
+  .task_title {
+    position: absolute;
+    text-align: center;
+    width: 200px;
+    left: 50%;
+    margin-left: -100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.task:last-child {
+  margin-right: 0;
+}

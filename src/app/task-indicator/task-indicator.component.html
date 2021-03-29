@@ -1,0 +1,17 @@
+<ng-container *ngIf="currentTask[0].length > 0">
+  <div class="tasks">
+    <ng-container *ngFor="let task of currentTask[0]; index as i">
+      <div class="task" *ngIf="i < 10">
+        <div class="task_timer"></div>
+        <span *ngIf="currentTask[0].length < 7" class="task_title">{{
+          task.title
+        }}</span>
+      </div>
+
+      <div class="task" *ngIf="i === 9">
+        <div class="task_timer"></div>
+        <span class="task_title">+ {{ currentTask[0].length - i }}</span>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
