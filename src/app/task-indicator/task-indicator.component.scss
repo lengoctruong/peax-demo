@@ -1,39 +1,73 @@
-.tasks {
+.task_title {
+color: #121216;
+}
+.progress-container {
   display: flex;
-  justify-content: space-around;
-}
-.row {
-  box-sizing: border-box;
-  padding: 0 20px;
-}
-.task {
-  background: #fff;
+  flex-direction: row;
+  padding: 10px 0;
+  cursor: pointer;
+  background: #f3f3f3;
   border-radius: 10px;
+}
+
+.progress-bar {
   height: 20px;
-  width: 100%;
-  position: relative;
-  margin-right: 10px;
+  flex-grow: 1;
+  border-radius: 10px;
+  margin: 0 5px;
+  display: flex;
+  background-image: -webkit-linear-gradient(left, 
+    
+    rgb(228, 228, 228) 0%,
+    rgb(228, 228, 228) 50%,
+    rgba(255, 255, 255) 50.001%,
+    rgba(255, 255, 255) 100%
 
-  .task_timer {
-    position: absolute;
-    width: 30%;
-    background: #e4e4e4;
-    height: 20px;
-    border-radius: 20px;
-  }
-
-  .task_title {
-    position: absolute;
-    text-align: center;
-    width: 200px;
-    left: 50%;
-    margin-left: -100px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
+  );
+  background-repeat: no-repeat;
+  background-size: 200%;
+  background-color: #666;
+  background-position: 100% 50%;
+  animation-timing-function: linear;
+  animation-delay: .2s;
 }
 
-.task:last-child {
-  margin-right: 0;
+.progress-bar.active {
+    animation-name: Loader;
 }
+
+.progress-bar.passed {
+    background-position: 0 0; 
+}
+
+@keyframes Loader {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+.pause:hover .progress-bar {
+  animation-play-state: paused;
+}
+
+.pause .not-hovered {
+  display: block;
+}
+.pause .hovered {
+  display: none;
+}
+
+.pause:hover .not-hovered {
+  display: none;
+}
+.pause:hover .hovered {
+  display: block;
+}
+
+body {
+  background: #121216;
+  padding: 50px;
+  width: 100vw;
+  color: #fff;
+  font-family: sans-serif;
+}
+
