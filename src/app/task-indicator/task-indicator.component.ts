@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild, OnChanges, SimpleChange } from '@angular/core';
 
 @Component({
   selector: 'app-task-indicator',
   templateUrl: './task-indicator.component.html',
   styleUrls: ['./task-indicator.component.scss']
 })
-export class TaskIndicatorComponent implements OnInit, AfterViewInit {
+export class TaskIndicatorComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() currentTask: any;
   constructor() { }
 
@@ -15,20 +15,25 @@ export class TaskIndicatorComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
+ngOnChanges(change){
+  if(change){
+    setTimeout(()=>{
+      this.runAnimation()
+    }, 100);
+  }
+}
   ngAfterViewInit() {
+    this.runAnimation()
+  }
+
+  runAnimation(){
     this.progress = [...this.progressContainer.nativeElement.children];
     this.playNext();
     this.progress.map(el => {
       el.addEventListener('animationend', (e) => this.playNext(e));
     });
-  }
-  // ngOnChanges(changes: any) {
-  //   if(changes) {
-  //     this.ngAfterViewInit()
-  //   }
-    
-  // }
 
+  }
   playNext = (e?: any) => {
     const current = e && e.target;
     let next;
@@ -47,6 +52,9 @@ export class TaskIndicatorComponent implements OnInit, AfterViewInit {
       });
       next = this.progress[0];
     }
-    next.classList.add('active');
+    if (next){
+      next.classList.add('active');
+    }
+   
   };
 }

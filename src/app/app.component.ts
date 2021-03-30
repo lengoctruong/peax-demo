@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild} from '@angular/core';
 import { Category } from './model';
 
 @Component({
@@ -137,9 +137,9 @@ export class AppComponent implements OnInit {
 
   private getCategory() {
     this.categories = [
-      { id: 1, name: 'onboarding', pendingTask: 5 },
-      { id: 2, name: 'mailbox', pendingTask: 3},
-      { id: 3, name: 'office', pendingTask: 10 }
+      { id: 1, name: 'Onboarding', pendingTask: 5 },
+      { id: 2, name: 'Mailbox', pendingTask: 3},
+      { id: 3, name: 'Office', pendingTask: 10 }
     ];
   }
 }
