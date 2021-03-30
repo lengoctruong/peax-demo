@@ -45,17 +45,27 @@ export class AppComponent implements OnInit {
       data: [
         {
           id: '201',
-          title: 'Add payment',
+          title: 'Verify Email Address',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
           id: '202',
-          title: 'News',
+          title: 'Upgrade ID level 2',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
-          id: '203',
-          title: 'Confirm change address',
+          id: '303',
+          title: 'Turn on notification',
+          content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
+        },
+        {
+          id: '404',
+          title: 'Subscription detail',
+          content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
+        },
+        {
+          id: '505',
+          title: 'New mail from PEAX',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         }
       ]
@@ -65,51 +75,71 @@ export class AppComponent implements OnInit {
       data: [
         {
           id: '301',
-          title: 'Order confirmation',
+          title: 'Add payment',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
           id: '302',
-          title: 'Credit card from Swiss Bank',
+          title: 'News',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
           id: '303',
+          title: 'Confirm change address',
+          content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
+        }
+      ]
+    },
+    {
+      id: 4,
+      data: [
+        {
+          id: '401',
+          title: 'Order confirmation',
+          content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
+        },
+        {
+          id: '402',
+          title: 'Credit card from Swiss Bank',
+          content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
+        },
+        {
+          id: '403',
           title: 'Electricity bill',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
-          id: '304',
+          id: '404',
           title: 'Gas bill',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
-          id: '305',
+          id: '405',
           title: 'Internet bill',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
-          id: '306',
+          id: '406',
           title: 'Money transfer detail',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
-          id: '307',
+          id: '407',
           title: 'ABC Service',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
-          id: '308',
+          id: '408',
           title: 'Spa bill',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
-          id: '309',
+          id: '409',
           title: 'Promotion from PEAX',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
-          id: '310',
+          id: '410',
           title: 'New friend on PEAX',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         }
@@ -137,9 +167,15 @@ export class AppComponent implements OnInit {
 
   private getCategory() {
     this.categories = [
-      { id: 1, name: 'onboarding', pendingTask: 5 },
-      { id: 2, name: 'mailbox', pendingTask: 3},
-      { id: 3, name: 'office', pendingTask: 10 }
+      { id: 1, name: 'rocket', pendingTask: 1 },
+      { id: 2, name: 'onboarding', pendingTask: 5 },
+      { id: 3, name: 'mailbox', pendingTask: 3},
+      { id: 4, name: 'office', pendingTask: 10 },      
     ];
+  }
+
+  removeCategory(event: Category) {
+    // let index = this.categories.findIndex(item => item.id === event.id);
+    this.categories.shift();
   }
 }

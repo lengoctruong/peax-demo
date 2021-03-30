@@ -2,6 +2,7 @@
   <app-category
     [category]="categories"
     (selectedCate)="getSelectedCategory($event)"
+    (removeCate)="removeCategory($event)"
   ></app-category>
 
   <app-task-indicator [currentTask]="currentTasks"></app-task-indicator>

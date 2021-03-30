@@ -7,10 +7,11 @@
     border-radius: 50%;
     display: grid;
     justify-content: center;
-    border: 2px solid #8bc6cd;
+    // border: 2px solid #8bc6cd;
     margin: 0 10px;
     position: relative;
-    cursor: pointer;
+    z-index: 1;
+    cursor: pointer;    
 
     img {
       align-self: center;
@@ -34,10 +35,62 @@
   }
 
   .icon:hover {
-    border: 2px solid #188e9b;
+    // border: 2px solid #188e9b;
   }
 
   .icon:first-child {
-    border: 2px solid #188e9b;
+    // border: 2px solid #188e9b;
+  }
+
+  .bgicon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    // display: grid;
+    justify-content: center;
+    border: 2px solid #8bc6cd;
+    margin: 0 10px;
+    // position: relative;
+    // cursor: pointer;
+    z-index: 0;
+  }
+
+  .bgicon:hover {
+    // border: 2px solid #9b184a;
+  }
+
+  .bgicon:first-child {
+    // border: 2px solid #90c4ca;
+  }
+
+  .bgicon-opacity {
+    animation: 2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s infinite kfopacity;
+  }
+
+  .moved {    
+    animation: 2s linear 0s infinite running kfmoved;
+    
+  }
+  @keyframes kfopacity {
+    from {      
+      opacity: 1;
+      transform: scale(1, 1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.2, 0.2);
+    }
+  }
+  
+  
+  @keyframes kfmoved {
+    from {
+      transform: translate(0, 0);    
+      opacity: 1;      
+    }
+    to {
+      transform: translate(-20px, -40px);
+      opacity: 0;      
+    }
   }
 }
