@@ -15,27 +15,27 @@ export class AppComponent implements OnInit {
       data: [
         {
           id: '101',
-          title: 'Verify Email Address',
+          title: 'Order confirmation',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
           id: '102',
-          title: 'Upgrade ID level 2',
+          title: 'Credit card from Swiss Bank',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
           id: '103',
-          title: 'Turn on notification',
+          title: 'Electricity bill',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
           id: '104',
-          title: 'Subscription detail',
+          title: 'Gas bill',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         },
         {
           id: '105',
-          title: 'New mail from PEAX',
+          title: 'Internet bill',
           content: 'The Task Manager helps the user to complete pending tasks easily and clearly. Tasks that have been completed disappear from the Task Manager.'
         }
       ]
@@ -167,7 +167,7 @@ export class AppComponent implements OnInit {
 
   private getCategory() {
     this.categories = [
-      { id: 1, name: 'Rocket', pendingTask: 1 },
+      { id: 1, name: 'Rocket', pendingTask: 0 },
       { id: 2, name: 'Onboarding', pendingTask: 5 },
       { id: 3, name: 'Mailbox', pendingTask: 3},
       { id: 4, name: 'Office', pendingTask: 10 }
