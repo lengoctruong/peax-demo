@@ -1,22 +1,24 @@
-
 <ng-container *ngIf="currentTask[0].length > 0">
-<div class="pause" >
-  <div class="progress-container" #progressContainer>
-      <div *ngFor="let task of currentTask[0]; index as i"  style="animation-duration: 2s" class="progress-bar">
-    <div  *ngIf="i < 10">
-      <span *ngIf="currentTask[0].length < 7" class="task_title">{{
-        task.title
-      }}</span>
+  <div class="pause">
+    <div class="progress-container" #progressContainer>
+      <div
+        *ngFor="let task of currentTask[0]; index as i"
+        style="animation-duration: 2s"
+        class="progress-bar"
+      >
+        <div *ngIf="i < 10">
+          <span *ngIf="currentTask[0].length < 7" class="task_title">{{
+            task.title
+          }}</span>
+        </div>
+
+        <div *ngIf="i === 9">
+          <span class="task_title">+ {{ currentTask[0].length - i }}</span>
+        </div>
+      </div>
     </div>
-  
-    <div  *ngIf="i === 9">
-      <span class="task_title">+ {{ currentTask[0].length - i }}</span>
-    </div>
+
+    <br />
   </div>
-</div>
-  
-  <br>  
-</div>
 </ng-container>
-
-
+<h1>12312312</h1>
