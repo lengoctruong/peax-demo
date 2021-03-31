@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild, OnChanges, SimpleChange } from '@angular/core';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-task-indicator',
@@ -7,6 +8,7 @@ import { Component, Input, OnInit, AfterViewInit, ViewChild, OnChanges, SimpleCh
 })
 export class TaskIndicatorComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() currentTask: any;
+ // @Input() taskId: any;
   constructor() { }
 
 
@@ -44,6 +46,13 @@ ngOnChanges(change){
       }
       current.classList.remove('active');
       current.classList.add('passed');
+      if(currentIndex === this.progress.length -1){
+        //call next category
+      //  this.taskId; 
+      //  this.currentTask;
+      //const iconId = document.getElementById('icon-'+ 1); 
+       const elementClick = document.getElementById('icon-2')?.click()
+      }
     }
     if (!next) {
       this.progress.map(el => {

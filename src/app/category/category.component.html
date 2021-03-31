@@ -1,10 +1,11 @@
 <ng-container *ngIf="category.length > 0">
   <div class="row">
-    <div *ngFor="let item of category" [@flyInOut]="'in'">
+    <div *ngFor="let item of category; index as i;" [@flyInOut]="'in'">
       <div class="bgicon" style="position: absolute"></div>
       <div
         *ngIf="item.pendingTask > 0"
         class="icon"
+        id="icon-{{i}}"
         matTooltip="{{ item.name }}"
         (click)="selectedItem(item)"
       >
