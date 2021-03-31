@@ -11,7 +11,7 @@
     margin: 0 10px;
     position: relative;
     z-index: 1;
-    cursor: pointer;    
+    cursor: pointer;
 
     img {
       align-self: center;
@@ -30,8 +30,8 @@
     }
   }
 
-  .icon:first-child {
-    margin-left: 0;
+  .bgicon:first-child {
+    margin-left: 0 !important;
   }
 
   .icon:hover {
@@ -67,12 +67,11 @@
     animation: 2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s infinite kfopacity;
   }
 
-  .moved {    
+  .moved {
     animation: 2s linear 0s infinite running kfmoved;
-    
   }
   @keyframes kfopacity {
-    from {      
+    from {
       opacity: 1;
       transform: scale(1, 1);
     }
@@ -81,16 +80,15 @@
       transform: scale(0.2, 0.2);
     }
   }
-  
-  
+
   @keyframes kfmoved {
     from {
-      transform: translate(0, 0);    
-      opacity: 1;      
+      transform: translate(0, 0);
+      opacity: 1;
     }
     to {
       transform: translate(-20px, -40px);
-      opacity: 0;      
+      opacity: 0;
     }
   }
 }
