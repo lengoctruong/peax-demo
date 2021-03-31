@@ -64,6 +64,5 @@ ngOnChanges(change){
     if (next){
       next.classList.add('active');
     }
-   
   };
 }
