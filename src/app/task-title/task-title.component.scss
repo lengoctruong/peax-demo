@@ -6,6 +6,11 @@
     height: 400px;
     position: relative;
 
+    h1 {
+      text-align: center;
+      font-weight: 500;
+    }
+
     .task-title__button {
       position: absolute;
       bottom: 0;
