@@ -1,5 +1,5 @@
-import { Component, OnInit , ViewChild} from '@angular/core';
-import { Category } from './model';
+import { Component, OnInit } from '@angular/core';
+import { Category, CategoryData } from './model';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +8,8 @@ import { Category } from './model';
 })
 export class AppComponent implements OnInit {
   title = 'my-app';
-  categories: any[] = [];
-  tasks: any[] = [
+  categories: Category[] = [];
+  categoryData: CategoryData[] = [
     {
       id: 1,
       data: [
@@ -147,7 +147,6 @@ export class AppComponent implements OnInit {
     }
   ];
   currentTasks: any = [];
-  initId = 1
   constructor() {}
 
   ngOnInit() {
@@ -158,16 +157,16 @@ export class AppComponent implements OnInit {
   }
 
   getSelectedCategory(event: Category) {
-    this.getCurrentTaskById(event.id)
+    this.getCurrentTaskById(event.id);
   }
 
   private getCurrentTaskById(id: number) {
-    this.currentTasks = this.tasks.filter(item => item.id === id).map(value => value.data)
+    this.currentTasks = this.categoryData.filter(item => item.id === id);
   }
 
   private getCategory() {
     this.categories = [
-      { id: 1, name: 'Rocket', pendingTask: 0 },
+      { id: 1, name: 'Rocket', pendingTask: 5 },
       { id: 2, name: 'Onboarding', pendingTask: 5 },
       { id: 3, name: 'Mailbox', pendingTask: 3},
       { id: 4, name: 'Office', pendingTask: 10 }
