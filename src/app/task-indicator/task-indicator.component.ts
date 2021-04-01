@@ -25,7 +25,11 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
     }
   }
 
-  runAnimation() {
+  selectTask(data: Task) {
+    this.taskContent = [data];
+  }
+
+  private runAnimation() {
     this.progress = Array.from(document.querySelectorAll('.progress-value'));
     this.playNext();
     this.progress.map((el) => {
@@ -33,7 +37,7 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
     });
   }
 
-  playNext = (e?: any) => {
+  private playNext = (e?: any) => {
     const current = e && e.target;
     let next;
     if (current) {
@@ -41,8 +45,8 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
       if (currentIndex < this.progress.length) {
         next = this.progress[currentIndex + 1];
       }
-      current.classList.remove('active');
-      current.classList.add('passed');
+      this.removeClass(current, 'active');
+      this.addClass(current, 'passed');
       if (currentIndex === this.progress.length - 1 && e !== undefined) {
         const id = this.currentTask[0].id;
         if (id) {
@@ -55,14 +59,13 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
     }
     if (!next) {
       this.progress.map((el) => {
-        el.classList.remove('active');
-        el.classList.remove('passed');
+        this.removeClass(el, 'active');
+        this.removeClass(el, 'passed');
       });
       next = this.progress[0];
     }
     if (next) {
-      next.classList.add('active');
-
+      this.addClass(next, 'active');
       // Get task content
       setTimeout(() => {
         // Fix: Expression has changed after it was checked
@@ -71,7 +74,7 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
     }
   };
 
-  focusIcon() {
+  private focusIcon() {
     const id = this.currentTask[0].id;
     if (id) {
       const iconId = 'bgicon-' + id;
@@ -80,17 +83,33 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
       // Remove focus
       const bgIcon = document.querySelectorAll('.bgicon') as any;
       if (bgIcon.length > 0) {
-        bgIcon.forEach((ele) => ele.classList.remove('border-icon'));
+        bgIcon.forEach((ele) => this.removeClass(ele, 'border-icon'));
       }
 
       // Add focus to active category
-      element?.classList.add('border-icon');
+      if (element) {
+        this.addClass(element, 'border-icon');
+      }
     }
   }
 
-  getTaskContent(id: string) {
+  private getTaskContent(id: string) {
     this.taskContent = this.currentTask[0].data.filter(
       (task) => task.id === id
     );
+  }
+
+  private removeClass(element: HTMLElement, className: string = '') {
+    if (!element) {
+      return;
+    }
+    element.classList.remove(className);
+  }
+
+  private addClass(element: HTMLElement, className: string = '') {
+    if (!element) {
+      return;
+    }
+    element.classList.add(className);
   }
 }
