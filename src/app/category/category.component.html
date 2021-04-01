@@ -1,8 +1,13 @@
 <ng-container *ngIf="category.length > 0">
   <div class="row">
     <div *ngFor="let item of category; index as i" [@flyInOut]="'in'">
-      <div  class="bgicon" style="position: absolute"></div>
-      <div id="icon-{{ item.id }}"
+      <div
+        id="bgicon-{{ item.id }}"
+        class="bgicon"
+        style="position: absolute"
+      ></div>
+      <div
+        id="icon-{{ item.id }}"
         *ngIf="item.pendingTask > 0"
         class="icon"
         matTooltip="{{ item.name }}"

@@ -21,9 +21,7 @@ export class TaskIndicatorComponent
 
   @ViewChild('progressContainer') progressContainer;
   progress;
-  ngOnInit(): void {
-    // this.taskContent = [];
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(change) {
     if (change) {
@@ -41,8 +39,7 @@ export class TaskIndicatorComponent
   }
 
   runAnimation() {
-    //this.progress = [...this.progressContainer.nativeElement.children];
-    this.progress = Array.from(document.querySelectorAll(".progress-value"))
+    this.progress = Array.from(document.querySelectorAll('.progress-value'));
     this.playNext();
     this.progress.map((el) => {
       el.addEventListener('animationend', (e) => this.playNext(e));
@@ -62,10 +59,10 @@ export class TaskIndicatorComponent
       if (currentIndex === this.progress.length - 1) {
         const id = this.currentTask[0].id;
         if (id) {
-        const iconId = 'icon-' + (id + 1);
-        document.getElementById(iconId)?.click();        
+          const iconId = 'icon-' + (id + 1);
+          document.getElementById(iconId)?.click();
+        }
       }
-    }
     }
     if (!next) {
       this.progress.map((el) => {
@@ -88,7 +85,7 @@ export class TaskIndicatorComponent
   focusIcon() {
     const id = this.currentTask[0].id;
     if (id) {
-      const iconId = 'icon-' + (id - 1);
+      const iconId = 'bgicon-' + id;
       const element = document.getElementById(iconId);
 
       // Remove focus
@@ -106,6 +103,5 @@ export class TaskIndicatorComponent
     this.taskContent = this.currentTask[0].data.filter(
       (task) => task.id === id
     );
-    return this.taskContent;
   }
 }
