@@ -2,6 +2,9 @@
   <ng-container *ngIf="displayData">
     <app-task-title [title]="displayData.title"></app-task-title>
 
-    <app-task-content [content]="displayData.content"></app-task-content>
+    <app-task-content
+      [content]="displayData.content"
+      [img]="displayData.img"
+    ></app-task-content>
   </ng-container>
 </div>
