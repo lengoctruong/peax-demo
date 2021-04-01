@@ -22,7 +22,7 @@ export class TaskIndicatorComponent
   @ViewChild('progressContainer') progressContainer;
   progress;
   ngOnInit(): void {
-    this.taskContent = [];
+    // this.taskContent = [];
   }
 
   ngOnChanges(change) {
@@ -60,12 +60,12 @@ export class TaskIndicatorComponent
       current.classList.remove('active');
       current.classList.add('passed');
       if (currentIndex === this.progress.length - 1) {
-        //call next category
-        //  this.taskId;
-        //  this.currentTask;
-        //const iconId = document.getElementById('icon-'+ 1);
-        //const elementClick = document.getElementById('icon-2')?.click();
+        const id = this.currentTask[0].id;
+        if (id) {
+        const iconId = 'icon-' + (id + 1);
+        document.getElementById(iconId)?.click();        
       }
+    }
     }
     if (!next) {
       this.progress.map((el) => {
