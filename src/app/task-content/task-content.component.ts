@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TaskContentComponent implements OnInit {
   @Input() content = '';
+  @Input() img = '';
 
   constructor() {}
 

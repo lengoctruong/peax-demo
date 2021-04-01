@@ -13,6 +13,7 @@ export class TaskManagerComponent implements OnInit, OnChanges  {
     id: '',
     title: '',
     content: '',
+    img: '',
   };
   constructor() {}
 
