@@ -149,7 +149,7 @@ export class AppComponent implements OnInit {
       ],
     },
   ];
-  currentTasks: any = [];
+  currentTasks: CategoryData[] = [];
   constructor() {}
 
   ngOnInit() {
@@ -176,7 +176,7 @@ export class AppComponent implements OnInit {
     ];
   }
 
-  removeCategory(event: Category) {
+  removeCategory(_: Category) {
     // let index = this.categories.findIndex(item => item.id === event.id);
     this.categories.shift();
   }

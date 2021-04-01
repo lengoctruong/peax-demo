@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  OnChanges,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { CategoryData, Task } from '../model';
 
 @Component({
@@ -13,17 +6,14 @@ import { CategoryData, Task } from '../model';
   templateUrl: './task-indicator.component.html',
   styleUrls: ['./task-indicator.component.scss'],
 })
-export class TaskIndicatorComponent
-  implements OnInit, AfterViewInit, OnChanges {
+export class TaskIndicatorComponent implements OnInit, OnChanges {
   @Input() currentTask: CategoryData[] = [];
   taskContent: Task[] = [];
   constructor() {}
 
   @ViewChild('progressContainer') progressContainer;
   progress;
-  ngOnInit(): void {
-    // this.taskContent = [];
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(change) {
     if (change) {
@@ -35,14 +25,8 @@ export class TaskIndicatorComponent
     }
   }
 
-  ngAfterViewInit() {
-    this.focusIcon();
-    this.runAnimation();
-  }
-
   runAnimation() {
-    //this.progress = [...this.progressContainer.nativeElement.children];
-    this.progress = Array.from(document.querySelectorAll(".progress-value"))
+    this.progress = Array.from(document.querySelectorAll('.progress-value'));
     this.playNext();
     this.progress.map((el) => {
       el.addEventListener('animationend', (e) => this.playNext(e));
@@ -59,17 +43,15 @@ export class TaskIndicatorComponent
       }
       current.classList.remove('active');
       current.classList.add('passed');
-      if (currentIndex === this.progress.length - 1 && e != undefined) {
+      if (currentIndex === this.progress.length - 1 && e !== undefined) {
         const id = this.currentTask[0].id;
-        console.log(id)
         if (id) {
-        const iconId = 'icon-' + (id + 1);
-        setTimeout(() => {
-          document.getElementById(iconId)?.click(); ;
-        }, 100);
-               
+          const iconId = 'icon-' + (id + 1);
+          setTimeout(() => {
+            document.getElementById(iconId)?.click();
+          }, 200);
+        }
       }
-    }
     }
     if (!next) {
       this.progress.map((el) => {
@@ -92,7 +74,7 @@ export class TaskIndicatorComponent
   focusIcon() {
     const id = this.currentTask[0].id;
     if (id) {
-      const iconId = 'icon-' + (id - 1);
+      const iconId = 'bgicon-' + id;
       const element = document.getElementById(iconId);
 
       // Remove focus
@@ -110,6 +92,5 @@ export class TaskIndicatorComponent
     this.taskContent = this.currentTask[0].data.filter(
       (task) => task.id === id
     );
-    return this.taskContent;
   }
 }
