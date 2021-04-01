@@ -1,5 +1,5 @@
 .task_title {
-color: #121216;
+  color: #121216;
 }
 .progress-container {
   display: flex;
@@ -11,57 +11,53 @@ color: #121216;
 }
 
 .progress-bar {
-  height: 20px;
   flex-grow: 1;
   border-radius: 10px;
   margin: 0 5px;
   display: flex;
-  background-image: -webkit-linear-gradient(left, 
-    
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.progress-value {
+  flex-grow: 1;
+  border-radius: 10px;
+  background-image: 
+  -webkit-linear-gradient(
+    left,
     rgb(228, 228, 228) 0%,
     rgb(228, 228, 228) 50%,
     rgba(255, 255, 255) 50.001%,
     rgba(255, 255, 255) 100%
-
   );
   background-repeat: no-repeat;
   background-size: 200%;
   background-color: #666;
   background-position: 100% 50%;
   animation-timing-function: linear;
-  animation-delay: .2s;
+  animation-delay: 0.2s;
+}
+.progress-value.active {
+  animation-name: Loader;
 }
 
-.progress-bar.active {
-    animation-name: Loader;
-}
-
-.progress-bar.passed {
-    background-position: 0 0; 
+.progress-value.passed {
+  background-position: 0 0;
 }
 
 @keyframes Loader {
-  0%   { background-position: 100% 0; }
-  100% { background-position: 0 0; }
+  0% { border-radius: 50px;
+    background-position: 100% 0;
+  }
+  100% {
+    border-radius: 50px;
+    background-position: 0 0;
+  }
 }
 
-.pause:hover .progress-bar {
+.pause .progress-value {
   animation-play-state: paused;
 }
 
-.pause .not-hovered {
-  display: block;
-}
-.pause .hovered {
-  display: none;
-}
-
-.pause:hover .not-hovered {
-  display: none;
-}
-.pause:hover .hovered {
-  display: block;
-}
 
 body {
   background: #121216;
@@ -70,4 +66,3 @@ body {
   color: #fff;
   font-family: sans-serif;
 }
-

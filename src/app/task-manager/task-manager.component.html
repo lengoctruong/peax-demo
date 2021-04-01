@@ -1,1 +1,10 @@
-<p>task-manager works!</p>
+<div class="task-manager">
+  <ng-container *ngIf="displayData">
+    <app-task-title [title]="displayData.title"></app-task-title>
+
+    <app-task-content
+      [content]="displayData.content"
+      [img]="displayData.img"
+    ></app-task-content>
+  </ng-container>
+</div>

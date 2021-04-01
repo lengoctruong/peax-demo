@@ -4,7 +4,7 @@ import { Category } from '../model';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']  
+  styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit, AfterViewInit {
   @Input() category: Category[] = [];
@@ -43,7 +43,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   removeItem(item: Category, event: any) {
-    console.log("item.id=" + item.id + "--" + event.target);
+    console.log("removeItem item.id=" + item.id + "--" + event.target);
 
     let catElement:any = this.getCategoryElementById(item.id);
     let icon:any = catElement.lastElementChild;
@@ -56,9 +56,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     let bgIcon:any = catElement.firstElementChild;
     bgIcon.classList.remove('paused');
     bgIcon.classList.add('bgicon-opacity');
-    bgIcon.addEventListener('animationend', () => this.onBgiconAnimationEnd(item));
-
-    // this.removeCate.emit(item);
+    bgIcon.addEventListener('animationend', () => this.onBgiconAnimationEnd(item));    
   }
 
   private onIconAnimationEnd(item: Category) {    
@@ -73,8 +71,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     bgIcon.removeEventListener('animationend', () => this.onBgiconAnimationEnd(item));
     bgIcon.classList.remove('bgicon-opacity');
     bgIcon.classList.add('display-none');
-
-    // this.removeCate.emit(this.category[0]);
+    
     this.moveLeftAllCategories(item);
   }
 
@@ -85,7 +82,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       let element:any = children[i];
     
       let elementId:string = element.firstElementChild.id;
-      let id:string[] = elementId.split("_");
+      let id:string[] = elementId.split("-");
       if (Number(id[1]) != item.id) {
         this.moveLeftIconCount++;
         //  icon
@@ -110,6 +107,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       // eventTarget.classList.add('paused');
       this.moveLeftIconCount--;
       if (this.moveLeftIconCount == 0) {
+        //  TODO: Temprarily remove first category
         this.removeCate.emit(this.category[0]);
       }
     }
@@ -122,7 +120,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       let element:any = children[i];
     
       let elementId:string = element.firstElementChild.id;
-      let id:string[] = elementId.split("_");
+      let id:string[] = elementId.split("-");
       if (Number(id[1]) == categoryId) {
         return element;
       }

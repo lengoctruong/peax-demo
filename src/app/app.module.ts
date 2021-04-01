@@ -11,6 +11,7 @@ import { TaskContentComponent } from './task-content/task-content.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     AppRoutingModule,
     BrowserAnimationsModule,
 
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
