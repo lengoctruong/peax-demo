@@ -1,5 +1,7 @@
 <div class="task-manager">
-  <app-task-title></app-task-title>
+  <ng-container *ngIf="displayData">
+    <app-task-title [title]="displayData.title"></app-task-title>
 
-  <app-task-content></app-task-content>
+    <app-task-content [content]="displayData.content"></app-task-content>
+  </ng-container>
 </div>

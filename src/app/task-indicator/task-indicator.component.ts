@@ -6,7 +6,7 @@ import {
   ViewChild,
   OnChanges,
 } from '@angular/core';
-import { CategoryData } from '../model';
+import { CategoryData, Task } from '../model';
 
 @Component({
   selector: 'app-task-indicator',
@@ -16,11 +16,14 @@ import { CategoryData } from '../model';
 export class TaskIndicatorComponent
   implements OnInit, AfterViewInit, OnChanges {
   @Input() currentTask: CategoryData[] = [];
+  taskContent: Task[] = [];
   constructor() {}
 
   @ViewChild('progressContainer') progressContainer;
   progress;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.taskContent = [];
+  }
 
   ngOnChanges(change) {
     if (change) {
@@ -31,6 +34,7 @@ export class TaskIndicatorComponent
       }, 100);
     }
   }
+
   ngAfterViewInit() {
     this.focusIcon();
     this.runAnimation();
@@ -71,6 +75,12 @@ export class TaskIndicatorComponent
     }
     if (next) {
       next.classList.add('active');
+
+      // Get task content
+      setTimeout(() => {
+        // Fix: Expression has changed after it was checked
+        this.getTaskContent(next.id);
+      }, 100);
     }
   };
 
@@ -89,5 +99,12 @@ export class TaskIndicatorComponent
       // Add focus to active category
       element?.classList.add('border-icon');
     }
+  }
+
+  getTaskContent(id: string) {
+    this.taskContent = this.currentTask[0].data.filter(
+      (task) => task.id === id
+    );
+    return this.taskContent;
   }
 }

@@ -5,6 +5,7 @@
         *ngFor="let task of currentTask[0].data; index as i"
         style="animation-duration: 2s"
         class="progress-bar"
+        id="{{ task.id }}"
       >
         <div *ngIf="i < 10">
           <span *ngIf="currentTask[0].data.length < 7" class="task_title">{{
@@ -20,4 +21,8 @@
 
     <br />
   </div>
+</ng-container>
+
+<ng-container *ngIf="taskContent.length > 0">
+  <app-task-manager [data]="taskContent"></app-task-manager>
 </ng-container>
