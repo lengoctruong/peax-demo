@@ -56,11 +56,13 @@ export class TaskIndicatorComponent
       }
       current.classList.remove('active');
       current.classList.add('passed');
-      if (currentIndex === this.progress.length - 1) {
+      if (currentIndex === this.progress.length - 1 && e !== undefined) {
         const id = this.currentTask[0].id;
         if (id) {
           const iconId = 'icon-' + (id + 1);
-          document.getElementById(iconId)?.click();
+          setTimeout(() => {
+            document.getElementById(iconId)?.click();
+          }, 100);
         }
       }
     }
