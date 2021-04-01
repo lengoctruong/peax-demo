@@ -41,7 +41,8 @@ export class TaskIndicatorComponent
   }
 
   runAnimation() {
-    this.progress = [...this.progressContainer.nativeElement.children];
+    //this.progress = [...this.progressContainer.nativeElement.children];
+    this.progress = Array.from(document.querySelectorAll(".progress-value"))
     this.playNext();
     this.progress.map((el) => {
       el.addEventListener('animationend', (e) => this.playNext(e));
@@ -63,7 +64,7 @@ export class TaskIndicatorComponent
         //  this.taskId;
         //  this.currentTask;
         //const iconId = document.getElementById('icon-'+ 1);
-        const elementClick = document.getElementById('icon-2')?.click();
+        //const elementClick = document.getElementById('icon-2')?.click();
       }
     }
     if (!next) {
