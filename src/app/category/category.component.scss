@@ -42,6 +42,10 @@
     // border: 2px solid #188e9b;
   }
 
+  .paused {
+    animation-play-state: paused;
+  }
+
   .bgicon {
     width: 60px;
     height: 60px;
@@ -64,13 +68,37 @@
   }
 
   .bgicon-opacity {
-    animation: 2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s infinite kfopacity;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+    animation-delay: 0.5s;
+    animation-iteration-count: 1;
+    animation-name: kfopacity;
   }
 
-  .moved {    
-    animation: 2s linear 0s infinite running kfmoved;
-    
+  .icon-move {        
+    animation-duration: 1s;
+    animation-timing-function: linear;    
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-name: kfmoved;    
   }
+  
+  .icon-move-left {        
+    animation-duration: 0.5s;
+    animation-timing-function: linear;    
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-name: kfmoveleft;    
+  }
+
+  .icon-pause {
+    animation-fill-mode: forwards;
+  }
+
+  .display-none{
+    display: none;
+  }
+
   @keyframes kfopacity {
     from {      
       opacity: 1;
@@ -91,6 +119,15 @@
     to {
       transform: translate(-20px, -40px);
       opacity: 0;      
+    }
+  }
+
+  @keyframes kfmoveleft {
+    from {
+      transform: translate(0, 0);          
+    }
+    to {
+      transform: translate(-80px, 0px);      
     }
   }
 }

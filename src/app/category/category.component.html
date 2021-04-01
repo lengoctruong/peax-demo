@@ -1,8 +1,8 @@
 <ng-container *ngIf="category.length > 0">
-  <div class="row">
-    <div *ngFor="let item of category" [@flyInOut]="'in'">
-      <div class="bgicon" style="position: absolute"></div>
-      <div
+  <div class="row" #categoryContainer>
+    <div *ngFor="let item of category">
+      <div class="bgicon paused" style="position: absolute" id="{{'bgicon_' + item.id}}"></div>
+      <div id="{{'icon_' + item.id}}"
         *ngIf="item.pendingTask > 0"
         class="icon"
         matTooltip="{{ item.name }}"
@@ -11,11 +11,11 @@
         <img src="{{ getIcon(item.id) }}" alt="Category" />
         <span>{{ item.pendingTask }}</span>
       </div>
-      <div
+      <div id="{{'icon_' + item.id}}"
         *ngIf="item.pendingTask === 0"
-        class="icon"
+        class="icon paused"
         matTooltip="{{ item.name }}"
-        (click)="removeItem(item)"
+        (click)="removeItem(item, $event)"
       >
         <img src="{{ getIcon(item.id) }}" alt="Category" />
         <span>{{ item.pendingTask }}</span>
