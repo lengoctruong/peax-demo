@@ -1,6 +1,7 @@
 .row {
   box-sizing: border-box;
   padding: 20px 20px;
+
   .icon {
     width: 60px;
     height: 60px;
@@ -75,27 +76,27 @@
     animation-name: kfopacity;
   }
 
-  .icon-move {        
+  .icon-move {
     animation-duration: 1s;
-    animation-timing-function: linear;    
+    animation-timing-function: linear;
     animation-iteration-count: 1;
     animation-play-state: running;
-    animation-name: kfmoved;    
+    animation-name: kfmoved;
   }
-  
-  .icon-move-left {        
+
+  .icon-bgicon-move-left {
     animation-duration: 0.5s;
-    animation-timing-function: linear;    
+    animation-timing-function: linear;
     animation-iteration-count: 1;
     animation-play-state: running;
-    animation-name: kfmoveleft;    
+    animation-name: kfmoveleft;
   }
 
   .icon-pause {
     animation-fill-mode: forwards;
   }
 
-  .display-none{
+  .display-none {
     display: none;
   }
 
@@ -104,6 +105,7 @@
       opacity: 1;
       transform: scale(1, 1);
     }
+
     to {
       opacity: 0;
       transform: scale(0.2, 0.2);
@@ -115,6 +117,7 @@
       transform: translate(0, 0);
       opacity: 1;
     }
+
     to {
       transform: translate(-20px, -40px);
       opacity: 0;
@@ -123,10 +126,11 @@
 
   @keyframes kfmoveleft {
     from {
-      transform: translate(0, 0);          
+      transform: translate(0, 0);
     }
+
     to {
-      transform: translate(-80px, 0px);      
+      transform: translate(-80px, 0px);
     }
   }
 }

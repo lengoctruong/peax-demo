@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, AfterViewInit,} from '@angular/core';
-import { Category } from '../model';
+import { Category, CategoryData } from '../model';
 
 @Component({
   selector: 'app-category',
@@ -13,7 +13,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
 
   @ViewChild('categoryContainer') public categoryContainer;
 
-  moveLeftIconCount = 0;
+  moveLeftBgIconCount = 0;
 
   constructor() {}
 
@@ -45,7 +45,11 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   removeItem(item: Category, event: any) {
     console.log("removeItem item.id=" + item.id + "--" + event.target);
 
-    let catElement:any = this.getCategoryElementById(item.id);
+    let catElement: any = this.getCategoryElementById(item.id);
+    if (catElement == null || catElement == undefined) {
+      return;
+    }
+
     let icon:any = catElement.lastElementChild;
     icon.children[1].classList.add('display-none');
 
@@ -59,15 +63,23 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     bgIcon.addEventListener('animationend', () => this.onBgiconAnimationEnd(item));    
   }
 
-  private onIconAnimationEnd(item: Category) {    
-    let icon:any = this.getCategoryElementById(item.id).lastElementChild;
-    icon.removeEventListener('animationend', () => this.onIconAnimationEnd(item));
+  private onIconAnimationEnd(item: Category) {
+    let catElement: any = this.getCategoryElementById(item.id);
+    if (catElement == null || catElement == undefined) {
+      return;
+    }
+    let icon: any = catElement.lastElementChild;
+    icon.children[0].removeEventListener('animationend', () => this.onIconAnimationEnd(item));
     icon.children[0].classList.remove('icon-move')
     icon.children[0].classList.add('display-none');
   }
 
   private onBgiconAnimationEnd(item: Category) {
-    var bgIcon:any = this.getCategoryElementById(item.id).firstElementChild;
+    let catElement: any = this.getCategoryElementById(item.id);
+    if (catElement == null || catElement == undefined) {
+      return;
+    }
+    var bgIcon: any = catElement.firstElementChild;
     bgIcon.removeEventListener('animationend', () => this.onBgiconAnimationEnd(item));
     bgIcon.classList.remove('bgicon-opacity');
     bgIcon.classList.add('display-none');
@@ -84,47 +96,72 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       let elementId:string = element.firstElementChild.id;
       let id:string[] = elementId.split("-");
       if (Number(id[1]) != item.id) {
-        this.moveLeftIconCount++;
+        this.moveLeftBgIconCount++;
         //  icon
         element.lastElementChild.classList.remove('paused');
-        element.lastElementChild.classList.add('icon-move-left');
-        element.lastElementChild.addEventListener('animationend', () => this.onCategoryMoveLeftAnimationEnd(element.lastElementChild));
+        element.lastElementChild.classList.add('icon-bgicon-move-left');
+        element.lastElementChild.addEventListener('animationend', () => this.onIconMoveLeftAnimationEnd(element.lastElementChild));
 
         //  bgIcon
         element.firstElementChild.classList.remove('paused');
-        element.firstElementChild.classList.add('icon-move-left');
-        element.firstElementChild.addEventListener('animationend', () => this.onCategoryMoveLeftAnimationEnd(element.firstElementChild));
+        element.firstElementChild.classList.add('icon-bgicon-move-left');
+        element.firstElementChild.addEventListener('animationend', () => this.onBgiconMoveLeftAnimationEnd(element.firstElementChild));
       }
     }
   }
   
-  private onCategoryMoveLeftAnimationEnd(eventTarget?:any) {    
+  private onIconMoveLeftAnimationEnd(eventTarget?: any) {
     if (eventTarget) {
-      console.log(eventTarget)
-      eventTarget.removeEventListener('animationend', () => this.onCategoryMoveLeftAnimationEnd());
-      eventTarget.classList.remove('icon-move-left');
-      
+      console.log("Icon move to left end - id: " + eventTarget.id)
+      eventTarget.removeEventListener('animationend', () => this.onIconMoveLeftAnimationEnd(eventTarget));
+      eventTarget.classList.remove('icon-bgicon-move-left');
+    }
+  }
+
+  private onBgiconMoveLeftAnimationEnd(eventTarget?: any) {
+    if (eventTarget) {
+      console.log("Bgicon move to left end - id: " + eventTarget.id)
+      eventTarget.removeEventListener('animationend', () => this.onBgiconMoveLeftAnimationEnd(eventTarget));
+      eventTarget.classList.remove('icon-bgicon-move-left');
+
       // eventTarget.classList.add('paused');
-      this.moveLeftIconCount--;
-      if (this.moveLeftIconCount == 0) {
+      this.moveLeftBgIconCount--;
+      if (this.moveLeftBgIconCount == 0) {
         //  TODO: Temprarily remove first category
-        this.removeCate.emit(this.category[0]);
+        let id: string[] = eventTarget.id.split("-");
+        let cat: any = this.getCategoryById(Number(id[1]));
+        if (cat) {
+          this.removeCate.emit(cat);
+        }
       }
     }
   }
 
-  private getCategoryElementById(categoryId:Number) {
+  private getCategoryElementById(categoryId: Number) {
     let children = this.categoryContainer.nativeElement.children;
-    let count:Number = children.length;
-    for(let i = 0; i < count; i++) {
-      let element:any = children[i];
-    
-      let elementId:string = element.firstElementChild.id;
-      let id:string[] = elementId.split("-");
+    let count: Number = children.length;
+    for (let i = 0; i < count; i++) {
+      let element: any = children[i];
+
+      let elementId: string = element.firstElementChild.id;
+      let id: string[] = elementId.split("-");
       if (Number(id[1]) == categoryId) {
         return element;
       }
     }
     return null;
+  }
+
+  private getCategoryById(categoryId: Number) {
+    if (this.category.length == 0) {
+      return null;
+    }
+    let result: any;
+    this.category.forEach(cat => {
+      if (cat.id == categoryId) {
+        result = cat;
+      }
+    })
+    return result;
   }
 }

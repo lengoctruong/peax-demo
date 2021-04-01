@@ -192,10 +192,10 @@ export class AppComponent implements OnInit {
 
   private getCategory() {
     this.categories = [
-      { id: 1, name: 'Rocket', pendingTask: 0 },
-      { id: 2, name: 'Onboarding', pendingTask: 0 },
-      { id: 3, name: 'Mailbox', pendingTask: 0 },
-      { id: 4, name: 'Office', pendingTask: 0 },
+      { id: 1, name: 'Rocket', pendingTask: 1 },
+      { id: 2, name: 'Onboarding', pendingTask: 5 },
+      { id: 3, name: 'Mailbox', pendingTask: 6 },
+      { id: 4, name: 'Office', pendingTask: 7 },
     ];
   }
 
