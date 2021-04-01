@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  OnChanges,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { CategoryData, Task } from '../model';
 
 @Component({
@@ -13,8 +6,7 @@ import { CategoryData, Task } from '../model';
   templateUrl: './task-indicator.component.html',
   styleUrls: ['./task-indicator.component.scss'],
 })
-export class TaskIndicatorComponent
-  implements OnInit, AfterViewInit, OnChanges {
+export class TaskIndicatorComponent implements OnInit, OnChanges {
   @Input() currentTask: CategoryData[] = [];
   taskContent: Task[] = [];
   constructor() {}
@@ -31,11 +23,6 @@ export class TaskIndicatorComponent
         this.runAnimation();
       }, 100);
     }
-  }
-
-  ngAfterViewInit() {
-    this.focusIcon();
-    this.runAnimation();
   }
 
   runAnimation() {
@@ -62,7 +49,7 @@ export class TaskIndicatorComponent
           const iconId = 'icon-' + (id + 1);
           setTimeout(() => {
             document.getElementById(iconId)?.click();
-          }, 100);
+          }, 200);
         }
       }
     }

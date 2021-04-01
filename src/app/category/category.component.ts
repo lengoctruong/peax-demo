@@ -53,7 +53,6 @@ export class CategoryComponent implements OnInit {
   }
 
   selectedItem(item: Category) {
-    console.log(item);
     this.selectedCate.emit(item);
   }
 
