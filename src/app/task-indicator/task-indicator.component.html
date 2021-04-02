@@ -1,32 +1,36 @@
 <ng-container *ngIf="currentTask[0].data.length > 0">
   <div class="task-indicator">
-    <div class="progress-container" #progressContainer>
-      <div
-        *ngFor="let task of currentTask[0].data; index as i"
-        class="progress-bar"
-      >
-        <div
-          *ngIf="i < 10"
-          class="progress-value"
-          style="animation-duration: 2s"
-          id="{{ task.id }}"
-          (click)="selectTask(task)"
-        >
-          <span *ngIf="currentTask[0].data.length < 7" class="task_title">{{
-            task.title
-          }}</span>
-        </div>
+    <div class="progress-container">
+      <ng-container *ngFor="let task of currentTask[0].data; index as i">
+        <div id="progress-bar_{{ i }}" class="progress-bar">
+          <ng-container *ngIf="i < 10">
+            <div
+              class="progress-value"
+              id="{{ task.id }}"
+              (click)="selectTask(task, i)"
+            ></div>
+            <span
+              *ngIf="currentTask[0].data.length < 7"
+              class="task_title"
+              (click)="selectTask(task, i)"
+            >
+              {{ task.title }}
+            </span>
+          </ng-container>
 
-        <div *ngIf="i === 9" (click)="selectTask(task)">
-          <span class="task_title">+ {{ currentTask[0].data.length - i }}</span>
+          <ng-container *ngIf="i === 9">
+            <div class="no-click">
+              <span class="task_title"
+                >+ {{ currentTask[0].data.length - i }}</span
+              >
+            </div>
+          </ng-container>
         </div>
-      </div>
+      </ng-container>
     </div>
-
-    <br />
   </div>
-</ng-container>
 
-<ng-container *ngIf="taskContent.length > 0">
-  <app-task-manager [data]="taskContent"></app-task-manager>
+  <ng-container *ngIf="taskContent.length > 0">
+    <app-task-manager [data]="taskContent"></app-task-manager>
+  </ng-container>
 </ng-container>

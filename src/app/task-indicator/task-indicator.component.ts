@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewChild, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  AfterViewInit,
+} from '@angular/core';
 import { CategoryData, Task } from '../model';
 
 @Component({
@@ -6,13 +12,14 @@ import { CategoryData, Task } from '../model';
   templateUrl: './task-indicator.component.html',
   styleUrls: ['./task-indicator.component.scss'],
 })
-export class TaskIndicatorComponent implements OnInit, OnChanges {
+export class TaskIndicatorComponent
+  implements OnInit, OnChanges, AfterViewInit {
   @Input() currentTask: CategoryData[] = [];
   taskContent: Task[] = [];
+  progress;
+
   constructor() {}
 
-  @ViewChild('progressContainer') progressContainer;
-  progress;
   ngOnInit(): void {}
 
   ngOnChanges(change) {
@@ -25,12 +32,39 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
     }
   }
 
-  selectTask(data: Task) {
+  ngAfterViewInit() {
+    this.focusIcon();
+  }
+
+  selectTask(data: Task, index: number) {
+    const id = 'progress-bar_' + index;
+    const classElement = this.getElementWithClass('progress-bar');
+    const classLength = classElement.length;
+    const item: Element[] = [];
+
+    for (let i = 0; i < classLength; i++) {
+      // Reset style
+      this.removeClass(classElement[i].children[0], 'bg-grey');
+
+      // Find elements to run animation
+      if (classElement[i].id >= id) {
+        item.push(classElement[i].children[0]);
+      } else {
+        // Add background color for elements, which do not run animation
+        this.addClass(classElement[i].children[0], 'bg-grey');
+      }
+    }
+
+    this.runAnimation(item);
     this.taskContent = [data];
   }
 
-  private runAnimation() {
-    this.progress = Array.from(document.querySelectorAll('.progress-value'));
+  private runAnimation(currentElement: Element[] = []) {
+    this.progress =
+      currentElement.length > 0
+        ? currentElement
+        : Array.from(document.querySelectorAll('.progress-value'));
+
     this.playNext();
     this.progress.map((el) => {
       el.addEventListener('animationend', (e) => this.playNext(e));
@@ -58,11 +92,7 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
       }
     }
     if (!next) {
-      this.progress.map((el) => {
-        this.removeClass(el, 'active');
-        this.removeClass(el, 'passed');
-      });
-      next = this.progress[0];
+      next = this.removeAnimation();
     }
     if (next) {
       this.addClass(next, 'active');
@@ -73,6 +103,14 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
       }, 100);
     }
   };
+
+  private removeAnimation() {
+    this.progress.map((el) => {
+      this.removeClass(el, 'active');
+      this.removeClass(el, 'passed');
+    });
+    return this.progress[0];
+  }
 
   private focusIcon() {
     const id = this.currentTask[0].id;
@@ -99,17 +137,25 @@ export class TaskIndicatorComponent implements OnInit, OnChanges {
     );
   }
 
-  private removeClass(element: HTMLElement, className: string = '') {
+  private removeClass(element: HTMLElement | Element, className: string = '') {
     if (!element) {
       return;
     }
     element.classList.remove(className);
   }
 
-  private addClass(element: HTMLElement, className: string = '') {
+  private addClass(element: HTMLElement | Element, className: string = '') {
     if (!element) {
       return;
     }
     element.classList.add(className);
+  }
+
+  private getElementWithId(id: string) {
+    return document.getElementById(id);
+  }
+
+  private getElementWithClass(className: string) {
+    return document.getElementsByClassName(className);
   }
 }
