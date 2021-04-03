@@ -1,46 +1,72 @@
-.task_title {
-  color: #121216;
-}
-.progress-container {
-  display: flex;
-  flex-direction: row;
-  padding: 10px 0;
-  cursor: pointer;
-  background: #f3f3f3;
-  border-radius: 10px;
-}
+.task-indicator {
+  &.pause {
+    .progress-value {
+      animation-play-state: paused;
+    }
+  }
 
-.progress-bar {
-  flex-grow: 1;
-  border-radius: 10px;
-  margin: 0 5px;
-  display: flex;
-  background-color: rgba(255, 255, 255, 0.5);
-}
+  .progress-container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0;
+    background: #f3f3f3;
 
-.progress-value {
-  flex-grow: 1;
-  border-radius: 10px;
-  background-image: -webkit-linear-gradient(
-    left,
-    rgb(228, 228, 228) 0%,
-    rgb(228, 228, 228) 50%,
-    rgba(255, 255, 255) 50.001%,
-    rgba(255, 255, 255) 100%
-  );
-  background-repeat: no-repeat;
-  background-size: 200%;
-  background-color: #666;
-  background-position: 100% 50%;
-  animation-timing-function: linear;
-  animation-delay: 0.2s;
-}
-.progress-value.active {
-  animation-name: Loader;
-}
+    .progress-bar {
+      position: relative;
+      align-items: center;
+      flex-grow: 1;
+      border-radius: 10px;
+      margin: 0 5px;
+      background-color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
 
-.progress-value.passed {
-  background-position: 0 0;
+      .progress-value {
+        position: absolute;
+        width: 100%;
+        height: 20px;
+        background-image: -webkit-linear-gradient(
+          left,
+          rgb(228, 228, 228) 0%,
+          rgb(228, 228, 228) 50%,
+          rgba(255, 255, 255) 50.001%,
+          rgba(255, 255, 255) 100%
+        );
+        background-size: 200%;
+        background-repeat: no-repeat;
+        background-position: 100% 50%;
+        animation-timing-function: linear;
+        animation-delay: 0.2s;
+        animation-duration: 2s;
+
+        &.bg-grey {
+          background: #e5e5e5;
+        }
+
+        &.active {
+          animation-name: Loader;
+        }
+
+        &.passed {
+          background-position: 0 0;
+        }
+      }
+
+      .no-click {
+        width: 100%;
+        cursor: not-allowed;
+        z-index: 2;
+      }
+
+      .task_title {
+        position: relative;
+        color: #121216;
+        width: 12.5rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
 }
 
 @keyframes Loader {
@@ -50,30 +76,4 @@
   100% {
     background-position: 0 0;
   }
-}
-
-.pause:hover .progress-value {
-  animation-play-state: paused;
-}
-
-.pause .not-hovered {
-  display: block;
-}
-.pause .hovered {
-  display: none;
-}
-
-.pause:hover .not-hovered {
-  display: none;
-}
-.pause:hover .hovered {
-  display: block;
-}
-
-body {
-  background: #121216;
-  padding: 50px;
-  width: 100vw;
-  color: #fff;
-  font-family: sans-serif;
 }
