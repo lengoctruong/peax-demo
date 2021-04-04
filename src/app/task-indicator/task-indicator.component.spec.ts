@@ -22,4 +22,8 @@ describe('TaskIndicatorComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  test('ngOnInit should compiled', () => {
+    expect(component.ngOnInit()).toBeTruthy();
+  });
 });
