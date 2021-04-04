@@ -199,8 +199,7 @@ export class AppComponent implements OnInit {
     ];
   }
 
-  removeCategory(_: Category) {
-    // let index = this.categories.findIndex(item => item.id === event.id);
-    this.categories.shift();
+  removeCategory(item: Category) {
+    this.categories = this.categories.filter(cat => cat.id != item.id);    
   }
 }
