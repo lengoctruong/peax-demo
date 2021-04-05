@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TaskContentComponent } from '../task-content/task-content.component';
+import { TaskManagerComponent } from '../task-manager/task-manager.component';
+import { TaskTitleComponent } from '../task-title/task-title.component';
 import { TaskIndicatorComponent } from './task-indicator.component';
-
 
 describe('TaskIndicatorComponent', () => {
   let component: TaskIndicatorComponent;
@@ -8,22 +10,21 @@ describe('TaskIndicatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskIndicatorComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [
+        TaskIndicatorComponent,
+        TaskManagerComponent,
+        TaskTitleComponent,
+        TaskContentComponent,
+      ],
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TaskIndicatorComponent);
-    component = fixture.componentInstance;
+    component = fixture.debugElement.componentInstance;
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  test('ngOnInit should compiled', () => {
-    expect(component.ngOnInit()).toBeTruthy();
   });
 });

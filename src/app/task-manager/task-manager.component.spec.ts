@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TaskContentComponent } from '../task-content/task-content.component';
+import { TaskTitleComponent } from '../task-title/task-title.component';
 import { TaskManagerComponent } from './task-manager.component';
-
 
 describe('TaskManagerComponent', () => {
   let component: TaskManagerComponent;
@@ -8,9 +9,12 @@ describe('TaskManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskManagerComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        TaskManagerComponent,
+        TaskContentComponent,
+        TaskTitleComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

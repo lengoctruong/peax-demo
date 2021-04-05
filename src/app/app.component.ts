@@ -199,9 +199,9 @@ export class AppComponent implements OnInit {
       { id: 4, name: 'Office', pendingTask: 10 },
     ];
   }
- 
+
   removeCategory(item: Category) {
-    this.categories = this.categories.filter(cat => cat.id != item.id);
+    this.categories = this.categories.filter((cat) => cat.id != item.id);
     return this.categories;
   }
 }
