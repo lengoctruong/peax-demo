@@ -13,7 +13,7 @@
 
     .progress-bar {
       position: relative;
-      align-items: center;
+      // align-items: center;
       flex-grow: 1;
       border-radius: 10px;
       margin: 0 5px;
@@ -22,7 +22,7 @@
 
       .progress-value {
         position: absolute;
-        width: 100%;
+        width: 0%;
         height: 20px;
         background-image: -webkit-linear-gradient(
           left,
@@ -36,7 +36,7 @@
         background-position: 100% 50%;
         animation-timing-function: linear;
         animation-delay: 0.2s;
-        animation-duration: 2s;
+        animation-duration: 200s;
 
         &.bg-grey {
           background: #e5e5e5;
@@ -72,8 +72,14 @@
 @keyframes Loader {
   0% {
     background-position: 100% 0;
+    width: 0%;
+    border-radius: 25px;
+    background: rgb(228, 228, 228);
   }
   100% {
     background-position: 0 0;
+    width: 100%;
+    border-radius: 25px;
+    background: rgb(228, 228, 228);
   }
 }
