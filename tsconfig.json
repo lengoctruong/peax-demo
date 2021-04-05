@@ -17,6 +17,9 @@
     "target": "es2015",
     "module": "es2020",
     "noImplicitAny": false,
+    "types": [
+      "jest"
+    ],
     "lib": [
       "es2018",
       "dom"

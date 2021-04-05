@@ -183,23 +183,25 @@ export class AppComponent implements OnInit {
   }
 
   getSelectedCategory(event: Category) {
-    this.getCurrentTaskById(event.id);
+    return this.getCurrentTaskById(event.id);
   }
 
   private getCurrentTaskById(id: number) {
     this.currentTasks = this.categoryData.filter((item) => item.id === id);
+    return this.currentTasks;
   }
 
   private getCategory() {
     this.categories = [
-      { id: 1, name: 'Rocket', pendingTask: 1 },
+      { id: 1, name: 'Rocket', pendingTask: 5 },
       { id: 2, name: 'Onboarding', pendingTask: 5 },
-      { id: 3, name: 'Mailbox', pendingTask: 6 },
-      { id: 4, name: 'Office', pendingTask: 7 },
+      { id: 3, name: 'Mailbox', pendingTask: 3 },
+      { id: 4, name: 'Office', pendingTask: 10 },
     ];
   }
-
+ 
   removeCategory(item: Category) {
-    this.categories = this.categories.filter(cat => cat.id != item.id);    
+    this.categories = this.categories.filter(cat => cat.id != item.id);
+    return this.categories;
   }
 }
