@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, AfterViewInit,} from '@angular/core';
-import { Category, CategoryData } from '../model';
+import { Category } from '../model';
 
 @Component({
   selector: 'app-category',
@@ -9,6 +9,7 @@ import { Category, CategoryData } from '../model';
 export class CategoryComponent implements OnInit, AfterViewInit {
 
   private readonly ONE_CATEGORY: number = 1;
+  private readonly DELIMITER: string = "-";
 
   @Input() category: Category[] = [];
   @Output() selectedCate = new EventEmitter<Category>();
@@ -52,9 +53,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   removeItem(item: Category, event: any) {
-    //console.log("\n\n 1-- removeItem item.id=" + item.id + "--" + event.target + " -- this.category.length:" + this.category.length);
-
-    let catElement: any = this.getCategoryElementById(item.id);
+    const catElement: any = this.getCategoryElementById(item.id);
     if (catElement == null || catElement == undefined) {
       return;
     }
@@ -75,7 +74,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   private onIconAnimationEnd(item: Category) {
-    let catElement: any = this.getCategoryElementById(item.id);
+    const catElement: any = this.getCategoryElementById(item.id);
     if (catElement == null || catElement == undefined) {
       return;
     }
@@ -86,17 +85,17 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   private onBgiconAnimationEnd(item: Category) {
-    let catElement: any = this.getCategoryElementById(item.id);
+    const catElement: any = this.getCategoryElementById(item.id);
     if (catElement == null || catElement == undefined) {
       return;
     }
-    var bgIcon: any = catElement.firstElementChild;
-    //console.log("2 -- onBgiconAnimationEnd item.id:", item.id);
+    var bgIcon: any = catElement.firstElementChild;    
     bgIcon.removeEventListener('animationend', this.bgiconEventListener);
     bgIcon.classList.remove('bgicon-opacity');
     bgIcon.classList.add('display-none');
 
-    if (this.category.length > this.ONE_CATEGORY) {
+    //  If category item is not last category, move all right categories of that item
+    if (this.category.length > this.ONE_CATEGORY && !this.isLastCategory(item)) {
       this.moveLeftAllCategories(item);
     } else {
       this.removeCate.emit(this.category.pop());
@@ -108,10 +107,10 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     const count: Number = children.length;
     const rightCategories: Array<Category> = this.getRightCategoriesOfSelectedCategory(item);
     for (let i = 0; i < count; i++) {
-      let element:any = children[i];
+      const element:any = children[i];
     
-      let elementId:string = element.firstElementChild.id;
-      const id: string[] = elementId.split("-");
+      const elementId:string = element.firstElementChild.id;
+      const id: string[] = elementId.split(this.DELIMITER);
       if (Number(id[1]) != item.id && rightCategories.findIndex(cat => cat.id == Number(id[1])) > -1) {
         this.moveLeftBgIconCount++;
         //  icon
@@ -121,7 +120,6 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         element.lastElementChild.classList.add('icon-bgicon-move-left');        
 
         //  bgIcon
-        //console.log("3 -- moveLeftAllCategories elementId:", elementId);
         element.firstElementChild.classList.remove('paused');
         this.bgiconMoveLeftEventListener.set(elementId, () => this.onBgiconMoveLeftAnimationEnd(element.firstElementChild, item));
         element.firstElementChild.addEventListener('animationend', this.bgiconMoveLeftEventListener.get(elementId));
@@ -132,7 +130,6 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   
   private onIconMoveLeftAnimationEnd(eventTarget: any) {
     if (eventTarget) {
-      //console.log("Icon move to left end - id: " + eventTarget.id)
       eventTarget.removeEventListener('animationend', this.iconMoveLeftEventListener.get(eventTarget.id));
       eventTarget.classList.remove('icon-bgicon-move-left');
     }
@@ -140,13 +137,12 @@ export class CategoryComponent implements OnInit, AfterViewInit {
 
   private onBgiconMoveLeftAnimationEnd(eventTarget: any, removedItem: Category) {
     if (eventTarget) {
-      //console.log("Bgicon move to left end - id: " + eventTarget.id + " -- this.moveLeftBgIconCount:" + this.moveLeftBgIconCount);
       eventTarget.removeEventListener('animationend', this.bgiconMoveLeftEventListener.get(eventTarget.id));
       eventTarget.classList.remove('icon-bgicon-move-left');
 
       this.moveLeftBgIconCount--;
       if (this.moveLeftBgIconCount == 0) {
-        let cat: any = this.getCategoryById(removedItem.id);
+        const cat: any = this.getCategoryById(removedItem.id);
         if (cat) {
           this.removeCate.emit(cat);
         }
@@ -154,14 +150,14 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private getCategoryElementById(categoryId: Number) {
-    let children = this.categoryContainer.nativeElement.children;
-    let count: Number = children.length;
+  private getCategoryElementById(categoryId: Number): any {
+    const children = this.categoryContainer.nativeElement.children;
+    const count: Number = children.length;
     for (let i = 0; i < count; i++) {
-      let element: any = children[i];
+      const element: any = children[i];
 
-      let elementId: string = element.firstElementChild.id;
-      let id: string[] = elementId.split("-");
+      const elementId: string = element.firstElementChild.id;
+      const id: string[] = elementId.split(this.DELIMITER);
       if (Number(id[1]) == categoryId) {
         return element;
       }
@@ -169,7 +165,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     return null;
   }
 
-  private getCategoryById(categoryId: Number) {
+  private getCategoryById(categoryId: Number): any {
     if (this.category.length == 0) {
       return null;
     }
@@ -183,7 +179,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   //  Get all right categories of selected category
-  private getRightCategoriesOfSelectedCategory(item: Category) {
+  private getRightCategoriesOfSelectedCategory(item: Category): Array<Category> {
     if (this.category.length == 0) {
       return new Array();
     }
@@ -193,5 +189,15 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       result.push(this.category[i]);
     }
     return result;
+  }
+
+  private isLastCategory(item: Category): boolean {
+    if (item) {
+      const itemIndex = this.category.findIndex(cat => cat.id == item.id);
+      if (itemIndex > -1 && itemIndex == this.category.length - 1){
+        return true;
+      }
+    }
+    return false;
   }
 }
