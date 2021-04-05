@@ -8,14 +8,13 @@ import { TaskTitleComponent } from './task-title/task-title.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   const event = {
     id: 1,
     name: 'Rocket',
-    pendingTask: 5
+    pendingTask: 5,
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -25,14 +24,10 @@ describe('AppComponent', () => {
         TaskIndicatorComponent,
         TaskManagerComponent,
         TaskTitleComponent,
-        TaskContentComponent
+        TaskContentComponent,
       ],
-      imports: [
-        MatTooltipModule,
-        MatButtonModule
-      ]
-    })
-      .compileComponents();
+      imports: [MatTooltipModule, MatButtonModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;
@@ -45,9 +40,12 @@ describe('AppComponent', () => {
   });
 
   test('getCategory - categories should has length equal 0', () => {
-    const getCategorySpy = jest.spyOn(AppComponent.prototype as any, 'getCategory');
+    const getCategorySpy = jest.spyOn(
+      AppComponent.prototype as any,
+      'getCategory'
+    );
     getCategorySpy.mockImplementation(() => {
-      return component.categories = [];
+      return (component.categories = []);
     });
 
     expect(component.ngOnInit()).toBeUndefined();
@@ -55,7 +53,7 @@ describe('AppComponent', () => {
 
   test(`getSelectedCategory - should contain event id`, () => {
     const data = component.getSelectedCategory(event);
-    expect(data[0]).toHaveProperty('id', 1);
+    expect(data[0]).toHaveProperty('idz', 1);
   });
 
   test(`removeCategory - should run`, () => {
