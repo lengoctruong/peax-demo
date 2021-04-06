@@ -20,6 +20,10 @@
       background-color: rgba(255, 255, 255, 0.5);
       cursor: pointer;
 
+      &.bg-grey {
+        background: #e5e5e5;
+      }
+
       .progress-value {
         position: absolute;
         width: 0%;
@@ -36,10 +40,6 @@
         animation-timing-function: linear;
         animation-delay: 0.2s;
         animation-duration: 2s;
-
-        &.bg-grey {
-          background: #e5e5e5;
-        }
 
         &.active {
           animation-name: Loader;
