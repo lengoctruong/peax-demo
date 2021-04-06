@@ -37,6 +37,9 @@ export class TaskIndicatorComponent
   }
 
   selectTask(data: Task, index: number) {
+    if (index === 9) {
+      return;
+    }
     const idTemp = 'progress-bar_';
     const classElement = this.getElementWithClass('progress-bar');
     const classLength = classElement.length;

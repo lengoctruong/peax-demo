@@ -1,9 +1,14 @@
 <div class="container-fluid wrapper">
-  <app-category
+  <app-category *ngIf="categories.length > 0"
     [category]="categories"
     (selectedCate)="getSelectedCategory($event)"
     (removeCate)="removeCategory($event)"
   ></app-category>
 
-  <app-task-indicator [currentTask]="currentTasks"></app-task-indicator>
+  <app-task-indicator  *ngIf="categories.length > 0" [currentTask]="currentTasks"></app-task-indicator>
+
+  <div *ngIf="categories.length === 0" >
+    <img src="../assets/icons/Nothing.png" alt="Nothing" />
+  </div>
+ 
 </div>
