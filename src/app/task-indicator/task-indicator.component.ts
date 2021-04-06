@@ -37,21 +37,21 @@ export class TaskIndicatorComponent
   }
 
   selectTask(data: Task, index: number) {
-    const id = 'progress-bar_' + index;
+    const idTemp = 'progress-bar_';
     const classElement = this.getElementWithClass('progress-bar');
     const classLength = classElement.length;
     const item: Element[] = [];
 
     for (let i = 0; i < classLength; i++) {
       // Reset style
-      this.removeClass(classElement[i].children[0], 'bg-grey');
+      this.removeClass(classElement[i], 'bg-grey');
 
       // Find elements to run animation
-      if (classElement[i].id >= id) {
+      if (parseInt(classElement[i].id.replace(idTemp, '')) >= index) {
         item.push(classElement[i].children[0]);
       } else {
         // Add background color for elements, which do not run animation
-        this.addClass(classElement[i].children[0], 'bg-grey');
+        this.addClass(classElement[i], 'bg-grey');
       }
     }
 
