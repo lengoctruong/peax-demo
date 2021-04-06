@@ -37,7 +37,6 @@
         );
         background-size: 200%;
         background-repeat: no-repeat;
-        background-position: 100% 50%;
         animation-timing-function: linear;
         animation-delay: 0.2s;
         animation-duration: 2s;
@@ -48,6 +47,7 @@
 
         &.passed {
           background-position: 0 0;
+          width: 100%;
         }
       }
 
@@ -60,7 +60,6 @@
       .task_title {
         position: relative;
         color: #121216;
-        width: 12.5rem;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;

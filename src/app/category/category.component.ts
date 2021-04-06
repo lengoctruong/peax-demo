@@ -1,14 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, AfterViewInit,} from '@angular/core';
-import { Category, CategoryData } from '../model';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
+import { Category } from '../model';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit, AfterViewInit {
-
   private readonly ONE_CATEGORY: number = 1;
+  private readonly DELIMITER: string = '-';
 
   @Input() category: Category[] = [];
   @Output() selectedCate = new EventEmitter<Category>();
@@ -29,7 +37,10 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    console.log("Children number of category container:" + this.categoryContainer.nativeElement.children.length);
+    console.log(
+      'Children number of category container:' +
+        this.categoryContainer.nativeElement.children.length
+    );
   }
 
   getIcon(id: number) {
@@ -52,101 +63,126 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   removeItem(item: Category, event: any) {
-    //console.log("\n\n 1-- removeItem item.id=" + item.id + "--" + event.target + " -- this.category.length:" + this.category.length);
-
-    let catElement: any = this.getCategoryElementById(item.id);
-    if (catElement == null || catElement == undefined) {
+    const catElement: any = this.getCategoryElementById(item.id);
+    if (!catElement) {
       return;
     }
 
-    let icon:any = catElement.lastElementChild;
+    const icon: any = catElement.lastElementChild;
     icon.children[1].classList.add('display-none');
 
     icon.children[0].classList.remove('paused');
     this.iconEventListener = () => this.onIconAnimationEnd(item);
     icon.children[0].addEventListener('animationend', this.iconEventListener);
-    icon.children[0].classList.add('icon-move');    
+    icon.children[0].classList.add('icon-move');
 
-    let bgIcon:any = catElement.firstElementChild;
+    const bgIcon: any = catElement.firstElementChild;
     bgIcon.classList.remove('paused');
     this.bgiconEventListener = () => this.onBgiconAnimationEnd(item);
-    bgIcon.addEventListener('animationend', this.bgiconEventListener);    
-    bgIcon.classList.add('bgicon-opacity');    
+    bgIcon.addEventListener('animationend', this.bgiconEventListener);
+    bgIcon.classList.add('bgicon-opacity');
   }
 
   private onIconAnimationEnd(item: Category) {
-    let catElement: any = this.getCategoryElementById(item.id);
-    if (catElement == null || catElement == undefined) {
+    const catElement: any = this.getCategoryElementById(item.id);
+    if (!catElement) {
       return;
     }
-    let icon: any = catElement.lastElementChild;    
-    icon.children[0].removeEventListener('animationend', this.iconEventListener);
-    icon.children[0].classList.remove('icon-move')
+    const icon: any = catElement.lastElementChild;
+    icon.children[0].removeEventListener(
+      'animationend',
+      this.iconEventListener
+    );
+    icon.children[0].classList.remove('icon-move');
     icon.children[0].classList.add('display-none');
   }
 
   private onBgiconAnimationEnd(item: Category) {
-    let catElement: any = this.getCategoryElementById(item.id);
-    if (catElement == null || catElement == undefined) {
+    const catElement: any = this.getCategoryElementById(item.id);
+    if (!catElement) {
       return;
     }
-    var bgIcon: any = catElement.firstElementChild;
-    //console.log("2 -- onBgiconAnimationEnd item.id:", item.id);
+    const bgIcon: any = catElement.firstElementChild;
     bgIcon.removeEventListener('animationend', this.bgiconEventListener);
     bgIcon.classList.remove('bgicon-opacity');
     bgIcon.classList.add('display-none');
 
-    if (this.category.length > this.ONE_CATEGORY) {
+    //  If category item is not last category, move all right categories of that item
+    if (
+      this.category.length > this.ONE_CATEGORY &&
+      !this.isLastCategory(item)
+    ) {
       this.moveLeftAllCategories(item);
     } else {
       this.removeCate.emit(this.category.pop());
-    }    
+    }
   }
 
   private moveLeftAllCategories(item: Category) {
     const children = this.categoryContainer.nativeElement.children;
-    const count: Number = children.length;
-    const rightCategories: Array<Category> = this.getRightCategoriesOfSelectedCategory(item);
+    const count: number = children.length;
+    const rightCategories: Array<Category> = this.getRightCategoriesOfSelectedCategory(
+      item
+    );
     for (let i = 0; i < count; i++) {
-      let element:any = children[i];
-    
-      let elementId:string = element.firstElementChild.id;
-      const id: string[] = elementId.split("-");
-      if (Number(id[1]) != item.id && rightCategories.findIndex(cat => cat.id == Number(id[1])) > -1) {
+      const element: any = children[i];
+
+      const elementId: string = element.firstElementChild.id;
+      const id: string[] = elementId.split(this.DELIMITER);
+      if (
+        Number(id[1]) != item.id &&
+        rightCategories.findIndex((cat) => cat.id == Number(id[1])) > -1
+      ) {
         this.moveLeftBgIconCount++;
         //  icon
-        element.lastElementChild.classList.remove('paused');        
-        this.iconMoveLeftEventListener.set(element.lastElementChild.id, () => this.onIconMoveLeftAnimationEnd(element.lastElementChild));
-        element.lastElementChild.addEventListener('animationend', this.iconMoveLeftEventListener.get(element.lastElementChild.id));
-        element.lastElementChild.classList.add('icon-bgicon-move-left');        
+        element.lastElementChild.classList.remove('paused');
+        this.iconMoveLeftEventListener.set(element.lastElementChild.id, () =>
+          this.onIconMoveLeftAnimationEnd(element.lastElementChild)
+        );
+        element.lastElementChild.addEventListener(
+          'animationend',
+          this.iconMoveLeftEventListener.get(element.lastElementChild.id)
+        );
+        element.lastElementChild.classList.add('icon-bgicon-move-left');
 
         //  bgIcon
-        //console.log("3 -- moveLeftAllCategories elementId:", elementId);
         element.firstElementChild.classList.remove('paused');
-        this.bgiconMoveLeftEventListener.set(elementId, () => this.onBgiconMoveLeftAnimationEnd(element.firstElementChild, item));
-        element.firstElementChild.addEventListener('animationend', this.bgiconMoveLeftEventListener.get(elementId));
-        element.firstElementChild.classList.add('icon-bgicon-move-left');        
+        this.bgiconMoveLeftEventListener.set(elementId, () =>
+          this.onBgiconMoveLeftAnimationEnd(element.firstElementChild, item)
+        );
+        element.firstElementChild.addEventListener(
+          'animationend',
+          this.bgiconMoveLeftEventListener.get(elementId)
+        );
+        element.firstElementChild.classList.add('icon-bgicon-move-left');
       }
     }
   }
-  
+
   private onIconMoveLeftAnimationEnd(eventTarget: any) {
     if (eventTarget) {
-      //console.log("Icon move to left end - id: " + eventTarget.id)
-      eventTarget.removeEventListener('animationend', this.iconMoveLeftEventListener.get(eventTarget.id));
+      eventTarget.removeEventListener(
+        'animationend',
+        this.iconMoveLeftEventListener.get(eventTarget.id)
+      );
       eventTarget.classList.remove('icon-bgicon-move-left');
     }
   }
 
-  private onBgiconMoveLeftAnimationEnd(eventTarget: any, removedItem: Category) {
+  private onBgiconMoveLeftAnimationEnd(
+    eventTarget: any,
+    removedItem: Category
+  ) {
     if (eventTarget) {
-      //console.log("Bgicon move to left end - id: " + eventTarget.id + " -- this.moveLeftBgIconCount:" + this.moveLeftBgIconCount);
-      eventTarget.removeEventListener('animationend', this.bgiconMoveLeftEventListener.get(eventTarget.id));
+      eventTarget.removeEventListener(
+        'animationend',
+        this.bgiconMoveLeftEventListener.get(eventTarget.id)
+      );
       eventTarget.classList.remove('icon-bgicon-move-left');
 
       this.moveLeftBgIconCount--;
       if (this.moveLeftBgIconCount == 0) {
-        let cat: any = this.getCategoryById(removedItem.id);
+        const cat: any = this.getCategoryById(removedItem.id);
         if (cat) {
           this.removeCate.emit(cat);
         }
@@ -154,44 +190,58 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private getCategoryElementById(categoryId: Number) {
-    let children = this.categoryContainer.nativeElement.children;
-    let count: Number = children.length;
+  private getCategoryElementById(categoryId: number): any {
+    const children = this.categoryContainer.nativeElement.children;
+    const count: number = children.length;
     for (let i = 0; i < count; i++) {
-      let element: any = children[i];
+      const element: any = children[i];
 
-      let elementId: string = element.firstElementChild.id;
-      let id: string[] = elementId.split("-");
-      if (Number(id[1]) == categoryId) {
+      const elementId: string = element.firstElementChild.id;
+      const id: string[] = elementId.split(this.DELIMITER);
+      if (Number(id[1]) === categoryId) {
         return element;
       }
     }
     return null;
   }
 
-  private getCategoryById(categoryId: Number) {
-    if (this.category.length == 0) {
+  private getCategoryById(categoryId: number): any {
+    if (this.category.length === 0) {
       return null;
     }
     let result: any;
-    this.category.forEach(cat => {
-      if (cat.id == categoryId) {
+    this.category.forEach((cat) => {
+      if (cat.id === categoryId) {
         result = cat;
       }
-    })
+    });
     return result;
   }
 
   //  Get all right categories of selected category
-  private getRightCategoriesOfSelectedCategory(item: Category) {
-    if (this.category.length == 0) {
+  private getRightCategoriesOfSelectedCategory(
+    item: Category
+  ): Array<Category> {
+    if (this.category.length === 0) {
       return new Array();
     }
-    const itemIndex: number = this.category.findIndex(cat => cat.id == item.id);
-    let result = new Array();
+    const itemIndex: number = this.category.findIndex(
+      (cat) => cat.id === item.id
+    );
+    const result = new Array();
     for (let i = itemIndex + 1; i < this.category.length; i++) {
       result.push(this.category[i]);
     }
     return result;
+  }
+
+  private isLastCategory(item: Category): boolean {
+    if (item) {
+      const itemIndex = this.category.findIndex((cat) => cat.id === item.id);
+      if (itemIndex > -1 && itemIndex === this.category.length - 1) {
+        return true;
+      }
+    }
+    return false;
   }
 }
