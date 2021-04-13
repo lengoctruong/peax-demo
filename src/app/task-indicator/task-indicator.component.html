@@ -2,17 +2,15 @@
   <div class="task-indicator">
     <div class="progress-container">
       <ng-container *ngFor="let task of currentTask[0].data; index as i">
-        <div id="progress-bar_{{ i }}" class="progress-bar">
+        <div id="progress-bar_{{ i }}" class="progress-bar" (click)="selectTask(task, i)">
           <ng-container *ngIf="i < 10">
             <div
               class="progress-value"
               id="{{ task.id }}"
-              (click)="selectTask(task, i)"
             ></div>
             <span
               *ngIf="currentTask[0].data.length < 7"
               class="task_title"
-              (click)="selectTask(task, i)"
             >
               {{ task.title }}
             </span>
