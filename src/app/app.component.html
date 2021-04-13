@@ -1,9 +1,13 @@
 <div class="container-fluid wrapper">
-  <app-category
-    [category]="categories"
-    (selectedCate)="getSelectedCategory($event)"
-    (removeCate)="removeCategory($event)"
-  ></app-category>
+  <ng-container *ngIf="categories$ | async as categories">
+    <app-category
+      [category]="categories"
+      (selectedCate)="getSelectedCategory($event)"
+      (removeCate)="removeCategory($event)"
+    ></app-category>
+  </ng-container>
 
-  <app-task-indicator [currentTask]="currentTasks"></app-task-indicator>
+  <ng-container *ngIf="currentTask$ | async as currentTask">
+    <app-task-indicator [currentTask]="currentTask"></app-task-indicator>
+  </ng-container>
 </div>
