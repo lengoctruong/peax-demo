@@ -211,7 +211,7 @@ export const appReducer = createReducer(
   on(AppActions.getCurrentTask, (state, action) => {
     return {
       ...state,
-      currentTask: { ...state.data.filter((item) => item.id === action.id)[0] },
+      currentTask: state.data.filter((item) => item.id === action.id)[0],
     };
   }),
   on(AppActions.removeCategory, (state, action) => {
