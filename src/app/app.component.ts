@@ -8,7 +8,7 @@ import {
   getCategoryId,
   getCurrentTaskSelector,
 } from './state/app.reducer';
-import { getCurrentTask, removeCategory } from './state/app.action';
+import { getCurrentCategoryData, removeCategory } from './state/app.action';
 
 @Component({
   selector: 'app-root',
@@ -32,11 +32,11 @@ export class AppComponent implements OnInit {
     let categoryId = 0;
     this.store.select(getCategoryId).subscribe((v) => (categoryId = v));
 
-    this.store.dispatch(getCurrentTask({ id: categoryId }));
+    this.store.dispatch(getCurrentCategoryData({ id: categoryId }));
   }
 
   getSelectedCategory(event: Category) {
-    this.store.dispatch(getCurrentTask({ id: event.id }));
+    this.store.dispatch(getCurrentCategoryData({ id: event.id }));
   }
 
   removeCategory(data: Category) {

@@ -4,7 +4,7 @@ export const getCategoryData = createAction(
   '[App] Get Category Data'
 );
 
-export const getCurrentTask = createAction(
+export const getCurrentCategoryData = createAction(
   '[App] Get Current Task',
   props<{id: number}>()
 );

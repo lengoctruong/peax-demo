@@ -4,7 +4,6 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import { Category } from '../model';
 import * as AppActions from './app.action';
 import { AppState } from './app.state';
 
@@ -178,7 +177,7 @@ const initialState: AppState = {
       ],
     },
   ],
-  currentTask: {
+  currentCategoryData: {
     id: 0,
     data: [],
   },
@@ -203,21 +202,21 @@ export const getCategoryData = createSelector(
 
 export const getCurrentTaskSelector = createSelector(
   getCategoryFeatureState,
-  (state) => state.currentTask
+  (state) => state.currentCategoryData
 );
 
 export const appReducer = createReducer(
   initialState,
-  on(AppActions.getCurrentTask, (state, action) => {
+  on(AppActions.getCurrentCategoryData, (state, action) => {
     return {
       ...state,
-      currentTask: state.data.filter((item) => item.id === action.id)[0],
+      currentCategoryData: state.data.filter((item) => item.id === action.id)[0],
     };
   }),
   on(AppActions.removeCategory, (state, action) => {
     return {
       ...state,
-      data: state.data.filter((item) => item.id !== action.id),
+      category: state.category.filter((item) => item.id !== action.id),
     };
   })
 );
