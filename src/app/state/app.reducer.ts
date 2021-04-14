@@ -1,4 +1,9 @@
-import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import {
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
 import { Category } from '../model';
 import * as AppActions from './app.action';
 import { AppState } from './app.state';
@@ -173,29 +178,32 @@ const initialState: AppState = {
       ],
     },
   ],
-  currentTask: []
+  currentTask: {
+    id: 0,
+    data: [],
+  },
 };
 
 const getCategoryFeatureState = createFeatureSelector<AppState>('app');
 
 export const getCategories = createSelector(
   getCategoryFeatureState,
-  state => state.category
+  (state) => state.category
 );
 
 export const getCategoryId = createSelector(
   getCategoryFeatureState,
-  state => state.category[0].id
+  (state) => state.category[0].id
 );
 
 export const getCategoryData = createSelector(
   getCategoryFeatureState,
-  state => state.data
+  (state) => state.data
 );
 
 export const getCurrentTaskSelector = createSelector(
   getCategoryFeatureState,
-  state => state.currentTask
+  (state) => state.currentTask
 );
 
 export const appReducer = createReducer(
@@ -203,13 +211,13 @@ export const appReducer = createReducer(
   on(AppActions.getCurrentTask, (state, action) => {
     return {
       ...state,
-      currentTask: state.data.filter(item => item.id === action.id)
+      currentTask: state.data.filter((item) => item.id === action.id)[0],
     };
   }),
   on(AppActions.removeCategory, (state, action) => {
     return {
       ...state,
-      data: state.data.filter(item => item.id !== action.id)
-    }
+      data: state.data.filter((item) => item.id !== action.id),
+    };
   })
 );

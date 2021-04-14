@@ -7,13 +7,15 @@
       (removeCate)="removeCategory($event)"
     ></app-category>
 
-    <div *ngIf="categories.length === 0" >
+    <div *ngIf="categories.length === 0">
       <img src="../assets/icons/Nothing.png" alt="Nothing" />
     </div>
   </ng-container>
 
   <ng-container *ngIf="currentTask$ | async as currentTask">
-    <app-task-indicator *ngIf="currentTask.length > 0" [currentTask]="currentTask"></app-task-indicator>
+    <app-task-indicator
+      *ngIf="currentTask.data.length > 0"
+      [currentTask]="currentTask"
+    ></app-task-indicator>
   </ng-container>
 </div>
-  

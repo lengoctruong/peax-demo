@@ -14,7 +14,7 @@ import { CategoryData, Task } from '../model';
 })
 export class TaskIndicatorComponent
   implements OnInit, OnChanges, AfterViewInit {
-  @Input() currentTask: CategoryData[] = [];
+  @Input() currentTask: CategoryData = { id: 0, data: [] };
   taskContent: Task[] = [];
   progress;
 
@@ -85,7 +85,7 @@ export class TaskIndicatorComponent
       this.removeClass(current, 'active');
       this.addClass(current, 'passed');
       if (currentIndex === this.progress.length - 1 && e !== undefined) {
-        const id = this.currentTask[0].id;
+        const id = this.currentTask.id;
         if (id) {
           const iconId = 'icon-' + (id + 1);
           setTimeout(() => {
@@ -116,7 +116,7 @@ export class TaskIndicatorComponent
   }
 
   private focusIcon() {
-    const id = this.currentTask[0].id;
+    const id = this.currentTask.id;
     if (id) {
       const iconId = 'bgicon-' + id;
       const element = document.getElementById(iconId);
@@ -135,9 +135,7 @@ export class TaskIndicatorComponent
   }
 
   private getTaskContent(id: string) {
-    this.taskContent = this.currentTask[0].data.filter(
-      (task) => task.id === id
-    );
+    this.taskContent = this.currentTask.data.filter((task) => task.id === id);
   }
 
   private removeClass(element: HTMLElement | Element, className: string = '') {

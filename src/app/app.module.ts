@@ -11,8 +11,8 @@ import { TaskTitleComponent } from './task-title/task-title.component';
 import { TaskContentComponent } from './task-content/task-content.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
@@ -24,7 +24,7 @@ import { environment } from 'src/environments/environment';
     TaskIndicatorComponent,
     TaskManagerComponent,
     TaskTitleComponent,
-    TaskContentComponent
+    TaskContentComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,10 +38,10 @@ import { environment } from 'src/environments/environment';
     StoreDevtoolsModule.instrument({
       name: 'Peax demo DevTools',
       maxAge: 25,
-      logOnly: environment.production
+      logOnly: environment.production,
     }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
