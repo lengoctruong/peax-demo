@@ -1,0 +1,4 @@
+<button mat-button class="primary-{{ colour }}" (click)="doAction()">
+  <i class="fas fa-spinner" [hidden]="isLoading"></i>
+  <span [hidden]="!isLoading">{{ title }}</span>
+</button>
