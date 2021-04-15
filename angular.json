@@ -26,10 +26,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "src/logo.ico",
-              "src/assets"
-            ],
+            "assets": ["src/logo.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss"
@@ -83,8 +80,7 @@
             "browserTarget": "my-app:build"
           }
         },
-        "test": {
-        },
+        "test": {},
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -93,9 +89,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
