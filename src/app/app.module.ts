@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { PrimaryButtonComponent } from './shared/primary-button/primary-button.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { environment } from 'src/environments/environment';
     TaskManagerComponent,
     TaskTitleComponent,
     TaskContentComponent,
+    PrimaryButtonComponent,
   ],
   imports: [
     BrowserModule,
