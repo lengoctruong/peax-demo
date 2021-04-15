@@ -59,11 +59,8 @@ button {
 
   i {
     font-size: 16px;
-
-    &.fa-spinner {
-      animation: spin 2s linear infinite;
-      -webkit-animation: spin 2s linear infinite; /* Safari */
-    }
+    animation: spin 2s linear infinite;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
   }
 }
 

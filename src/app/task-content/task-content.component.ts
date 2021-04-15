@@ -15,7 +15,10 @@ export class TaskContentComponent implements OnInit {
   @Input() content = '';
   @Input() img = '';
   @ViewChild('activationCode') activationCode;
-  constructor() {}
+  numbers;
+  constructor() {
+    this.numbers = [0,1,2,3,4,5,6,7];
+  }
 
   ngOnInit(): void {}
 
@@ -73,6 +76,7 @@ export class TaskContentComponent implements OnInit {
   }
 
   execute(event: string) {
-    console.log('this.store.dispatch: ', event);
+    //console.log('this.store.dispatch: ', event);
+    this.addError();
   }
 }
