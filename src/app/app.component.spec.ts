@@ -7,6 +7,12 @@ import { TaskManagerComponent } from './task-manager/task-manager.component';
 import { TaskTitleComponent } from './task-title/task-title.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Category } from './model';
+import { Observable } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { appReducer } from './state/app.reducer';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -26,9 +32,16 @@ describe('AppComponent', () => {
         TaskTitleComponent,
         TaskContentComponent,
       ],
-      imports: [MatTooltipModule, MatButtonModule],
+      imports: [MatTooltipModule,
+        MatButtonModule,
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('app', appReducer),
+        StoreDevtoolsModule.instrument({
+          name: 'Peax demo DevTools',
+          maxAge: 25,
+          logOnly: environment.production,
+        }),]
     }).compileComponents();
-
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;
 
@@ -39,13 +52,13 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  test('getCategory - categories should has length equal 0', () => {
+  test.only('getCategory - categories should has length equal 0', () => {
     const getCategorySpy = jest.spyOn(
       AppComponent.prototype as any,
       'getCategory'
     );
     getCategorySpy.mockImplementation(() => {
-      return (component.categories = []);
+      return (component.categories$ = new Observable<Category[]>());
     });
 
     expect(component.ngOnInit()).toBeUndefined();
