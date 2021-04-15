@@ -71,4 +71,8 @@ export class TaskContentComponent implements OnInit {
     }
     children[0].focus();
   }
+
+  execute(event: string) {
+    console.log('this.store.dispatch: ', event);
+  }
 }
