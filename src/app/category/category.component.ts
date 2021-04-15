@@ -37,10 +37,6 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    console.log(
-      'Children number of category container:' +
-        this.categoryContainer.nativeElement.children.length
-    );
   }
 
   getIcon(id: number) {
@@ -130,8 +126,8 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       const elementId: string = element.firstElementChild.id;
       const id: string[] = elementId.split(this.DELIMITER);
       if (
-        Number(id[1]) != item.id &&
-        rightCategories.findIndex((cat) => cat.id == Number(id[1])) > -1
+        Number(id[1]) !== item.id &&
+        rightCategories.findIndex((cat) => cat.id === Number(id[1])) > -1
       ) {
         this.moveLeftBgIconCount++;
         //  icon
