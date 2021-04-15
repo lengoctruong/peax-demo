@@ -1,8 +1,25 @@
 @import "@angular/material/prebuilt-themes/pink-bluegrey.css";
 
 .task-manager {
+  position: relative;
+  overflow: hidden;
   background: #fff;
   box-sizing: border-box;
   padding: 30px;
   border-radius: 15px;
+
+  .lottie {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    background: rgb(256, 256, 256, 0.9);
+
+    lottie-player {
+      display: inline-block;
+      width: 320px;
+    }
+  }
 }

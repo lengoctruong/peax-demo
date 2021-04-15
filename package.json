@@ -34,6 +34,7 @@
     "@angular-devkit/build-angular": "~0.1102.2",
     "@angular/cli": "~11.2.2",
     "@angular/compiler-cli": "~11.2.3",
+    "@lottiefiles/lottie-player": "^1.0.3",
     "@types/jest": "^26.0.22",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",

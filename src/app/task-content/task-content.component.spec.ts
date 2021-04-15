@@ -1,16 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskContentComponent } from './task-content.component';
 
-
 describe('TaskContentComponent', () => {
   let component: TaskContentComponent;
   let fixture: ComponentFixture<TaskContentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskContentComponent ]
-    })
-    .compileComponents();
+      declarations: [TaskContentComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -21,6 +21,9 @@ export class TaskManagerComponent implements OnInit, OnChanges {
     content: '',
     img: '',
   };
+
+  isCompleted = true;
+
   constructor() {}
 
   ngOnInit(): void {}

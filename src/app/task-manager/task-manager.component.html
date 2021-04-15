@@ -7,4 +7,17 @@
       [img]="displayData.img"
     ></app-task-content>
   </ng-container>
+
+  <ng-container *ngIf="isCompleted">
+    <div class="lottie">
+      <lottie-player
+        autoplay
+        loop
+        mode="normal"
+        src="/assets/lottie/lottie-check-success.json"
+        style="width: 320px"
+      >
+      </lottie-player>
+    </div>
+  </ng-container>
 </div>
