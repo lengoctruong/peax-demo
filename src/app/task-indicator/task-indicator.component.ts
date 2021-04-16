@@ -1,26 +1,42 @@
 import {
   Component,
-  Input,
   OnInit,
   OnChanges,
   AfterViewInit,
+  Input,
 } from '@angular/core';
-import { CategoryData, Task } from '../model';
+import { Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { CategoryData, Task } from '../_model';
+
+// State
+import * as AppState from '../state/app.state';
+
+// Actions
+import * as AppActions from '../state/app.action';
+
+// Reducers
+import { getCurrentCategoryDataSelector } from '../state/app.reducer';
 
 @Component({
   selector: 'app-task-indicator',
   templateUrl: './task-indicator.component.html',
   styleUrls: ['./task-indicator.component.scss'],
 })
-export class TaskIndicatorComponent
-  implements OnInit, OnChanges, AfterViewInit {
+export class TaskIndicatorComponent implements OnInit, AfterViewInit {
+  // TODO: ngOnChanges not able to triggered if remove Input
   @Input() currentTask: CategoryData = { id: 0, data: [] };
-  taskContent: Task[] = [];
+
+  currentCategoryData$: Observable<CategoryData> = of({ id: 0, data: [] });
   progress;
 
-  constructor() {}
+  constructor(private appState: Store<AppState.State>) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.currentCategoryData$ = this.appState.select(
+      getCurrentCategoryDataSelector
+    );
+  }
 
   ngOnChanges(change) {
     if (change) {
@@ -50,7 +66,7 @@ export class TaskIndicatorComponent
       this.removeClass(classElement[i], 'bg-grey');
 
       // Find elements to run animation
-      if (parseInt(classElement[i].id.replace(idTemp, '')) >= index) {
+      if (parseInt(classElement[i].id.replace(idTemp, ''), 0) >= index) {
         item.push(classElement[i].children[0]);
       } else {
         // Add background color for elements, which do not run animation
@@ -59,7 +75,7 @@ export class TaskIndicatorComponent
     }
 
     this.runAnimation(item);
-    this.taskContent = [data];
+    this.appState.dispatch(AppActions.getCurrentTaskById({ id: data.id }));
   }
 
   private runAnimation(currentElement: Element[] = []) {
@@ -85,11 +101,12 @@ export class TaskIndicatorComponent
       this.removeClass(current, 'active');
       this.addClass(current, 'passed');
       if (currentIndex === this.progress.length - 1 && e !== undefined) {
-        const id = this.currentTask.id;
+        let id = 0;
+        this.currentCategoryData$.subscribe((item) => (id = item.id));
         if (id) {
           const iconId = 'icon-' + (id + 1);
           setTimeout(() => {
-            document.getElementById(iconId)?.click();
+            this.getElementWithId(iconId)?.click();
           }, 200);
         }
       }
@@ -116,10 +133,11 @@ export class TaskIndicatorComponent
   }
 
   private focusIcon() {
-    const id = this.currentTask.id;
+    let id = 0;
+    this.currentCategoryData$.subscribe((item) => (id = item.id));
     if (id) {
       const iconId = 'bgicon-' + id;
-      const element = document.getElementById(iconId);
+      const element = this.getElementWithId(iconId);
 
       // Remove focus
       const bgIcon = document.querySelectorAll('.bgicon') as any;
@@ -135,7 +153,7 @@ export class TaskIndicatorComponent
   }
 
   private getTaskContent(id: string) {
-    this.taskContent = this.currentTask.data.filter((task) => task.id === id);
+    this.appState.dispatch(AppActions.getCurrentTaskById({ id }));
   }
 
   private removeClass(element: HTMLElement | Element, className: string = '') {

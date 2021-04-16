@@ -7,7 +7,7 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { Category } from '../model';
+import { Category } from '../_model';
 
 @Component({
   selector: 'app-category',
@@ -36,8 +36,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   getIcon(id: number) {
     switch (id) {

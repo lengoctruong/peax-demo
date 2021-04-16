@@ -7,7 +7,7 @@ import { TaskManagerComponent } from './task-manager/task-manager.component';
 import { TaskTitleComponent } from './task-title/task-title.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Category } from './model';
+import { Category } from './_model';
 import { Observable } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -32,7 +32,8 @@ describe('AppComponent', () => {
         TaskTitleComponent,
         TaskContentComponent,
       ],
-      imports: [MatTooltipModule,
+      imports: [
+        MatTooltipModule,
         MatButtonModule,
         StoreModule.forRoot({}),
         StoreModule.forFeature('app', appReducer),
@@ -40,7 +41,8 @@ describe('AppComponent', () => {
           name: 'Peax demo DevTools',
           maxAge: 25,
           logOnly: environment.production,
-        }),]
+        }),
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;

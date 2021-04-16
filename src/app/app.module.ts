@@ -1,5 +1,5 @@
 import { appReducer } from './state/app.reducer';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
-import { PrimaryButtonComponent } from './shared/primary-button/primary-button.component';
+import { PrimaryButtonComponent } from './_shared/primary-button/primary-button.component';
+// import { taskIndicatorReducer } from './task-indicator/state/task-indicator.reducer';
 
 @NgModule({
   declarations: [
@@ -36,13 +37,15 @@ import { PrimaryButtonComponent } from './shared/primary-button/primary-button.c
     MatTooltipModule,
     MatButtonModule,
     StoreModule.forRoot({}),
-    StoreModule.forFeature('app', appReducer),
+    StoreModule.forFeature('categoryState', appReducer),
+    // StoreModule.forFeature('taskIndicatorState', taskIndicatorReducer),
     StoreDevtoolsModule.instrument({
       name: 'Peax demo DevTools',
       maxAge: 25,
       logOnly: environment.production,
     }),
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent],
 })
