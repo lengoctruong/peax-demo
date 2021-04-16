@@ -3,87 +3,22 @@
     <p class="task-content__paraph">{{ content }}</p>
     <!-- <img src="{{ img }}" alt="task content" /> -->
     <div class="activation-code-form" id="activation-code-id" #activationCode>
-      <input
-        class="activation-code"
-        type="number"
-        maxlength="1"
-        [value]="activationCode"
-        onKeyPress="if(this.value.length==1) return false;"
-        min="0"
-        max="9"
-      />
-      <input
-        class="activation-code"
-        type="number"
-        maxlength="1"
-        [value]="activationCode"
-        onKeyPress="if(this.value.length==1) return false;"
-        min="0"
-        max="9"
-      />
-      <input
-        class="activation-code"
-        type="number"
-        maxlength="1"
-        [value]="activationCode"
-        onKeyPress="if(this.value.length==1) return false;"
-        min="0"
-        max="9"
-      />
-      <input
-        class="activation-code"
-        type="number"
-        maxlength="1"
-        [value]="activationCode"
-        onKeyPress="if(this.value.length==1) return false;"
-        min="0"
-        max="9"
-      />
-      <input
-        class="activation-code"
-        type="number"
-        maxlength="1"
-        [value]="activationCode"
-        onKeyPress="if(this.value.length==1) return false;"
-        min="0"
-        max="9"
-      />
-      <input
-        class="activation-code"
-        type="number"
-        maxlength="1"
-        [value]="activationCode"
-        onKeyPress="if(this.value.length==1) return false;"
-        min="0"
-        max="9"
-      />
-      <input
-        class="activation-code"
-        type="number"
-        maxlength="1"
-        [value]="activationCode"
-        onKeyPress="if(this.value.length==1) return false;"
-        min="0"
-        max="9"
-      />
-      <input
-        class="activation-code"
-        type="number"
-        maxlength="1"
-        [value]="activationCode"
-        onKeyPress="if(this.value.length==1) return false;"
-        min="0"
-        max="9"
-      />
+        <input
+          *ngFor="let number of numbers"
+          class="activation-code"
+          type="number"
+          maxlength="1"
+          [value]="activationCode"
+          onKeyPress="if(this.value.length==1) return false;"
+          min="0"
+          max="9"
+        />
     </div>
   </div>
   <div class="task-content__button">
-    <!-- <button mat-button class="btn-primary-action" (click)="addError()">
-      Action
-    </button> -->
     <app-primary-button
       [title]="'Click here'"
-      [colour]="'yellow'"
+      [colour]="'green'"
       [actionName]="'GetProduct'"
       (executeAction)="execute($event)"
     ></app-primary-button>
