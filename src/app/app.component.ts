@@ -3,12 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { Category, CategoryData } from './model';
-import {
-  getCategories,
-  getCategoryId,
-  getCurrentTaskSelector,
-} from './state/app.reducer';
-import { getCurrentCategoryData, removeCategory } from './state/app.action';
+import * as AppSelectors from '../app/state/app.selector';
+import { getCurrentCategoryData } from './state/app.action';
 
 @Component({
   selector: 'app-root',
@@ -26,20 +22,9 @@ export class AppComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.categories$ = this.store.select(getCategories);
-    this.currentTask$ = this.store.select(getCurrentTaskSelector);
+    this.categories$ = this.store.select(AppSelectors.getCategoriesSelector);
+    this.currentTask$ = this.store.select(AppSelectors.getCurrentTaskSelector);
 
-    let categoryId = 0;
-    this.store.select(getCategoryId).subscribe((v) => (categoryId = v));
-
-    this.store.dispatch(getCurrentCategoryData({ id: categoryId }));
-  }
-
-  getSelectedCategory(event: Category) {
-    this.store.dispatch(getCurrentCategoryData({ id: event.id }));
-  }
-
-  removeCategory(data: Category) {
-    this.store.dispatch(removeCategory({ id: data.id }));
+    this.store.dispatch(getCurrentCategoryData({ id: 1 }));
   }
 }

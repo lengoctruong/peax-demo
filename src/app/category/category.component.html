@@ -19,7 +19,7 @@
         *ngIf="item.pendingTask === 0"
         class="icon paused"
         matTooltip="{{ item.name }}"
-        (click)="removeItem(item, $event)"
+        (click)="removeItem(item)"
       >
         <img src="{{ getIcon(item.id) }}" alt="Category" />
         <span>{{ item.pendingTask }}</span>

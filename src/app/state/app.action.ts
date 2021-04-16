@@ -13,3 +13,8 @@ export const removeCategory = createAction(
   '[App] Remove Category',
   props<{id: number}>()
 );
+
+export const setCategoryId = createAction(
+  '[App] Set Category Id',
+  props<{ id: number }>()
+);

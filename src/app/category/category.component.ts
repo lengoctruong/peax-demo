@@ -1,13 +1,14 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
 import { Category } from '../model';
+import { Store } from '@ngrx/store';
+import { AppState } from '../state/app.state';
+import * as AppActions from '../state/app.action';
 
 @Component({
   selector: 'app-category',
@@ -19,8 +20,6 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   private readonly DELIMITER: string = '-';
 
   @Input() category: Category[] = [];
-  @Output() selectedCate = new EventEmitter<Category>();
-  @Output() removeCate = new EventEmitter<Category>();
 
   @ViewChild('categoryContainer') public categoryContainer;
 
@@ -32,7 +31,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   private iconEventListener: EventListener | undefined;
   private iconMoveLeftEventListener = new Map();
 
-  constructor() {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {}
 
@@ -55,10 +54,10 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   selectedItem(item: Category) {
-    this.selectedCate.emit(item);
+    this.store.dispatch(AppActions.getCurrentCategoryData({ id: item.id }));
   }
 
-  removeItem(item: Category, event: any) {
+  removeItem(item: Category) {
     const catElement: any = this.getCategoryElementById(item.id);
     if (!catElement) {
       return;
@@ -110,7 +109,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     ) {
       this.moveLeftAllCategories(item);
     } else {
-      this.removeCate.emit(this.category.pop());
+      this.store.dispatch(AppActions.removeCategory({ id: this.category[this.category.length - 1].id }));
     }
   }
 
@@ -177,10 +176,10 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       eventTarget.classList.remove('icon-bgicon-move-left');
 
       this.moveLeftBgIconCount--;
-      if (this.moveLeftBgIconCount == 0) {
+      if (this.moveLeftBgIconCount === 0) {
         const cat: any = this.getCategoryById(removedItem.id);
         if (cat) {
-          this.removeCate.emit(cat);
+          this.store.dispatch(AppActions.removeCategory({ id: cat.id }));
         }
       }
     }
