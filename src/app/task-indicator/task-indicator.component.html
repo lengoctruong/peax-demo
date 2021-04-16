@@ -1,7 +1,7 @@
-<ng-container *ngIf="currentTask.data.length > 0">
-  <div class="task-indicator">
+<ng-container *ngIf="currentCategoryData$ | async as currentCategoryData">
+  <div *ngIf="currentCategoryData.data.length > 0" class="task-indicator">
     <div class="progress-container">
-      <ng-container *ngFor="let task of currentTask.data; index as i">
+      <ng-container *ngFor="let task of currentCategoryData.data; index as i">
         <div
           id="progress-bar_{{ i }}"
           class="progress-bar"
@@ -9,7 +9,10 @@
         >
           <ng-container *ngIf="i < 10">
             <div class="progress-value" id="{{ task.id }}"></div>
-            <span *ngIf="currentTask.data.length < 7" class="task_title">
+            <span
+              *ngIf="currentCategoryData.data.length < 7"
+              class="task_title"
+            >
               {{ task.title }}
             </span>
           </ng-container>
@@ -17,7 +20,7 @@
           <ng-container *ngIf="i === 9">
             <div class="no-click">
               <span class="task_title"
-                >+ {{ currentTask.data.length - i }}</span
+                >+ {{ currentCategoryData.data.length - i }}</span
               >
             </div>
           </ng-container>
@@ -26,7 +29,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="taskContent.length > 0">
-    <app-task-manager [data]="taskContent"></app-task-manager>
+  <ng-container *ngIf="currentCategoryData.data.length > 0">
+    <app-task-manager></app-task-manager>
   </ng-container>
 </ng-container>

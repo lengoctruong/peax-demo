@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
-import { PrimaryButtonComponent } from './shared/primary-button/primary-button.component';
+import { PrimaryButtonComponent } from './_shared/primary-button/primary-button.component';
 
 @NgModule({
   declarations: [
@@ -36,15 +36,15 @@ import { PrimaryButtonComponent } from './shared/primary-button/primary-button.c
     MatTooltipModule,
     MatButtonModule,
     StoreModule.forRoot({}),
-    StoreModule.forFeature('app', appReducer),
+    StoreModule.forFeature('categoryState', appReducer),
     StoreDevtoolsModule.instrument({
       name: 'Peax demo DevTools',
       maxAge: 25,
       logOnly: environment.production,
     }),
   ],
-  providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

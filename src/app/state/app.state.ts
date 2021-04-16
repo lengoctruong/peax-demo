@@ -1,7 +1,12 @@
-import { Category, CategoryData } from '../model';
+import { Category, CategoryData, Task } from '../_model';
 
-export interface AppState {
+export interface State {
+  categoryState: CategoryState;
+}
+
+export interface CategoryState {
   category: Category[];
   data: CategoryData[];
   currentCategoryData: CategoryData;
+  currentTask: Task;
 }

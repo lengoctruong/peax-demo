@@ -1,8 +1,8 @@
-import { AppState } from './state/app.state';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { Category, CategoryData } from './model';
+import { Category, CategoryData } from './_model';
+import { State } from './state/app.state';
 import * as AppSelectors from '../app/state/app.selector';
 import { getCurrentCategoryData } from './state/app.action';
 
@@ -19,11 +19,13 @@ export class AppComponent implements OnInit {
     id: 0,
     data: [],
   });
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
     this.categories$ = this.store.select(AppSelectors.getCategoriesSelector);
-    this.currentTask$ = this.store.select(AppSelectors.getCurrentTaskSelector);
+    this.currentTask$ = this.store.select(
+      AppSelectors.getCurrentCategoryDataSelector
+    );
 
     this.store.dispatch(getCurrentCategoryData({ id: 1 }));
   }
