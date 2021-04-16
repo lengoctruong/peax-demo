@@ -1,11 +1,8 @@
-import {
-  createReducer,
-  on,
-} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as AppActions from './app.action';
-import { AppState } from './app.state';
+import { CategoryState } from './app.state';
 
-const initialState: AppState = {
+export const initialState: CategoryState = {
   category: [
     { id: 1, name: 'Rocket', pendingTask: 5 },
     { id: 2, name: 'Onboarding', pendingTask: 5 },
@@ -179,6 +176,7 @@ const initialState: AppState = {
     id: 0,
     data: [],
   },
+  currentTask: { id: '', content: '', img: '', title: '' },
 };
 
 export const appReducer = createReducer(
@@ -186,13 +184,23 @@ export const appReducer = createReducer(
   on(AppActions.getCurrentCategoryData, (state, action) => {
     return {
       ...state,
-      currentCategoryData: state.data.filter((item) => item.id === action.id)[0],
+      currentCategoryData:
+        state.data.filter((item) => item.id === action.id)[0] || {},
     };
   }),
   on(AppActions.removeCategory, (state, action) => {
     return {
       ...state,
       category: state.category.filter((item) => item.id !== action.id),
+    };
+  }),
+  on(AppActions.getCurrentTaskById, (state, action) => {
+    return {
+      ...state,
+      currentTask:
+        state.currentCategoryData.data.filter(
+          (item) => item.id === action.id
+        )[0] || {},
     };
   })
 );

@@ -5,9 +5,9 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { Category } from '../model';
+import { Category } from '../_model';
 import { Store } from '@ngrx/store';
-import { AppState } from '../state/app.state';
+import * as AppState from '../state/app.state';
 import * as AppActions from '../state/app.action';
 
 @Component({
@@ -31,12 +31,11 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   private iconEventListener: EventListener | undefined;
   private iconMoveLeftEventListener = new Map();
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState.State>) {}
 
   ngOnInit(): void {}
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   getIcon(id: number) {
     switch (id) {
@@ -109,7 +108,11 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     ) {
       this.moveLeftAllCategories(item);
     } else {
-      this.store.dispatch(AppActions.removeCategory({ id: this.category[this.category.length - 1].id }));
+      this.store.dispatch(
+        AppActions.removeCategory({
+          id: this.category[this.category.length - 1].id,
+        })
+      );
     }
   }
 

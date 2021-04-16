@@ -1,7 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { AppState } from './app.state';
+import { CategoryState, State } from './app.state';
 
-const getCategoryFeatureState = createFeatureSelector<AppState>('app');
+export const getCategoryFeatureState = createFeatureSelector<
+  State,
+  CategoryState
+>('categoryState');
 
 export const getCategoriesSelector = createSelector(
   getCategoryFeatureState,
@@ -14,6 +17,26 @@ export const getCategoryDataSelector = createSelector(
 );
 
 export const getCurrentTaskSelector = createSelector(
+  getCategoryFeatureState,
+  (state) => state.currentCategoryData.data[0]
+);
+
+export const getCategories = createSelector(
+  getCategoryFeatureState,
+  (state) => state.category
+);
+
+export const getCategoryId = createSelector(
+  getCategoryFeatureState,
+  (state) => state.category[0].id
+);
+
+export const getCategoryData = createSelector(
+  getCategoryFeatureState,
+  (state) => state.data
+);
+
+export const getCurrentCategoryDataSelector = createSelector(
   getCategoryFeatureState,
   (state) => state.currentCategoryData
 );

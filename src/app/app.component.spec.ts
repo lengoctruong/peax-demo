@@ -12,17 +12,12 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { appReducer } from './state/app.reducer';
-import { PrimaryButtonComponent } from './shared/primary-button/primary-button.component';
+import { PrimaryButtonComponent } from './_shared/primary-button/primary-button.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  const event = {
-    id: 1,
-    name: 'Rocket',
-    pendingTask: 5,
-  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -32,9 +27,10 @@ describe('AppComponent', () => {
         TaskManagerComponent,
         TaskTitleComponent,
         TaskContentComponent,
-        PrimaryButtonComponent
+        PrimaryButtonComponent,
       ],
-      imports: [MatTooltipModule,
+      imports: [
+        MatTooltipModule,
         MatButtonModule,
         StoreModule.forRoot({}),
         StoreModule.forFeature('app', appReducer),
@@ -42,9 +38,9 @@ describe('AppComponent', () => {
           name: 'Peax demo DevTools',
           maxAge: 25,
           logOnly: environment.production,
-        })
+        }),
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;
