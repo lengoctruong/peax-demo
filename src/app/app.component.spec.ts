@@ -7,12 +7,13 @@ import { TaskManagerComponent } from './task-manager/task-manager.component';
 import { TaskTitleComponent } from './task-title/task-title.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Category } from './model';
 import { Observable } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { appReducer } from './state/app.reducer';
+import { PrimaryButtonComponent } from './shared/primary-button/primary-button.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -31,6 +32,7 @@ describe('AppComponent', () => {
         TaskManagerComponent,
         TaskTitleComponent,
         TaskContentComponent,
+        PrimaryButtonComponent
       ],
       imports: [MatTooltipModule,
         MatButtonModule,
@@ -40,7 +42,9 @@ describe('AppComponent', () => {
           name: 'Peax demo DevTools',
           maxAge: 25,
           logOnly: environment.production,
-        }),]
+        })
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;
@@ -52,24 +56,9 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  test.only('getCategory - categories should has length equal 0', () => {
-    const getCategorySpy = jest.spyOn(
-      AppComponent.prototype as any,
-      'getCategory'
-    );
-    getCategorySpy.mockImplementation(() => {
-      return (component.categories$ = new Observable<Category[]>());
-    });
-
-    expect(component.ngOnInit()).toBeUndefined();
-  });
-
-  test(`getSelectedCategory - should contain event id`, () => {
-    const data = component.getSelectedCategory(event);
-    expect(data[0]).toHaveProperty('idz', 1);
-  });
-
-  test(`removeCategory - should run`, () => {
-    expect(component.removeCategory(event)).toBeTruthy();
+  test('categories and currentTask should be instance of Observable after ngOnInit', () => {
+    component.ngOnInit();
+    expect(component.categories$).toBeInstanceOf(Observable);
+    expect(component.currentTask$).toBeInstanceOf(Observable);
   });
 });
