@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { getCurrentTaskSelector } from '../state/app.reducer';
+import { getCurrentTaskSelector } from '../state/app.selector';
 import * as AppState from '../state/app.state';
 import { Task } from '../_model';
 

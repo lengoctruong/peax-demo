@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  AfterViewInit,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { CategoryData, Task } from '../_model';
@@ -15,8 +9,8 @@ import * as AppState from '../state/app.state';
 // Actions
 import * as AppActions from '../state/app.action';
 
-// Reducers
-import { getCurrentCategoryDataSelector } from '../state/app.reducer';
+// Selectors
+import { getCurrentCategoryDataSelector } from '../state/app.selector';
 
 @Component({
   selector: 'app-task-indicator',

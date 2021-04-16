@@ -3,8 +3,6 @@
     <app-category
       *ngIf="categories.length > 0"
       [category]="categories"
-      (selectedCate)="getSelectedCategory($event)"
-      (removeCate)="removeCategory($event)"
     ></app-category>
 
     <div *ngIf="categories.length === 0">

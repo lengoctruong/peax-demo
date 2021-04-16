@@ -18,3 +18,7 @@ export const getCurrentTaskById = createAction(
 );
 
 export const getCurrentTask = createAction('[App] Get Current Task');
+export const setCategoryId = createAction(
+  '[App] Set Category Id',
+  props<{ id: number }>()
+);
