@@ -11,11 +11,10 @@
   <ng-container *ngIf="isCompleted$ | async">
     <div class="lottie">
       <lottie-player
-        autoplay
-        loop
-        mode="normal"
         src="/assets/lottie/lottie-check-success.json"
-        style="width: 320px"
+        background="transparent"
+        style="width: 300px; height: 300px"
+        autoplay
       >
       </lottie-player>
     </div>
