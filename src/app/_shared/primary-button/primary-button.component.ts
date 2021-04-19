@@ -21,8 +21,11 @@ export class PrimaryButtonComponent implements OnInit {
   doAction() {
     this.isLoading = !this.isLoading;
 
-    if (this.actionName) {
-      this.executeAction.emit(this.actionName);
-    }
+    setTimeout(() => {
+      if (this.actionName) {
+        this.executeAction.emit(this.actionName);
+      }
+      this.isLoading = !this.isLoading;
+    }, 600);
   }
 }

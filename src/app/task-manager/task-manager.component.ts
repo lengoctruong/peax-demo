@@ -1,7 +1,10 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { getCurrentTaskSelector } from '../state/app.selector';
+import {
+  displayLottieSeletor,
+  getCurrentTaskSelector,
+} from '../state/app.selector';
 import * as AppState from '../state/app.state';
 import { Task } from '../_model';
 
@@ -17,12 +20,14 @@ export class TaskManagerComponent implements OnInit {
     img: '',
     content: '',
   });
-  isCompleted = false;
+
+  isCompleted$: Observable<boolean> = of();
 
   constructor(private appState: Store<AppState.State>) {}
 
   ngOnInit() {
     this.currentTask$ = this.appState.select(getCurrentTaskSelector);
+    this.isCompleted$ = this.appState.select(displayLottieSeletor);
   }
 
   @HostListener('mouseover') onMouseOver() {

@@ -177,6 +177,7 @@ export const initialState: CategoryState = {
     data: [],
   },
   currentTask: { id: '', content: '', img: '', title: '' },
+  hasDone: false,
 };
 
 export const appReducer = createReducer(
@@ -201,6 +202,25 @@ export const appReducer = createReducer(
         state.currentCategoryData.data.filter(
           (item) => item.id === action.id
         )[0] || {},
+    };
+  }),
+  on(AppActions.completeTask, (state) => {
+    return {
+      ...state,
+      hasDone: true,
+    };
+  }),
+  on(AppActions.setCurrentCategoryData, (state, action) => {
+    return {
+      ...state,
+      currentCategoryData: action.data,
+    };
+  }),
+  on(AppActions.setCurrentTask, (state, action) => {
+    return {
+      ...state,
+      hasDone: false,
+      currentTask: action.task,
     };
   })
 );

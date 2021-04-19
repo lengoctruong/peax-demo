@@ -9,4 +9,5 @@ export interface CategoryState {
   data: CategoryData[];
   currentCategoryData: CategoryData;
   currentTask: Task;
+  hasDone: boolean;
 }
