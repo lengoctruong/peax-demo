@@ -22,7 +22,7 @@ export const initialState: CategoryState = {
         },
         {
           id: '102',
-          title: 'Credit card from Swiss Bank',
+          title: 'Credit card from Swiss bank',
           content: `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.`,
           img: '/assets/icons/dummy.png',
         },
@@ -51,7 +51,7 @@ export const initialState: CategoryState = {
       data: [
         {
           id: '201',
-          title: 'Verify Email Address',
+          title: 'Verify email address',
           content: `At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium`,
           img: '/assets/icons/dummy.png',
         },
@@ -118,7 +118,7 @@ export const initialState: CategoryState = {
         },
         {
           id: '402',
-          title: 'Credit card from Swiss Bank',
+          title: 'Credit card from Swiss bank',
           content: `reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.`,
           img: '/assets/icons/dummy.png',
         },
