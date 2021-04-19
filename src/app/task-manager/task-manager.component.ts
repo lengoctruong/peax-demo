@@ -21,7 +21,7 @@ export class TaskManagerComponent implements OnInit {
 
   constructor(private appState: Store<AppState.State>) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.currentTask$ = this.appState.select(getCurrentTaskSelector);
   }
 
