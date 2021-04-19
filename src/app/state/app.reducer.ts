@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { Category, CategoryData } from '../_model';
 import * as AppActions from './app.action';
 import { CategoryState } from './app.state';
 
@@ -221,6 +222,48 @@ export const appReducer = createReducer(
       ...state,
       hasDone: false,
       currentTask: action.task,
+    };
+  }),
+  on(AppActions.removeTask, (state, action) => {
+    let categories: Category[] = [];
+    let currentCate = state.category.filter(
+      (item) => item.id === action.cateId
+    )[0];
+    if (currentCate.pendingTask > 1) {
+      currentCate = {
+        id: currentCate.id,
+        name: currentCate.name,
+        pendingTask: currentCate.pendingTask - 1,
+      };
+      categories = [
+        ...state.category.filter((item) => item.id !== action.cateId),
+        currentCate,
+      ].sort((a, b) => a.id - b.id);
+    } else {
+      categories = [
+        ...state.category.filter((item) => item.id !== action.cateId),
+      ].sort((a, b) => a.id - b.id);
+    }
+
+    let apiData = state.data.filter((item) => item.id === action.cateId)[0];
+    apiData = {
+      id: apiData.id,
+      data: apiData.data.filter((i) => i.id !== action.taskId),
+    };
+
+    return {
+      ...state,
+      category: [...categories],
+      data: [
+        ...state.data.filter((item) => item.id !== action.cateId),
+        apiData,
+      ].sort((a, b) => a.id - b.id),
+      currentCategoryData: {
+        id: state.currentCategoryData.id,
+        data: state.currentCategoryData.data.filter(
+          (item) => item.id !== action.taskId
+        ),
+      },
     };
   })
 );

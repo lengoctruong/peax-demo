@@ -11,6 +11,11 @@ export const removeCategory = createAction(
   props<{ id: number }>()
 );
 
+export const removeTask = createAction(
+  '[App] Remove Task',
+  props<{ cateId: number; taskId: string }>()
+);
+
 export const getCurrentTaskById = createAction(
   '[App] Get Current Task By Id',
   props<{ id: string }>()

@@ -6,19 +6,23 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { CategoryData, Task } from '../_model';
-import * as AppState from '../state/app.state';
 import { Store } from '@ngrx/store';
+
+// Model
+import { CategoryData, Task } from '../_model';
+
+// State
+import * as AppState from '../state/app.state';
+
+// Selectors
 import {
   getCategoryDataSelector,
   getCurrentCategoryDataSelector,
   getCurrentTaskSelector,
 } from '../state/app.selector';
-import {
-  completeTask,
-  setCurrentCategoryData,
-  setCurrentTask,
-} from '../state/app.action';
+
+// Actions
+import * as AppActions from '../state/app.action';
 
 @Component({
   selector: 'app-task-content',
@@ -69,7 +73,15 @@ export class TaskContentComponent implements OnInit {
     this.numbers = [0, 1, 2, 3, 4, 5, 6, 7];
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.apiData$ = this.appState.select(getCategoryDataSelector);
+
+    this.currentTask$ = this.appState.select(getCurrentTaskSelector);
+
+    this.currentCategoryData$ = this.appState.select(
+      getCurrentCategoryDataSelector
+    );
+  }
 
   addError() {
     const numberArray = document.querySelectorAll('.activation-code');
@@ -98,16 +110,12 @@ export class TaskContentComponent implements OnInit {
   }
 
   execute(event: string) {
+    const action = this.getAction(event);
+
     // Temp variables
     let apiData: CategoryData[] = [];
     let currentCategoryData: CategoryData = { id: 0, data: [] };
     let currentTask: Task = { id: '', title: '', img: '', content: '' };
-
-    // Select data from AppState
-    this.currentTask$ = this.appState.select(getCurrentTaskSelector);
-    this.currentCategoryData$ = this.appState.select(
-      getCurrentCategoryDataSelector
-    );
 
     // Assign value to [Temp variables]
     this.currentTask$.subscribe((data) => (currentTask = data));
@@ -118,13 +126,11 @@ export class TaskContentComponent implements OnInit {
       (item) => item.id === currentTask.id
     );
 
-    this.addError();
-    this.appState.dispatch(completeTask());
+    this.appState.dispatch(action);
 
     setTimeout(() => {
       // If index === currentCategoryData.data.length: then next category
-      if (taskIndex - 1 === currentCategoryData.data.length) {
-        this.apiData$ = this.appState.select(getCategoryDataSelector);
+      if (taskIndex === currentCategoryData.data.length - 1) {
         this.apiData$.subscribe((data) => (apiData = data));
 
         // Find current category index
@@ -132,15 +138,54 @@ export class TaskContentComponent implements OnInit {
           (item) => item.id === currentCategoryData.id
         );
 
+        this.removeTask(currentCategoryData.id, currentTask.id);
+
         this.appState.dispatch(
-          setCurrentCategoryData({ data: apiData[curCategogyIndex + 1] })
+          AppActions.setCurrentCategoryData({
+            data: apiData[curCategogyIndex + 1],
+          })
         );
-      } else {
+
         // Next task
-        this.appState.dispatch(
-          setCurrentTask({ task: currentCategoryData.data[taskIndex + 1] })
-        );
+        // taskIndex no need to +1 due to - (1)
+        this.setCurrentTask(currentCategoryData.data[taskIndex]);
+      } else {
+        // (1) - Remove current task
+        this.removeTask(currentCategoryData.id, currentTask.id);
+
+        // Next task
+        this.setCurrentTask(currentCategoryData.data[taskIndex]);
       }
     }, 2000);
+  }
+
+  private removeTask(cateId: number, taskId: string) {
+    this.appState.dispatch(
+      AppActions.removeTask({
+        cateId,
+        taskId,
+      })
+    );
+  }
+
+  private setCurrentTask(task: Task) {
+    this.appState.dispatch(
+      AppActions.setCurrentTask({
+        task,
+      })
+    );
+  }
+
+  private getAction(actionName: string) {
+    let action;
+    switch (actionName) {
+      case 'completeTask':
+        action = AppActions.completeTask();
+        break;
+      default:
+        break;
+    }
+
+    return action;
   }
 }
