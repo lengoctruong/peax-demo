@@ -118,7 +118,6 @@ export class TaskContentComponent implements OnInit {
       (item) => item.id === currentTask.id
     );
 
-    this.addError();
     this.appState.dispatch(completeTask());
 
     setTimeout(() => {
