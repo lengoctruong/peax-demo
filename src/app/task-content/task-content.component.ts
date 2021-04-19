@@ -48,7 +48,8 @@ export class TaskContentComponent implements OnInit {
       e.preventDefault();
 
       let nextControl: any = e.srcElement.nextElementSibling;
-      while (true) {
+      let addErrorFlag = true;
+      while (addErrorFlag) {
         if (nextControl) {
           if (nextControl.type === e.srcElement.type) {
             nextControl.focus();
@@ -57,7 +58,8 @@ export class TaskContentComponent implements OnInit {
             nextControl = nextControl.nextElementSibling;
           }
         } else {
-          return;
+          this.addError();
+          addErrorFlag = false;
         }
       }
     }
