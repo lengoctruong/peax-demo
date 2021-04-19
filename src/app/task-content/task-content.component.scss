@@ -36,65 +36,59 @@
       background: #8bc6cd;
     }
   }
-  .activation-code-form
-{
-  height: 58px;
-  width: 484px;
-  margin: auto;
-  
-
-  
-  input
-  {
-    border-radius: 6px;
-    border: 1px solid rgb(154, 154, 154);
+  .activation-code-form {
     height: 58px;
-    width: 50px;
-    margin: 0 5px;
-    font-size: 30px;
-    caret-color: #188E9B;
-    text-align: center;
-    
-    &.error
-    {
-      animation: shake 0.25s 2 linear;
-      border-color: #D0021B;
+    width: 484px;
+    margin: auto;
+
+    input {
+      border-radius: 6px;
+      border: 1px solid #9a9a9a;
+      height: 58px;
+      width: 50px;
+      margin: 0 5px;
+      font-size: 30px;
+      caret-color: #188e9b;
+      text-align: center;
+
+      &.error {
+        animation: shake 0.25s 2 linear;
+        border-color: #d0021b;
+      }
     }
   }
-}
 
-@keyframes shake {
-  // 0% { transform: translateX(0); }
-  // 25% { transform: translateX(8px); }
-  // 75% { transform: translateX(0px); }
-  // 100% { transform: translateX(10px);}
-  0% {
-    transform: translate(6px, 0);
+  @keyframes shake {
+    // 0% { transform: translateX(0); }
+    // 25% { transform: translateX(8px); }
+    // 75% { transform: translateX(0px); }
+    // 100% { transform: translateX(10px);}
+    0% {
+      transform: translate(6px, 0);
+    }
+    50% {
+      transform: translate(-3px, 0);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
   }
-  50% {
-    transform: translate(-3px, 0);
+
+  // Remove Arrows/Spinners
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
-  100% {
-    transform: translate(0, 0);
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
-}
 
-// Remove Arrows/Spinners
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-input[type=number]:focus {
- outline: none;
- border:1px solid #188E9B;
- 
-}
+  input[type="number"]:focus {
+    outline: none;
+    border: 2px solid #188e9b;
+  }
 }

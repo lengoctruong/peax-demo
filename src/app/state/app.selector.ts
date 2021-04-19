@@ -27,3 +27,8 @@ export const getCurrentCategoryDataSelector = createSelector(
   getCategoryFeatureState,
   (state) => state.currentCategoryData
 );
+
+export const displayLottieSeletor = createSelector(
+  getCategoryFeatureState,
+  (state) => state.hasDone
+);

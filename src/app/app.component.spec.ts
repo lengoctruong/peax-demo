@@ -141,7 +141,8 @@ describe('reducers', () => {
         },
       ]
     },
-    currentTask: { id: '', content: '', img: '', title: '' }
+    currentTask: { id: '', content: '', img: '', title: '' },
+    hasDone: false
   };
 
   test('should return the current category data', () => {
@@ -169,9 +170,9 @@ describe('reducers', () => {
 });
 
 describe('actions', () => {
-  test('create action [App] Get Current Task', () => {
+  test('create action [App] Get Current Category Data', () => {
     const expectedAction = {
-      type: '[App] Get Current Task',
+      type: '[App] Get Current Category Data',
       id: 1
     };
     expect(AppActions.getCurrentCategoryData({ id: 1 })).toEqual(expectedAction);
