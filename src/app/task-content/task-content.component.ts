@@ -40,7 +40,7 @@ export class TaskContentComponent implements OnInit {
     });
   }
   @HostListener('keyup', ['$event']) onKeyDown(e: any) {
-    var key = e.keyCode || e.charCode;
+    let key = e.keyCode || e.charCode;
     let previous: any = e.srcElement.previousSibling;
     if (key == 8 || key == 46) {
       if (previous != null) {
@@ -52,7 +52,8 @@ export class TaskContentComponent implements OnInit {
       e.preventDefault();
 
       let nextControl: any = e.srcElement.nextElementSibling;
-      while (true) {
+      let addErrorFlag = true;
+      while (addErrorFlag) {
         if (nextControl) {
           if (nextControl.type === e.srcElement.type) {
             nextControl.focus();
@@ -61,7 +62,9 @@ export class TaskContentComponent implements OnInit {
             nextControl = nextControl.nextElementSibling;
           }
         } else {
-          return;
+          //return;
+            this.addError()
+            addErrorFlag = false;
         }
       }
     }
