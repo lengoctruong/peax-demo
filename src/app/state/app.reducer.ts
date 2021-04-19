@@ -176,7 +176,7 @@ export const initialState: CategoryState = {
     id: 0,
     data: [],
   },
-  currentTask: { id: '', content: '', img: '', title: '' },
+  currentTask: { id: '', content: '', img: '', title: '' }
 };
 
 export const appReducer = createReducer(
