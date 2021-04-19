@@ -6,11 +6,13 @@ export const getCategoryFeatureState = createFeatureSelector<
   CategoryState
 >('categoryState');
 
+// Categories
 export const getCategoriesSelector = createSelector(
   getCategoryFeatureState,
   (state) => state.category
 );
 
+// Data from API
 export const getCategoryDataSelector = createSelector(
   getCategoryFeatureState,
   (state) => state.data
@@ -18,22 +20,7 @@ export const getCategoryDataSelector = createSelector(
 
 export const getCurrentTaskSelector = createSelector(
   getCategoryFeatureState,
-  (state) => state.currentCategoryData.data[0]
-);
-
-export const getCategories = createSelector(
-  getCategoryFeatureState,
-  (state) => state.category
-);
-
-export const getCategoryId = createSelector(
-  getCategoryFeatureState,
-  (state) => state.category[0].id
-);
-
-export const getCategoryData = createSelector(
-  getCategoryFeatureState,
-  (state) => state.data
+  (state) => state.currentTask
 );
 
 export const getCurrentCategoryDataSelector = createSelector(

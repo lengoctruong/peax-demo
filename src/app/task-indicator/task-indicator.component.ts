@@ -1,6 +1,14 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
+
+// Model
 import { CategoryData, Task } from '../_model';
 
 // State
@@ -17,7 +25,8 @@ import { getCurrentCategoryDataSelector } from '../state/app.selector';
   templateUrl: './task-indicator.component.html',
   styleUrls: ['./task-indicator.component.scss'],
 })
-export class TaskIndicatorComponent implements OnInit, AfterViewInit {
+export class TaskIndicatorComponent
+  implements OnInit, AfterViewInit, OnChanges {
   // TODO: ngOnChanges not able to triggered if remove Input
   @Input() currentTask: CategoryData = { id: 0, data: [] };
 
