@@ -3,8 +3,19 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      // "@core": ["src/app/@core"],
+      "@core/*": ["src/app/@core/*"],
+      // "@shared": ["src/app/@shared"],
+      "@shared/*": ["src/app/@shared/*"],
+      // "@components": ["src/app/components"],
+      "@components/*": ["src/app/components/*"],
+      "@env/*": ["src/environments/*"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -18,13 +29,8 @@
     "module": "es2020",
     "noImplicitAny": false,
     "esModuleInterop": true,
-    "types": [
-      "jest"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "types": ["jest"],
+    "lib": ["es2018", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

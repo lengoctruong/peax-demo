@@ -1,0 +1,53 @@
+button {
+  &.primary-emerald:enabled {
+    background: $primary-emerald-enabled;
+  }
+  &.primary-emerald:disabled {
+    background: $primary-emerald-disabled;
+  }
+  &.primary-emerald:hover {
+    background: $primary-emerald-hover;
+  }
+  &.primary-emerald:focus {
+    background: $primary-emerald-focus;
+  }
+
+  &.primary-yellow:enabled {
+    background: $primary-yellow-enabled;
+  }
+  &.primary-yellow:disabled {
+    background: $primary-yellow-disabled;
+  }
+  &.primary-yellow:hover {
+    background: $primary-yellow-hover;
+  }
+  &.primary-yellow:focus {
+    background: $primary-yellow-focus;
+  }
+
+  &.primary-green:enabled {
+    background: $primary-green-focus;
+  }
+  &.primary-green:disabled {
+    background: $primary-green-disabled;
+  }
+  &.primary-green:hover {
+    background: $primary-green-hover;
+  }
+  &.primary-green:focus {
+    background: $primary-green-focus;
+  }
+
+  &.primary-red:enabled {
+    background: $primary-red-enabled;
+  }
+  &.primary-red:disabled {
+    background: $primary-red-disabled;
+  }
+  &.primary-red:hover {
+    background: $primary-red-hover;
+  }
+  &.primary-red:focus {
+    background: $primary-red-focus;
+  }
+}

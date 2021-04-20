@@ -1,0 +1,50 @@
+/*
+ * Application global variables.
+ */
+//  Primeng view ports
+$viewport-sm: 576px !default; // mobile phones
+$viewport-md: 768px !default; // tablets
+$viewport-lg: 992px !default; // desktops
+$viewport-xl: 1200px !default;
+
+// For margins & paddings
+$space-8: 8px;
+$space-16: 16px;
+$space-24: 24px;
+$space-32: 32px;
+$space-40: 40px;
+$space-48: 48px;
+$space-56: 56px;
+$space-64: 64px;
+$space-72: 72px;
+
+// Colours
+$primary-emerald-enabled: #188e9b;
+$primary-emerald-disabled: #8bc6cd;
+$primary-emerald-hover: #188e9b;
+$primary-emerald-focus: #188e9b;
+
+$primary-yellow-enabled: #ffed00;
+$primary-yellow-disabled: #fff199;
+$primary-yellow-hover: #ffdd00;
+$primary-yellow-focus: #ffd200;
+
+$primary-green-enabled: #7ed321;
+$primary-green-disabled: #eafad7;
+$primary-green-hover: #69b516;
+$primary-green-focus: #5b9c14;
+
+$primary-red-enabled: #d0021b;
+$primary-red-disabled: #ec9aa4;
+$primary-red-hover: #ba0118;
+$primary-red-focus: #8b0112;
+
+// Font Awesome
+@mixin fontawesome-config {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 5 Free";
+}
