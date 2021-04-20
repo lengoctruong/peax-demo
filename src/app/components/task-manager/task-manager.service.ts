@@ -15,10 +15,11 @@ export class TaskManagerService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCategories(): Observable<TaskManagerModel.CategoryModel> {
-    return this.http.get<TaskManagerModel.CategoryModel>(this.categoriesUrl)
+  getAllCategories(): Observable<TaskManagerModel.CategoryModel[]> {
+    return this.http.get<TaskManagerModel.CategoryModel[]>(this.categoriesUrl)
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
+        // map(),
         catchError(this.handleError)
       );
   }

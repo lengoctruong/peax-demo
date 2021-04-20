@@ -8,6 +8,7 @@ import { SharedModule } from './@shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 // Components
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { EventStreamComponent } from './components/event-stream/event-stream.com
       maxAge: 25,
       logOnly: environment.production,
     }),
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent],

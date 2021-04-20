@@ -31,5 +31,7 @@ export class TaskManagerComponent implements OnInit {
     );
 
     this.store.dispatch(TaskManagerActions.getCurrentCategoryData({ id: 1 }));
+    // in progress
+    // this.store.dispatch(TaskManagerActions.gettAllCategories());
   }
 }

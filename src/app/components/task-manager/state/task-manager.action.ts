@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { CategoryData, Task } from '@components/task-manager/models/category.model';
+import { CategoryModel } from '../models/task-manager.model';
 
 export const getCurrentCategoryData = createAction(
   '[App] Get Current Category Data',
@@ -31,4 +32,21 @@ export const setCurrentCategoryData = createAction(
 export const setCurrentTask = createAction(
   '[App] Set Current Task',
   props<{ task: Task }>()
+);
+
+export const gettAllCategories = createAction(
+  '[App] Get All Categories'
+);
+
+export const getAllCategoriesSuccess = createAction(
+  '[App] Get All Categories Load Success',
+  props<{
+    category: [],
+    data: []
+  }>()
+);
+
+export const getAllCategoriesFailure = createAction(
+  '[App] Get All Categories Fail',
+  props<{ error: string }>()
 );

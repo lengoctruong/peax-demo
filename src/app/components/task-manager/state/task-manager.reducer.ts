@@ -265,5 +265,13 @@ export const appReducer = createReducer(
         ),
       },
     };
+  }),
+  on(TaskManagerActions.getAllCategoriesSuccess, (state, action) => {
+    return {
+      ...state,
+      hasDone: false,
+      category: action.category,
+      data: action.data
+    };
   })
 );

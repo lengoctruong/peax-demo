@@ -12,6 +12,8 @@ import { TaskTitleComponent } from './task-title/task-title.component';
 // Reducers
 import * as TaskManagerReducers from '@components/task-manager/state/task-manager.reducer';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { TaskManagerEffects } from '@components/task-manager/state/task-manager.effect';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { StoreModule } from '@ngrx/store';
   ],
   imports: [CommonModule, TaskManagerRoutingModule, SharedModule,
     StoreModule.forFeature('categoryState', TaskManagerReducers.appReducer),
+    EffectsModule.forFeature([TaskManagerEffects])
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
