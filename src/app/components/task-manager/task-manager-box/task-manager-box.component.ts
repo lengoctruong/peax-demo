@@ -2,13 +2,13 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
-import { Task } from 'src/app/@shared/models';
+import { Task } from '@components/task-manager/models/category.model';
 
 // State
-import * as AppState from 'src/app/@state/app.state';
+import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
 
 // Selectors
-import * as AppSelectors from 'src/app/@state/app.selector';
+import * as TaskManagerSelectors from '@components/task-manager/state/task-manager.selector';
 
 @Component({
   selector: 'app-task-manager-box',
@@ -25,13 +25,13 @@ export class TaskManagerBoxComponent implements OnInit {
 
   isCompleted$: Observable<boolean> = of();
 
-  constructor(private appState: Store<AppState.State>) {}
+  constructor(private appState: Store<TaskManagerState.State>) {}
 
   ngOnInit() {
     this.currentTask$ = this.appState.select(
-      AppSelectors.getCurrentTaskSelector
+      TaskManagerSelectors.getCurrentTaskSelector
     );
-    this.isCompleted$ = this.appState.select(AppSelectors.displayLottieSeletor);
+    this.isCompleted$ = this.appState.select(TaskManagerSelectors.displayLottieSeletor);
   }
 
   @HostListener('mouseover') onMouseOver() {

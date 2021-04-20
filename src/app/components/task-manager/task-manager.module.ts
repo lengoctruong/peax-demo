@@ -9,6 +9,10 @@ import { TaskManagerRoutingModule } from './task-manager-routing.module';
 import { TaskManagerComponent } from './task-manager.component';
 import { TaskTitleComponent } from './task-title/task-title.component';
 
+// Reducers
+import * as TaskManagerReducers from '@components/task-manager/state/task-manager.reducer';
+import { StoreModule } from '@ngrx/store';
+
 @NgModule({
   declarations: [
     CategoryComponent,
@@ -18,7 +22,9 @@ import { TaskTitleComponent } from './task-title/task-title.component';
     TaskIndicatorComponent,
     TaskManagerBoxComponent,
   ],
-  imports: [CommonModule, TaskManagerRoutingModule, SharedModule],
+  imports: [CommonModule, TaskManagerRoutingModule, SharedModule,
+    StoreModule.forFeature('categoryState', TaskManagerReducers.appReducer),
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TaskManagerModule {}

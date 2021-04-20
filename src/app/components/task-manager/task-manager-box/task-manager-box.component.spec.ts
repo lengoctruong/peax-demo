@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskContentComponent } from '../task-content/task-content.component';
 import { TaskTitleComponent } from '../task-title/task-title.component';
-import { TaskManagerComponent } from './task-manager-box.component';
+import { TaskManagerBoxComponent } from './task-manager-box.component';
 
 describe('TaskManagerComponent', () => {
-  let component: TaskManagerComponent;
-  let fixture: ComponentFixture<TaskManagerComponent>;
+  let component: TaskManagerBoxComponent;
+  let fixture: ComponentFixture<TaskManagerBoxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        TaskManagerComponent,
+        TaskManagerBoxComponent,
         TaskContentComponent,
         TaskTitleComponent,
       ],
@@ -18,7 +18,7 @@ describe('TaskManagerComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskManagerComponent);
+    fixture = TestBed.createComponent(TaskManagerBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

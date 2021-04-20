@@ -9,16 +9,16 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
 // Model
-import { CategoryData, Task } from 'src/app/@shared/models';
+import { CategoryData, Task } from '@components/task-manager/models/category.model';
 
 // State
-import * as AppState from 'src/app/@state/app.state';
+import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
 
 // Selectors
-import * as AppSelectors from 'src/app/@state/app.selector';
+import * as TaskManagerSelectors from '@components/task-manager/state/task-manager.selector';
 
 // Actions
-import * as AppActions from 'src/app/@state/app.action';
+import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
 
 @Component({
   selector: 'app-task-indicator',
@@ -33,11 +33,11 @@ export class TaskIndicatorComponent
   currentCategoryData$: Observable<CategoryData> = of({ id: 0, data: [] });
   progress;
 
-  constructor(private appState: Store<AppState.State>) {}
+  constructor(private appState: Store<TaskManagerState.State>) {}
 
   ngOnInit() {
     this.currentCategoryData$ = this.appState.select(
-      AppSelectors.getCurrentCategoryDataSelector
+      TaskManagerSelectors.getCurrentCategoryDataSelector
     );
   }
 
@@ -78,7 +78,7 @@ export class TaskIndicatorComponent
     }
 
     this.runAnimation(item);
-    this.appState.dispatch(AppActions.getCurrentTaskById({ id: data.id }));
+    this.appState.dispatch(TaskManagerActions.getCurrentTaskById({ id: data.id }));
   }
 
   private runAnimation(currentElement: Element[] = []) {
@@ -156,7 +156,7 @@ export class TaskIndicatorComponent
   }
 
   private getTaskContent(id: string) {
-    this.appState.dispatch(AppActions.getCurrentTaskById({ id }));
+    this.appState.dispatch(TaskManagerActions.getCurrentTaskById({ id }));
   }
 
   private removeClass(element: HTMLElement | Element, className: string = '') {

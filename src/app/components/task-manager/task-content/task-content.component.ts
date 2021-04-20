@@ -9,16 +9,16 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 // Model
-import { CategoryData, Task } from 'src/app/@shared/models';
+import { CategoryData, Task } from '@components/task-manager/models/category.model';
 
 // State
-import * as AppState from 'src/app/@state/app.state';
+import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
 
 // Selectors
-import * as AppSelectors from 'src/app/@state/app.selector';
+import * as TaskManagerSelectors from '@components/task-manager/state/task-manager.selector';
 
 // Actions
-import * as AppActions from 'src/app/@state/app.action';
+import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
 
 @Component({
   selector: 'app-task-content',
@@ -65,19 +65,19 @@ export class TaskContentComponent implements OnInit {
     }
   }
 
-  constructor(private appState: Store<AppState.State>) {
+  constructor(private appState: Store<TaskManagerState.State>) {
     this.numbers = [0, 1, 2, 3, 4, 5, 6, 7];
   }
 
   ngOnInit() {
-    this.apiData$ = this.appState.select(AppSelectors.getCategoryDataSelector);
+    this.apiData$ = this.appState.select(TaskManagerSelectors.getCategoryDataSelector);
 
     this.currentTask$ = this.appState.select(
-      AppSelectors.getCurrentTaskSelector
+      TaskManagerSelectors.getCurrentTaskSelector
     );
 
     this.currentCategoryData$ = this.appState.select(
-      AppSelectors.getCurrentCategoryDataSelector
+      TaskManagerSelectors.getCurrentCategoryDataSelector
     );
   }
 
@@ -139,7 +139,7 @@ export class TaskContentComponent implements OnInit {
         this.removeTask(currentCategoryData.id, currentTask.id);
 
         this.appState.dispatch(
-          AppActions.setCurrentCategoryData({
+          TaskManagerActions.setCurrentCategoryData({
             data: apiData[curCategogyIndex + 1],
           })
         );
@@ -159,7 +159,7 @@ export class TaskContentComponent implements OnInit {
 
   private removeTask(cateId: number, taskId: string) {
     this.appState.dispatch(
-      AppActions.removeTask({
+      TaskManagerActions.removeTask({
         cateId,
         taskId,
       })
@@ -168,7 +168,7 @@ export class TaskContentComponent implements OnInit {
 
   private setCurrentTask(task: Task) {
     this.appState.dispatch(
-      AppActions.setCurrentTask({
+      TaskManagerActions.setCurrentTask({
         task,
       })
     );
@@ -178,7 +178,7 @@ export class TaskContentComponent implements OnInit {
     let action;
     switch (actionName) {
       case 'completeTask':
-        action = AppActions.completeTask();
+        action = TaskManagerActions.completeTask();
         break;
       default:
         break;

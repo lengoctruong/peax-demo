@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 
 // Reducers
-import * as AppReducers from 'src/app/@state/app.reducer';
+// import * as AppReducers from 'src/app/@state/app.reducer';
 import { EventStreamComponent } from './components/event-stream/event-stream.component';
 
 @NgModule({
@@ -26,7 +26,7 @@ import { EventStreamComponent } from './components/event-stream/event-stream.com
     SharedModule,
 
     StoreModule.forRoot({}),
-    StoreModule.forFeature('categoryState', AppReducers.appReducer),
+    // StoreModule.forFeature('categoryState', AppReducers.appReducer),
     StoreDevtoolsModule.instrument({
       name: 'Peax demo DevTools',
       maxAge: 25,

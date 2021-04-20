@@ -5,14 +5,14 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { Category } from 'src/app/@shared/models';
+import { Category } from '@components/task-manager/models/category.model';
 import { Store } from '@ngrx/store';
 
 // State
-import * as AppState from 'src/app/@state/app.state';
+import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
 
 // Actions
-import * as AppActions from 'src/app/@state/app.action';
+import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
 
 @Component({
   selector: 'app-category',
@@ -35,7 +35,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   private iconEventListener: EventListener | undefined;
   private iconMoveLeftEventListener = new Map();
 
-  constructor(private store: Store<AppState.State>) {}
+  constructor(private store: Store<TaskManagerState.State>) {}
 
   ngOnInit(): void {}
 
@@ -57,7 +57,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   selectedItem(item: Category) {
-    this.store.dispatch(AppActions.getCurrentCategoryData({ id: item.id }));
+    this.store.dispatch(TaskManagerActions.getCurrentCategoryData({ id: item.id }));
   }
 
   removeItem(item: Category) {
@@ -113,7 +113,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       this.moveLeftAllCategories(item);
     } else {
       this.store.dispatch(
-        AppActions.removeCategory({
+        TaskManagerActions.removeCategory({
           id: this.category[this.category.length - 1].id,
         })
       );
@@ -186,7 +186,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       if (this.moveLeftBgIconCount === 0) {
         const cat: any = this.getCategoryById(removedItem.id);
         if (cat) {
-          this.store.dispatch(AppActions.removeCategory({ id: cat.id }));
+          this.store.dispatch(TaskManagerActions.removeCategory({ id: cat.id }));
         }
       }
     }

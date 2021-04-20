@@ -3,16 +3,16 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
 // Model
-import { Category, CategoryData } from 'src/app/@shared/models';
+import { Category, CategoryData } from '@components/task-manager/models/category.model';
 
 // State
-import * as AppState from 'src/app/@state/app.state';
+import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
 
 // Selectors
-import * as AppSelectors from 'src/app/@state/app.selector';
+import * as TaskManagerSelectors from '@components/task-manager/state/task-manager.selector';
 
 // Actions
-import * as AppActions from 'src/app/@state/app.action';
+import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
 
 @Component({
   selector: 'app-task-manager',
@@ -22,14 +22,14 @@ import * as AppActions from 'src/app/@state/app.action';
 export class TaskManagerComponent implements OnInit {
   categories$: Observable<Category[]> = of();
   currentTask$: Observable<CategoryData> = of();
-  constructor(private store: Store<AppState.State>) {}
+  constructor(private store: Store<TaskManagerState.State>) {}
 
   ngOnInit() {
-    this.categories$ = this.store.select(AppSelectors.getCategoriesSelector);
+    this.categories$ = this.store.select(TaskManagerSelectors.getCategoriesSelector);
     this.currentTask$ = this.store.select(
-      AppSelectors.getCurrentCategoryDataSelector
+      TaskManagerSelectors.getCurrentCategoryDataSelector
     );
 
-    this.store.dispatch(AppActions.getCurrentCategoryData({ id: 1 }));
+    this.store.dispatch(TaskManagerActions.getCurrentCategoryData({ id: 1 }));
   }
 }
