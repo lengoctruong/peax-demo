@@ -11,7 +11,7 @@ import * as TaskManagerModel from '@components/task-manager/models/task-manager.
 })
 export class TaskManagerService {
 
-  private categoriesUrl = 'api/categories';
+  private categoriesUrl = 'http://192.168.2.120:8080/api/category';
 
   constructor(private http: HttpClient) { }
 
@@ -19,7 +19,6 @@ export class TaskManagerService {
     return this.http.get<TaskManagerModel.CategoryModel[]>(this.categoriesUrl)
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
-        // map(),
         catchError(this.handleError)
       );
   }

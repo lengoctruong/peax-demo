@@ -1,5 +1,5 @@
 export interface CategoryModel {
-    categoryId: string;
+    categoryId: number;
     name: string;
     tasks: TaskModel[];
 }

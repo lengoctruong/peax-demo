@@ -13,6 +13,7 @@ import * as TaskManagerSelectors from '@components/task-manager/state/task-manag
 
 // Actions
 import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
+import { getError } from '@components/task-manager/state/task-manager.selector';
 
 @Component({
   selector: 'app-task-manager',
@@ -22,6 +23,8 @@ import * as TaskManagerActions from '@components/task-manager/state/task-manager
 export class TaskManagerComponent implements OnInit {
   categories$: Observable<Category[]> = of();
   currentTask$: Observable<CategoryData> = of();
+  errorMessage$: Observable<string> = of();
+
   constructor(private store: Store<TaskManagerState.State>) {}
 
   ngOnInit() {
@@ -30,8 +33,7 @@ export class TaskManagerComponent implements OnInit {
       TaskManagerSelectors.getCurrentCategoryDataSelector
     );
 
-    this.store.dispatch(TaskManagerActions.getCurrentCategoryData({ id: 1 }));
-    // in progress
-    // this.store.dispatch(TaskManagerActions.gettAllCategories());
+    this.store.dispatch(TaskManagerActions.getAllCategories());
+    this.errorMessage$ = this.store.select(getError);
   }
 }

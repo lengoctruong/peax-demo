@@ -10,4 +10,5 @@ export interface CategoryState {
   currentCategoryData: CategoryData;
   currentTask: Task;
   hasDone: boolean;
+  error: string;
 }

@@ -32,3 +32,8 @@ export const displayLottieSeletor = createSelector(
   getCategoryFeatureState,
   (state) => state.hasDone
 );
+
+export const getError = createSelector(
+  getCategoryFeatureState,
+  state => state.error
+);
