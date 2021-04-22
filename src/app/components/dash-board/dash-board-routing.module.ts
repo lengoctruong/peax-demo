@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TaskManagerComponent } from './task-manager.component';
+import { DashBoardComponent } from './dash-board.component';
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
-  { path: '', component: TaskManagerComponent },
+  { path: '', component: DashBoardComponent },
 ];
 
 @NgModule({
@@ -12,4 +12,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [],
 })
-export class TaskManagerRoutingModule {}
+export class DashBoardRoutingModule {}
