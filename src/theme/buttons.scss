@@ -26,7 +26,7 @@ button {
   }
 
   &.primary-green:enabled {
-    background: $primary-green-focus;
+    background: $primary-green-enabled;
   }
   &.primary-green:disabled {
     background: $primary-green-disabled;
