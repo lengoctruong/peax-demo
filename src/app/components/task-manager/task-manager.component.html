@@ -17,3 +17,7 @@
     ></app-task-indicator>
   </ng-container>
 </div>
+<div *ngIf="errorMessage$ | async as errorMessage"
+     class="alert alert-danger">
+  Error: {{ errorMessage }}
+</div>

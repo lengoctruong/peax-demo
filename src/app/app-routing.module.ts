@@ -3,19 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './@shared/components/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'task-manager', pathMatch: 'full' },
+  { path: '', redirectTo: 'dash-board', pathMatch: 'full' },
   {
-    path: 'task-manager',
+    path: 'dash-board',
     loadChildren: () =>
-      import('@components/task-manager/task-manager.module').then(
-        (m) => m.TaskManagerModule
-      ),
-  },
-  {
-    path: 'event-stream',
-    loadChildren: () =>
-      import('@components/event-stream/event-stream.module').then(
-        (m) => m.EventStreamModule
+      import('@components/dash-board/dash-board.module').then(
+        (m) => m.DashBoardModule
       ),
   },
   {

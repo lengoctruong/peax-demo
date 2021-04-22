@@ -17,7 +17,7 @@ import { AppComponent } from './app.component';
 import { EventStreamComponent } from './components/event-stream/event-stream.component';
 
 @NgModule({
-  declarations: [AppComponent, EventStreamComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,7 +31,7 @@ import { EventStreamComponent } from './components/event-stream/event-stream.com
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],

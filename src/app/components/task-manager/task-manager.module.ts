@@ -5,7 +5,6 @@ import { CategoryComponent } from './category/category.component';
 import { TaskContentComponent } from './task-content/task-content.component';
 import { TaskIndicatorComponent } from './task-indicator/task-indicator.component';
 import { TaskManagerBoxComponent } from './task-manager-box/task-manager-box.component';
-import { TaskManagerRoutingModule } from './task-manager-routing.module';
 import { TaskManagerComponent } from './task-manager.component';
 import { TaskTitleComponent } from './task-title/task-title.component';
 
@@ -24,9 +23,19 @@ import { TaskManagerEffects } from '@components/task-manager/state/task-manager.
     TaskIndicatorComponent,
     TaskManagerBoxComponent,
   ],
-  imports: [CommonModule, TaskManagerRoutingModule, SharedModule,
+  imports: [
+    CommonModule,
+    SharedModule,
     StoreModule.forFeature('categoryState', TaskManagerReducers.appReducer),
-    EffectsModule.forFeature([TaskManagerEffects])
+    EffectsModule.forFeature([TaskManagerEffects]),
+  ],
+  exports: [
+    CategoryComponent,
+    TaskContentComponent,
+    TaskManagerComponent,
+    TaskTitleComponent,
+    TaskIndicatorComponent,
+    TaskManagerBoxComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
