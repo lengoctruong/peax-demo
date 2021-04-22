@@ -9,7 +9,10 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 // Model
-import { CategoryData, Task } from '@components/task-manager/models/category.model';
+import {
+  CategoryData,
+  Task,
+} from '@components/task-manager/models/category.model';
 
 // State
 import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
@@ -19,6 +22,7 @@ import * as TaskManagerSelectors from '@components/task-manager/state/task-manag
 
 // Actions
 import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
+import { TaskIndicator } from '@app/@shared/enums/task-indicator.enum';
 
 @Component({
   selector: 'app-task-content',
@@ -70,7 +74,9 @@ export class TaskContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiData$ = this.appState.select(TaskManagerSelectors.getCategoryDataSelector);
+    this.apiData$ = this.appState.select(
+      TaskManagerSelectors.getCategoryDataSelector
+    );
 
     this.currentTask$ = this.appState.select(
       TaskManagerSelectors.getCurrentTaskSelector
@@ -120,9 +126,12 @@ export class TaskContentComponent implements OnInit {
     this.currentCategoryData$.subscribe((data) => (currentCategoryData = data));
 
     // Find task index
-    const taskIndex = currentCategoryData.data.findIndex(
-      (item) => item.id === currentTask.id
+    const taskIndex = this.findTaskIndex(
+      currentTask.id,
+      currentCategoryData.data
     );
+    // TODO: Find last element to add animation
+    // const is9th = taskIndex === TaskIndicator.LastItem - 1;
 
     this.appState.dispatch(action);
 
@@ -185,5 +194,9 @@ export class TaskContentComponent implements OnInit {
     }
 
     return action;
+  }
+
+  private findTaskIndex(id: string, data: Task[]) {
+    return data.findIndex((item) => item.id === id);
   }
 }

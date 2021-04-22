@@ -3,24 +3,25 @@
     <div class="progress-container">
       <ng-container *ngFor="let task of currentCategoryData.data; index as i">
         <div
+          *ngIf="i < LastItem"
           id="progress-bar_{{ i }}"
           class="progress-bar"
           (click)="selectTask(task, i)"
         >
-          <ng-container *ngIf="i < 10">
-            <div class="progress-value" id="{{ task.id }}"></div>
-            <span
-              *ngIf="currentCategoryData.data.length < 7"
-              class="task_title"
-            >
-              {{ task.title }}
-            </span>
-          </ng-container>
+          <div class="progress-value" id="{{ task.id }}"></div>
+          <span
+            *ngIf="currentCategoryData.data.length < ItemWithTitle"
+            class="task_title"
+          >
+            {{ task.title }}
+          </span>
+        </div>
 
-          <ng-container *ngIf="i === 9">
+        <div *ngIf="i === LastItem" class="progress-bar-fixed">
+          <ng-container>
             <div class="no-click">
               <span class="task_title"
-                >+ {{ currentCategoryData.data.length - i }}</span
+                >+ {{ currentCategoryData.data.length - LastItem }}</span
               >
             </div>
           </ng-container>

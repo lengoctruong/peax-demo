@@ -5,20 +5,19 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import * as TaskManagerModel from '@components/task-manager/models/task-manager.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskManagerService {
-
   private categoriesUrl = 'http://192.168.2.120:8080/api/category';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllCategories(): Observable<TaskManagerModel.CategoryModel[]> {
-    return this.http.get<TaskManagerModel.CategoryModel[]>(this.categoriesUrl)
+    return this.http
+      .get<TaskManagerModel.CategoryModel[]>(this.categoriesUrl)
       .pipe(
-        tap(data => console.log(JSON.stringify(data))),
+        tap((data) => console.log(JSON.stringify(data))),
         catchError(this.handleError)
       );
   }

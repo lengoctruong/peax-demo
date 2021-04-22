@@ -9,7 +9,10 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
 // Model
-import { CategoryData, Task } from '@components/task-manager/models/category.model';
+import {
+  CategoryData,
+  Task,
+} from '@components/task-manager/models/category.model';
 
 // State
 import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
@@ -19,6 +22,9 @@ import * as TaskManagerSelectors from '@components/task-manager/state/task-manag
 
 // Actions
 import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
+
+// Enums
+import { TaskIndicator } from '@app/@shared/enums/task-indicator.enum';
 
 @Component({
   selector: 'app-task-indicator',
@@ -32,6 +38,10 @@ export class TaskIndicatorComponent
 
   currentCategoryData$: Observable<CategoryData> = of({ id: 0, data: [] });
   progress;
+
+  // UI variables
+  LastItem = TaskIndicator.LastItem;
+  ItemWithTitle = TaskIndicator.ItemWithTitle;
 
   constructor(private appState: Store<TaskManagerState.State>) {}
 
@@ -78,7 +88,9 @@ export class TaskIndicatorComponent
     }
 
     this.runAnimation(item);
-    this.appState.dispatch(TaskManagerActions.getCurrentTaskById({ id: data.id }));
+    this.appState.dispatch(
+      TaskManagerActions.getCurrentTaskById({ id: data.id })
+    );
   }
 
   private runAnimation(currentElement: Element[] = []) {
