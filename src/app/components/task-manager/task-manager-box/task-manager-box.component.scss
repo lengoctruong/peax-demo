@@ -1,12 +1,18 @@
 @import "@angular/material/prebuilt-themes/pink-bluegrey.css";
 
-.task-manager {
+.task-manager-box {
   position: relative;
   overflow: hidden;
   background: #fff;
   box-sizing: border-box;
   padding: 30px;
   border-radius: 15px;
+
+  .task-manager-box_button {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+  }
 
   .lottie {
     width: 100%;

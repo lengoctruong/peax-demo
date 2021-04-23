@@ -1,4 +1,4 @@
-<div class="task-manager">
+<div class="task-manager-box">
   <ng-container *ngIf="currentTask$ | async as currentTask">
     <app-task-title [title]="currentTask.title"></app-task-title>
 
@@ -6,6 +6,15 @@
       [content]="currentTask.content"
       [img]="currentTask.img"
     ></app-task-content>
+
+    <div class="task-manager-box_button">
+      <app-primary-button
+        [title]="'Click here'"
+        [colour]="'green'"
+        [actionName]="'completeTask'"
+        (executeAction)="execute($event)"
+      ></app-primary-button>
+    </div>
   </ng-container>
 
   <ng-container *ngIf="isCompleted$ | async">

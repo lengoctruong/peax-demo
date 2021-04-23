@@ -1,4 +1,7 @@
 .task-indicator {
+  width: 100%;
+  overflow: hidden;
+
   &.pause {
     .progress-value {
       animation-play-state: paused;
@@ -13,12 +16,12 @@
 
     .progress-bar {
       position: relative;
-      // align-items: center;
       flex-grow: 1;
       border-radius: 10px;
       margin: 0 5px;
       background-color: rgba(255, 255, 255, 0.5);
       cursor: pointer;
+      transition: ease 2s;
 
       &.bg-grey {
         background: #e5e5e5;
@@ -39,7 +42,7 @@
         background-repeat: no-repeat;
         animation-timing-function: linear;
         animation-delay: 0.2s;
-        animation-duration: 2s;
+        animation-duration: 999s;
 
         &.active {
           animation-name: Loader;
@@ -49,12 +52,6 @@
           background-position: 0 0;
           width: 100%;
         }
-      }
-
-      .no-click {
-        width: 100%;
-        cursor: not-allowed;
-        z-index: 2;
       }
 
       .task_title {
@@ -67,15 +64,31 @@
     }
 
     .progress-bar-fixed {
-      text-align: center;
       width: 5rem;
-      border-radius: 10px;
-      margin: 0 5px;
-      background-color: rgba(255, 255, 255, 0.5);
       cursor: not-allowed;
+      z-index: 2;
+      background-color: rgba(243, 243, 243);
+
+      .no-click {
+        text-align: center;
+        border-radius: 10px;
+        margin: 0 0 0 5px;
+      }
     }
   }
 }
+
+// .display-none {
+//   display: none;
+// }
+
+// .move-right {
+//   transform: translateX(200%);
+// }
+
+// .move-left {
+//   transform: translateX(0);
+// }
 
 @keyframes Loader {
   0% {

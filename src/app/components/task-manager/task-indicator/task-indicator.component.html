@@ -17,12 +17,17 @@
           </span>
         </div>
 
-        <div *ngIf="i === LastItem" class="progress-bar-fixed">
+        <div
+          *ngIf="i === currentCategoryData.data.length - 1 && i >= LastItem"
+          class="progress-bar-fixed"
+        >
           <ng-container>
-            <div class="no-click">
-              <span class="task_title"
-                >+ {{ currentCategoryData.data.length - LastItem }}</span
-              >
+            <div>
+              <div class="no-click">
+                <span class="task_title"
+                  >+ {{ currentCategoryData.data.length - LastItem }}</span
+                >
+              </div>
             </div>
           </ng-container>
         </div>

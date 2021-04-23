@@ -2,7 +2,10 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
-import { Task } from '@components/task-manager/models/category.model';
+import {
+  CategoryData,
+  Task,
+} from '@components/task-manager/models/category.model';
 
 // State
 import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
@@ -10,29 +13,27 @@ import * as TaskManagerState from '@components/task-manager/state/task-manager.s
 // Selectors
 import * as TaskManagerSelectors from '@components/task-manager/state/task-manager.selector';
 
+// Actions
+import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
+
+// Enums
+import { TaskIndicator } from '@app/@shared/enums/task-indicator.enum';
+
 @Component({
   selector: 'app-task-manager-box',
   templateUrl: './task-manager-box.component.html',
   styleUrls: ['./task-manager-box.component.scss'],
 })
 export class TaskManagerBoxComponent implements OnInit {
-  currentTask$: Observable<Task> = of({
-    id: '',
-    title: '',
-    img: '',
-    content: '',
-  });
-
   isCompleted$: Observable<boolean> = of();
+  apiData$: Observable<CategoryData[]> = of();
+  currentTask$: Observable<Task> = of();
+  currentCategoryData$: Observable<CategoryData> = of();
+
+  // UI variables
+  ProgressBar = 'progress-bar';
 
   constructor(private appState: Store<TaskManagerState.State>) {}
-
-  ngOnInit() {
-    this.currentTask$ = this.appState.select(
-      TaskManagerSelectors.getCurrentTaskSelector
-    );
-    this.isCompleted$ = this.appState.select(TaskManagerSelectors.displayLottieSeletor);
-  }
 
   @HostListener('mouseover') onMouseOver() {
     const element = document.querySelector('.task-indicator');
@@ -42,5 +43,162 @@ export class TaskManagerBoxComponent implements OnInit {
   @HostListener('mouseout') onMouseOut() {
     const element = document.querySelector('.task-indicator');
     element?.classList.remove('pause');
+  }
+
+  ngOnInit() {
+    this.currentTask$ = this.appState.select(
+      TaskManagerSelectors.getCurrentTaskSelector
+    );
+    this.isCompleted$ = this.appState.select(
+      TaskManagerSelectors.displayLottieSeletor
+    );
+
+    this.apiData$ = this.appState.select(
+      TaskManagerSelectors.getCategoryDataSelector
+    );
+
+    this.currentCategoryData$ = this.appState.select(
+      TaskManagerSelectors.getCurrentCategoryDataSelector
+    );
+  }
+
+  execute(event: any) {
+    const action = this.getAction(event);
+
+    // Temp variables
+    let apiData: CategoryData[] = [];
+    let currentCategoryData: CategoryData = { id: 0, data: [] };
+    let currentTask: Task = { id: '', title: '', img: '', content: '' };
+
+    // Assign value to [Temp variables]
+    this.currentTask$.subscribe((data) => (currentTask = data));
+    this.currentCategoryData$.subscribe((data) => (currentCategoryData = data));
+
+    // Find task index
+    const taskIndex = this.findTaskIndex(
+      currentTask.id,
+      currentCategoryData.data
+    );
+    // TODO: Find last element to add animation
+    // const is9th = taskIndex === TaskIndicator.LastItem - 1;
+
+    this.appState.dispatch(action);
+
+    setTimeout(() => {
+      // If index === currentCategoryData.data.length: then next category
+      if (taskIndex === currentCategoryData.data.length - 1) {
+        this.apiData$.subscribe((data) => (apiData = data));
+
+        // Find current category index
+        const curCategogyIndex = apiData.findIndex(
+          (item) => item.id === currentCategoryData.id
+        );
+
+        this.removeTask(currentCategoryData.id, currentTask.id);
+        // this.slideLeft();
+
+        this.appState.dispatch(
+          TaskManagerActions.setCurrentCategoryData({
+            data: apiData[curCategogyIndex + 1],
+          })
+        );
+
+        // Next task
+        // taskIndex no need to +1 due to - (1)
+        this.setCurrentTask(currentCategoryData.data[taskIndex]);
+      } else {
+        // (1) - Remove current task
+        this.removeTask(currentCategoryData.id, currentTask.id);
+
+        // Next task
+        this.setCurrentTask(currentCategoryData.data[taskIndex]);
+      }
+    }, 2000);
+  }
+
+  // slideLeft() {
+  //   const htmlElements = this.getLastItems();
+  //   const eleLength = htmlElements.lastItems.length;
+
+  //   if (htmlElements.lastItems.length > 0) {
+  //     for (let i = 0; i < eleLength; i++) {
+  //       this.addClass(htmlElements.lastItems[i], 'move-right');
+  //       this.removeClass(htmlElements.lastItems[i], 'display-none');
+
+  //       setTimeout(() => {
+  //         this.addClass(htmlElements.lastItems[i], 'move-left');
+  //       }, 300);
+  //       break;
+  //     }
+  //   }
+  // }
+
+  private removeTask(cateId: number, taskId: string) {
+    this.appState.dispatch(
+      TaskManagerActions.removeTask({
+        cateId,
+        taskId,
+      })
+    );
+  }
+
+  private setCurrentTask(task: Task) {
+    this.appState.dispatch(
+      TaskManagerActions.setCurrentTask({
+        task,
+      })
+    );
+  }
+
+  private getAction(actionName: string) {
+    let action;
+    switch (actionName) {
+      case 'completeTask':
+        action = TaskManagerActions.completeTask();
+        break;
+      default:
+        break;
+    }
+
+    return action;
+  }
+
+  private findTaskIndex(id: string, data: Task[]) {
+    return data.findIndex((item) => item.id === id);
+  }
+
+  private getLastItems() {
+    const elements = this.getElementWithClass(this.ProgressBar);
+    const eleLength = elements.length;
+    const lastItems: Element[] = [];
+
+    if (eleLength > TaskIndicator.LastItem) {
+      for (let i = TaskIndicator.LastItem; i < eleLength; i++) {
+        lastItems.push(elements[i]);
+      }
+    }
+
+    return {
+      elements,
+      lastItems,
+    };
+  }
+
+  private getElementWithClass(className: string) {
+    return document.getElementsByClassName(className);
+  }
+
+  private removeClass(element: HTMLElement | Element, className: string = '') {
+    if (!element) {
+      return;
+    }
+    element.classList.remove(className);
+  }
+
+  private addClass(element: HTMLElement | Element, className: string = '') {
+    if (!element) {
+      return;
+    }
+    element.classList.add(className);
   }
 }

@@ -1,7 +1,6 @@
 <div class="task-content">
   <div class="task-content_card">
     <p class="task-content__paraph">{{ content }}</p>
-    <!-- <img src="{{ img }}" alt="task content" /> -->
     <div class="activation-code-form" id="activation-code-id" #activationCode>
       <input
         *ngFor="let number of numbers"
@@ -14,13 +13,5 @@
         max="9"
       />
     </div>
-  </div>
-  <div class="task-content__button">
-    <app-primary-button
-      [title]="'Click here'"
-      [colour]="'green'"
-      [actionName]="'completeTask'"
-      (executeAction)="execute($event)"
-    ></app-primary-button>
   </div>
 </div>
