@@ -16,10 +16,7 @@ export class TaskManagerService {
   getAllCategories(): Observable<TaskManagerModel.CategoryModel[]> {
     return this.http
       .get<TaskManagerModel.CategoryModel[]>(this.categoriesUrl)
-      .pipe(
-        // tap((data) => console.log(JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(err: any) {

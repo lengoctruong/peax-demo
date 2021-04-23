@@ -13,7 +13,7 @@
     flex-direction: row;
     padding: 10px 0;
     background: #f3f3f3;
-
+    transition: 1s transform;
     .progress-bar {
       position: relative;
       flex-grow: 1;
@@ -77,6 +77,12 @@
     }
   }
 }
+.moveleft {
+  transform: translateX(-115px);
+}
+.task-indicator-hidden {
+  visibility: hidden;
+}
 
 // .display-none {
 //   display: none;
@@ -103,4 +109,12 @@
     border-radius: 25px;
     background: rgb(228, 228, 228);
   }
+}
+.task-indicator-count {
+  border-radius: 10px;
+  margin: 0 5px;
+  background-color: #fdfdfd;
+  padding: 10px 0;
+  width: 110px;
+  height: 20px;
 }

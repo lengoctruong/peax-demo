@@ -1,6 +1,11 @@
 <ng-container *ngIf="currentCategoryData$ | async as currentCategoryData">
   <div *ngIf="currentCategoryData.data.length > 0" class="task-indicator">
-    <div class="progress-container">
+    <div
+      class="progress-container"
+      id="task-indicatior"
+      #taskIndicator
+      [ngStyle]="{ transform: 'translateX(' + transX + 'px)' }"
+    >
       <ng-container *ngFor="let task of currentCategoryData.data; index as i">
         <div
           *ngIf="i < LastItem"
@@ -34,7 +39,7 @@
       </ng-container>
     </div>
   </div>
-
+  <button (click)="moveTaskIndicator()">Test</button>
   <ng-container *ngIf="currentCategoryData.data.length > 0">
     <app-task-manager-box></app-task-manager-box>
   </ng-container>

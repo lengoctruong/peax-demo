@@ -4,6 +4,9 @@ import {
   AfterViewInit,
   Input,
   OnChanges,
+  ViewChild,
+  ElementRef,
+  Renderer2,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -36,6 +39,8 @@ export class TaskIndicatorComponent
   // TODO: ngOnChanges not able to triggered if remove Input
   @Input() currentTask: CategoryData = { id: 0, data: [] };
 
+  @ViewChild('taskIndicator') taskIndicator!: ElementRef;
+
   currentCategoryData$: Observable<CategoryData> = of({ id: 0, data: [] });
   progress;
 
@@ -52,7 +57,14 @@ export class TaskIndicatorComponent
   ProgressBar = 'progress-bar';
   ProgressValue = 'progress-value';
 
-  constructor(private appState: Store<TaskManagerState.State>) {}
+  // TransX
+  count = 1;
+  transX;
+
+  constructor(
+    private appState: Store<TaskManagerState.State>,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit() {
     this.currentCategoryData$ = this.appState.select(
@@ -228,5 +240,29 @@ export class TaskIndicatorComponent
 
   private getElementWithClass(className: string) {
     return document.getElementsByClassName(className);
+  }
+  moveTaskIndicator() {
+    const taskIndicatorContainer = document.querySelector('#task-indicatior');
+
+    const progressbar: HTMLParagraphElement = this.renderer.createElement(
+      'div'
+    );
+    const progressvalue: HTMLParagraphElement = this.renderer.createElement(
+      'div'
+    );
+    this.addClass(progressvalue, 'task-indicator-count');
+    this.renderer.appendChild(this.taskIndicator.nativeElement, progressbar);
+    progressbar.appendChild(progressvalue);
+    // Count move left
+    this.transX = -112 * this.count;
+    this.count++;
+    // Add width into task container
+    const widthTaskContainer = this.taskIndicator.nativeElement.offsetWidth;
+    const increaseContainer = widthTaskContainer + 112;
+    this.renderer.setStyle(
+      this.taskIndicator.nativeElement,
+      'width',
+      increaseContainer + 'px'
+    );
   }
 }
