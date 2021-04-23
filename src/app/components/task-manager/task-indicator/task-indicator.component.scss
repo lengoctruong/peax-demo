@@ -1,4 +1,5 @@
 .task-indicator {
+  overflow: hidden;
   &.pause {
     .progress-value {
       animation-play-state: paused;
@@ -10,7 +11,7 @@
     flex-direction: row;
     padding: 10px 0;
     background: #f3f3f3;
-
+    transition: 1s transform;
     .progress-bar {
       position: relative;
       // align-items: center;
@@ -75,6 +76,14 @@
       cursor: not-allowed;
     }
   }
+}
+.moveleft {
+ 
+  transform: translateX(-115px);
+}
+.task-indicator-hidden {
+  visibility: hidden
+
 }
 
 @keyframes Loader {
