@@ -9,11 +9,14 @@
   }
 
   .progress-container {
+    width: 100%;
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     padding: 10px 0;
     background: #f3f3f3;
     transition: 1s transform;
+
     .progress-bar {
       position: relative;
       flex-grow: 1;
@@ -21,10 +24,35 @@
       margin: 0 5px;
       background-color: rgba(255, 255, 255, 0.5);
       cursor: pointer;
-      transition: ease 2s;
+      transition: ease 0.5s;
 
       &.bg-grey {
         background: #e5e5e5;
+      }
+
+      &.move-right {
+        transition-duration: 0ms;
+        opacity: 0;
+        transform: translateX(200%);
+      }
+
+      &.move-left {
+        transition: ease 0.5s;
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      &.scroll-left-100 {
+        transform: translateX(-106%);
+      }
+
+      &.scroll-left-0 {
+        transform: translateX(0%);
+      }
+
+      &.flex-0 {
+        transition-duration: 0ms;
+        flex: 0;
       }
 
       .progress-value {
@@ -42,7 +70,7 @@
         background-repeat: no-repeat;
         animation-timing-function: linear;
         animation-delay: 0.2s;
-        animation-duration: 999s;
+        animation-duration: 5s;
 
         &.active {
           animation-name: Loader;
@@ -73,28 +101,24 @@
         text-align: center;
         border-radius: 10px;
         margin: 0 0 0 5px;
+        background-color: rgba(255, 255, 255, 0.5);
       }
     }
   }
 }
+
 .moveleft {
   transform: translateX(-115px);
 }
-.task-indicator-hidden {
-  visibility: hidden;
+
+.task-indicator-count {
+  border-radius: 10px;
+  margin: 0 5px;
+  background-color: #fdfdfd;
+  padding: 10px 0;
+  width: 110px;
+  height: 20px;
 }
-
-// .display-none {
-//   display: none;
-// }
-
-// .move-right {
-//   transform: translateX(200%);
-// }
-
-// .move-left {
-//   transform: translateX(0);
-// }
 
 @keyframes Loader {
   0% {
@@ -109,12 +133,4 @@
     border-radius: 25px;
     background: rgb(228, 228, 228);
   }
-}
-.task-indicator-count {
-  border-radius: 10px;
-  margin: 0 5px;
-  background-color: #fdfdfd;
-  padding: 10px 0;
-  width: 110px;
-  height: 20px;
 }

@@ -16,8 +16,8 @@ import * as TaskManagerSelectors from '@components/task-manager/state/task-manag
 // Actions
 import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
 
-// Enums
-import { TaskIndicator } from '@app/@shared/enums/task-indicator.enum';
+// Animations
+import * as Animations from '@shared/animations';
 
 @Component({
   selector: 'app-task-manager-box',
@@ -32,6 +32,8 @@ export class TaskManagerBoxComponent implements OnInit {
 
   // UI variables
   ProgressBar = 'progress-bar';
+  MoveLeft = 'move-left';
+  MoveRight = 'move-right';
 
   constructor(private appState: Store<TaskManagerState.State>) {}
 
@@ -79,8 +81,6 @@ export class TaskManagerBoxComponent implements OnInit {
       currentTask.id,
       currentCategoryData.data
     );
-    // TODO: Find last element to add animation
-    // const is9th = taskIndex === TaskIndicator.LastItem - 1;
 
     this.appState.dispatch(action);
 
@@ -95,7 +95,11 @@ export class TaskManagerBoxComponent implements OnInit {
         );
 
         this.removeTask(currentCategoryData.id, currentTask.id);
-        // this.slideLeft();
+        Animations.slideLeftLastItem(
+          this.ProgressBar,
+          this.MoveRight,
+          this.MoveLeft
+        );
 
         this.appState.dispatch(
           TaskManagerActions.setCurrentCategoryData({
@@ -110,28 +114,17 @@ export class TaskManagerBoxComponent implements OnInit {
         // (1) - Remove current task
         this.removeTask(currentCategoryData.id, currentTask.id);
 
+        Animations.slideLeftLastItem(
+          this.ProgressBar,
+          this.MoveRight,
+          this.MoveLeft
+        );
+
         // Next task
         this.setCurrentTask(currentCategoryData.data[taskIndex]);
       }
     }, 2000);
   }
-
-  // slideLeft() {
-  //   const htmlElements = this.getLastItems();
-  //   const eleLength = htmlElements.lastItems.length;
-
-  //   if (htmlElements.lastItems.length > 0) {
-  //     for (let i = 0; i < eleLength; i++) {
-  //       this.addClass(htmlElements.lastItems[i], 'move-right');
-  //       this.removeClass(htmlElements.lastItems[i], 'display-none');
-
-  //       setTimeout(() => {
-  //         this.addClass(htmlElements.lastItems[i], 'move-left');
-  //       }, 300);
-  //       break;
-  //     }
-  //   }
-  // }
 
   private removeTask(cateId: number, taskId: string) {
     this.appState.dispatch(
@@ -165,23 +158,6 @@ export class TaskManagerBoxComponent implements OnInit {
 
   private findTaskIndex(id: string, data: Task[]) {
     return data.findIndex((item) => item.id === id);
-  }
-
-  private getLastItems() {
-    const elements = this.getElementWithClass(this.ProgressBar);
-    const eleLength = elements.length;
-    const lastItems: Element[] = [];
-
-    if (eleLength > TaskIndicator.LastItem) {
-      for (let i = TaskIndicator.LastItem; i < eleLength; i++) {
-        lastItems.push(elements[i]);
-      }
-    }
-
-    return {
-      elements,
-      lastItems,
-    };
   }
 
   private getElementWithClass(className: string) {

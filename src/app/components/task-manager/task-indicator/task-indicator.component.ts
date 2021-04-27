@@ -6,7 +6,7 @@ import {
   OnChanges,
   ViewChild,
   ElementRef,
-  Renderer2,
+  // Renderer2,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -29,6 +29,9 @@ import * as TaskManagerActions from '@components/task-manager/state/task-manager
 // Enums
 import { TaskIndicator } from '@app/@shared/enums/task-indicator.enum';
 
+// Animations
+import * as Animations from '@shared/animations';
+
 @Component({
   selector: 'app-task-indicator',
   templateUrl: './task-indicator.component.html',
@@ -41,7 +44,8 @@ export class TaskIndicatorComponent
 
   @ViewChild('taskIndicator') taskIndicator!: ElementRef;
 
-  currentCategoryData$: Observable<CategoryData> = of({ id: 0, data: [] });
+  currentCategoryData$: Observable<CategoryData> = of();
+  currentCategoryData: CategoryData = { id: 0, data: [] };
   progress;
 
   // UI variables
@@ -49,35 +53,43 @@ export class TaskIndicatorComponent
   ItemWithTitle = TaskIndicator.ItemWithTitle;
 
   Icon = 'icon';
+  Flex0 = 'flex-0';
   Active = 'active';
   Passed = 'passed';
   BGIcon = 'bgicon';
   BGGrey = 'bg-grey';
+  MoveLeft = 'move-left';
+  MoveRight = 'move-right';
   BorderIcon = 'border-icon';
   ProgressBar = 'progress-bar';
+  DisplayNone = 'display-none';
   ProgressValue = 'progress-value';
 
   // TransX
-  count = 1;
-  transX;
+  // count = 1;
+  // transX;
 
   constructor(
-    private appState: Store<TaskManagerState.State>,
-    private renderer: Renderer2
+    private appState: Store<TaskManagerState.State> // private renderer: Renderer2
   ) {}
 
-  ngOnInit() {
-    this.currentCategoryData$ = this.appState.select(
-      TaskManagerSelectors.getCurrentCategoryDataSelector
-    );
-  }
+  ngOnInit() {}
 
   ngOnChanges(change) {
     if (change) {
+      this.currentCategoryData$ = this.appState.select(
+        TaskManagerSelectors.getCurrentCategoryDataSelector
+      );
+      this.currentCategoryData$.subscribe(
+        (res) => (this.currentCategoryData = res)
+      );
+
       this.focusIcon();
 
       setTimeout(() => {
-        // this.hideItems();
+        if (this.currentCategoryData.data.length > TaskIndicator.LastItem) {
+          this.hideLastItem();
+        }
         this.runAnimation();
       }, 100);
     }
@@ -115,6 +127,10 @@ export class TaskIndicatorComponent
     );
   }
 
+  scrollLeft() {
+    Animations.scrollLeft(this.ProgressBar, this.Flex0, this.DisplayNone);
+  }
+
   private runAnimation(currentElement: Element[] = []) {
     this.progress =
       currentElement.length > 0
@@ -125,33 +141,6 @@ export class TaskIndicatorComponent
     this.progress.map((el) => {
       el.addEventListener('animationend', (e) => this.playNext(e));
     });
-  }
-
-  private hideItems() {
-    const htmlElements = this.getLastItems();
-
-    if (htmlElements.lastItems.length > 0) {
-      htmlElements.lastItems.forEach((item) =>
-        this.addClass(item, 'display-none')
-      );
-    }
-  }
-
-  private getLastItems() {
-    const elements = this.getElementWithClass(this.ProgressBar);
-    const eleLength = elements.length;
-    const lastItems: Element[] = [];
-
-    if (eleLength > TaskIndicator.LastItem) {
-      for (let i = TaskIndicator.LastItem; i < eleLength; i++) {
-        lastItems.push(elements[i]);
-      }
-    }
-
-    return {
-      elements,
-      lastItems,
-    };
   }
 
   private playNext = (e?: any) => {
@@ -241,28 +230,42 @@ export class TaskIndicatorComponent
   private getElementWithClass(className: string) {
     return document.getElementsByClassName(className);
   }
-  moveTaskIndicator() {
-    const taskIndicatorContainer = document.querySelector('#task-indicatior');
 
-    const progressbar: HTMLParagraphElement = this.renderer.createElement(
-      'div'
+  private slideLeft() {
+    // Animation is triggered when a task done
+    Animations.slideLeftLastItem(
+      this.ProgressBar,
+      this.MoveRight,
+      this.MoveLeft
     );
-    const progressvalue: HTMLParagraphElement = this.renderer.createElement(
-      'div'
-    );
-    this.addClass(progressvalue, 'task-indicator-count');
-    this.renderer.appendChild(this.taskIndicator.nativeElement, progressbar);
-    progressbar.appendChild(progressvalue);
-    // Count move left
-    this.transX = -112 * this.count;
-    this.count++;
-    // Add width into task container
-    const widthTaskContainer = this.taskIndicator.nativeElement.offsetWidth;
-    const increaseContainer = widthTaskContainer + 112;
-    this.renderer.setStyle(
-      this.taskIndicator.nativeElement,
-      'width',
-      increaseContainer + 'px'
-    );
+  }
+
+  // moveTaskIndicator() {
+  //   // const taskIndicatorContainer = document.querySelector('#task-indicatior');
+
+  //   const progressbar: HTMLParagraphElement = this.renderer.createElement(
+  //     'div'
+  //   );
+  //   const progressvalue: HTMLParagraphElement = this.renderer.createElement(
+  //     'div'
+  //   );
+  //   this.addClass(progressvalue, 'task-indicator-count');
+  //   this.renderer.appendChild(this.taskIndicator.nativeElement, progressbar);
+  //   progressbar.appendChild(progressvalue);
+  //   // Count move left
+  //   this.transX = -112 * this.count;
+  //   this.count++;
+  //   // Add width into task container
+  //   const widthTaskContainer = this.taskIndicator.nativeElement.offsetWidth;
+  //   const increaseContainer = widthTaskContainer + 112;
+  //   this.renderer.setStyle(
+  //     this.taskIndicator.nativeElement,
+  //     'width',
+  //     increaseContainer + 'px'
+  //   );
+  // }
+
+  private hideLastItem() {
+    Animations.hideLastItem(this.ProgressBar, this.Flex0);
   }
 }

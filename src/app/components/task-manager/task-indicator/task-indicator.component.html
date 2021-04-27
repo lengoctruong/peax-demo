@@ -1,11 +1,6 @@
 <ng-container *ngIf="currentCategoryData$ | async as currentCategoryData">
   <div *ngIf="currentCategoryData.data.length > 0" class="task-indicator">
-    <div
-      class="progress-container"
-      id="task-indicatior"
-      #taskIndicator
-      [ngStyle]="{ transform: 'translateX(' + transX + 'px)' }"
-    >
+    <div class="progress-container" id="task-indicatior" #taskIndicator>
       <ng-container *ngFor="let task of currentCategoryData.data; index as i">
         <div
           *ngIf="i < LastItem"
@@ -24,22 +19,29 @@
 
         <div
           *ngIf="i === currentCategoryData.data.length - 1 && i >= LastItem"
+          id="progress-bar_{{ i }}"
+          class="progress-bar"
+          (click)="selectTask(task, i)"
+        >
+          <div class="progress-value" id="{{ task.id }}"></div>
+        </div>
+
+        <div
+          *ngIf="i === currentCategoryData.data.length - 1 && i >= LastItem"
           class="progress-bar-fixed"
         >
           <ng-container>
-            <div>
-              <div class="no-click">
-                <span class="task_title"
-                  >+ {{ currentCategoryData.data.length - LastItem }}</span
-                >
-              </div>
+            <div class="no-click">
+              <span class="task_title"
+                >+ {{ currentCategoryData.data.length - LastItem }}</span
+              >
             </div>
           </ng-container>
         </div>
       </ng-container>
     </div>
   </div>
-  <button (click)="moveTaskIndicator()">Test</button>
+  <button (click)="scrollLeft()">Test</button>
   <ng-container *ngIf="currentCategoryData.data.length > 0">
     <app-task-manager-box></app-task-manager-box>
   </ng-container>
