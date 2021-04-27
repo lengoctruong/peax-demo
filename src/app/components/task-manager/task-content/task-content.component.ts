@@ -6,9 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 
-// Model
-import { Task } from '@components/task-manager/models/category.model';
-
 @Component({
   selector: 'app-task-content',
   templateUrl: './task-content.component.html',
@@ -19,6 +16,10 @@ export class TaskContentComponent implements OnInit {
   @Input() img = '';
   @ViewChild('activationCode') activationCode;
   numbers;
+
+  // UI Variables
+  Error = 'error';
+  ActivationCode = 'activation-code';
 
   @HostListener('keyup', ['$event']) onKeyDown(e: any) {
     const key = e.keyCode || e.charCode;
@@ -56,11 +57,13 @@ export class TaskContentComponent implements OnInit {
 
   ngOnInit() {}
 
-  addError() {
-    const numberArray = document.querySelectorAll('.activation-code');
+  private addError() {
+    const numberArray = document.querySelectorAll(
+      '.'.concat(this.ActivationCode)
+    );
 
     numberArray.forEach((element) => {
-      element.classList.add('error');
+      element.classList.add(this.Error);
     });
     setTimeout(() => {
       this.removeError(numberArray);
@@ -68,13 +71,13 @@ export class TaskContentComponent implements OnInit {
     this.clearNumberField();
   }
 
-  removeError(numberArray: any) {
+  private removeError(numberArray: any) {
     numberArray.forEach((element) => {
-      element.classList.remove('error');
+      element.classList.remove(this.Error);
     });
   }
 
-  clearNumberField() {
+  private clearNumberField() {
     const children = this.activationCode.nativeElement.children;
     for (const child of children) {
       child.value = '';

@@ -8,8 +8,14 @@
         type="number"
         maxlength="1"
         [value]="activationCode"
+<<<<<<< HEAD
         (keydown.arrowup)="(false)" (keydown.arrowdown)="(false)"  (keydown.+)="(false)"  (keydown.-)="(false)"  (keydown.dot)="(false)"
         onKeyPress="if(this.value.length==1) return false;"
+=======
+        onKeyPress="if(value.length === 1) return false;"
+        min="0"
+        max="9"
+>>>>>>> d608c00117d386f43472ccb96718cc73374377ec
       />
     </div>
   </div>

@@ -3,7 +3,10 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
 // Model
-import { Category, CategoryData } from '@components/task-manager/models/category.model';
+import {
+  Category,
+  CategoryData,
+} from '@components/task-manager/models/category.model';
 
 // State
 import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
@@ -13,7 +16,6 @@ import * as TaskManagerSelectors from '@components/task-manager/state/task-manag
 
 // Actions
 import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
-import { getError } from '@components/task-manager/state/task-manager.selector';
 
 @Component({
   selector: 'app-task-manager',
@@ -28,12 +30,14 @@ export class TaskManagerComponent implements OnInit {
   constructor(private store: Store<TaskManagerState.State>) {}
 
   ngOnInit() {
-    this.categories$ = this.store.select(TaskManagerSelectors.getCategoriesSelector);
+    this.categories$ = this.store.select(
+      TaskManagerSelectors.getCategoriesSelector
+    );
     this.currentTask$ = this.store.select(
       TaskManagerSelectors.getCurrentCategoryDataSelector
     );
 
     this.store.dispatch(TaskManagerActions.getAllCategories());
-    this.errorMessage$ = this.store.select(getError);
+    this.errorMessage$ = this.store.select(TaskManagerSelectors.getError);
   }
 }
