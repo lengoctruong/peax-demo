@@ -5,24 +5,6 @@ import {
   HostListener,
   ViewChild,
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Store } from '@ngrx/store';
-
-// Model
-import {
-  CategoryData,
-  Task,
-} from '@components/task-manager/models/category.model';
-
-// State
-import * as TaskManagerState from '@components/task-manager/state/task-manager.state';
-
-// Selectors
-import * as TaskManagerSelectors from '@components/task-manager/state/task-manager.selector';
-
-// Actions
-import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
-import { TaskIndicator } from '@app/@shared/enums/task-indicator.enum';
 
 @Component({
   selector: 'app-task-content',
@@ -35,14 +17,14 @@ export class TaskContentComponent implements OnInit {
   @ViewChild('activationCode') activationCode;
   numbers;
 
-  apiData$: Observable<CategoryData[]> = of();
-  currentTask$: Observable<Task> = of();
-  currentCategoryData$: Observable<CategoryData> = of();
+  // UI Variables
+  Error = 'error';
+  ActivationCode = 'activation-code';
 
   @HostListener('keyup', ['$event']) onKeyDown(e: any) {
     const key = e.keyCode || e.charCode;
     const previous: any = e.srcElement.previousSibling;
-    if (key === 8 || key === 46) {
+    if (key === 8) {
       if (previous != null) {
         previous.focus();
         return;
@@ -69,29 +51,19 @@ export class TaskContentComponent implements OnInit {
     }
   }
 
-  constructor(private appState: Store<TaskManagerState.State>) {
+  constructor() {
     this.numbers = [0, 1, 2, 3, 4, 5, 6, 7];
   }
 
-  ngOnInit() {
-    this.apiData$ = this.appState.select(
-      TaskManagerSelectors.getCategoryDataSelector
-    );
+  ngOnInit() {}
 
-    this.currentTask$ = this.appState.select(
-      TaskManagerSelectors.getCurrentTaskSelector
+  private addError() {
+    const numberArray = document.querySelectorAll(
+      '.'.concat(this.ActivationCode)
     );
-
-    this.currentCategoryData$ = this.appState.select(
-      TaskManagerSelectors.getCurrentCategoryDataSelector
-    );
-  }
-
-  addError() {
-    const numberArray = document.querySelectorAll('.activation-code');
 
     numberArray.forEach((element) => {
-      element.classList.add('error');
+      element.classList.add(this.Error);
     });
     setTimeout(() => {
       this.removeError(numberArray);
@@ -99,104 +71,17 @@ export class TaskContentComponent implements OnInit {
     this.clearNumberField();
   }
 
-  removeError(numberArray: any) {
+  private removeError(numberArray: any) {
     numberArray.forEach((element) => {
-      element.classList.remove('error');
+      element.classList.remove(this.Error);
     });
   }
 
-  clearNumberField() {
+  private clearNumberField() {
     const children = this.activationCode.nativeElement.children;
     for (const child of children) {
       child.value = '';
     }
     children[0].focus();
-  }
-
-  execute(event: any) {
-    const action = this.getAction(event);
-
-    // Temp variables
-    let apiData: CategoryData[] = [];
-    let currentCategoryData: CategoryData = { id: 0, data: [] };
-    let currentTask: Task = { id: '', title: '', img: '', content: '' };
-
-    // Assign value to [Temp variables]
-    this.currentTask$.subscribe((data) => (currentTask = data));
-    this.currentCategoryData$.subscribe((data) => (currentCategoryData = data));
-
-    // Find task index
-    const taskIndex = this.findTaskIndex(
-      currentTask.id,
-      currentCategoryData.data
-    );
-    // TODO: Find last element to add animation
-    // const is9th = taskIndex === TaskIndicator.LastItem - 1;
-
-    this.appState.dispatch(action);
-
-    setTimeout(() => {
-      // If index === currentCategoryData.data.length: then next category
-      if (taskIndex === currentCategoryData.data.length - 1) {
-        this.apiData$.subscribe((data) => (apiData = data));
-
-        // Find current category index
-        const curCategogyIndex = apiData.findIndex(
-          (item) => item.id === currentCategoryData.id
-        );
-
-        this.removeTask(currentCategoryData.id, currentTask.id);
-
-        this.appState.dispatch(
-          TaskManagerActions.setCurrentCategoryData({
-            data: apiData[curCategogyIndex + 1],
-          })
-        );
-
-        // Next task
-        // taskIndex no need to +1 due to - (1)
-        this.setCurrentTask(currentCategoryData.data[taskIndex]);
-      } else {
-        // (1) - Remove current task
-        this.removeTask(currentCategoryData.id, currentTask.id);
-
-        // Next task
-        this.setCurrentTask(currentCategoryData.data[taskIndex]);
-      }
-    }, 2000);
-  }
-
-  private removeTask(cateId: number, taskId: string) {
-    this.appState.dispatch(
-      TaskManagerActions.removeTask({
-        cateId,
-        taskId,
-      })
-    );
-  }
-
-  private setCurrentTask(task: Task) {
-    this.appState.dispatch(
-      TaskManagerActions.setCurrentTask({
-        task,
-      })
-    );
-  }
-
-  private getAction(actionName: string) {
-    let action;
-    switch (actionName) {
-      case 'completeTask':
-        action = TaskManagerActions.completeTask();
-        break;
-      default:
-        break;
-    }
-
-    return action;
-  }
-
-  private findTaskIndex(id: string, data: Task[]) {
-    return data.findIndex((item) => item.id === id);
   }
 }

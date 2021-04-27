@@ -1,15 +1,46 @@
-.row {
+.category {
   box-sizing: border-box;
-  padding: 20px 20px;
+  padding: 20px 20px 0 20px;
+
+  .bgicon {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    justify-content: center;
+    border: 2px solid #8bc6cd;
+    margin: 0 10px;
+    position: absolute;
+    z-index: 0;
+    background: #fff;
+
+    &.paused {
+      animation-play-state: paused;
+    }
+  }
+
+  .bgicon-opacity {
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+    animation-delay: 0.5s;
+    animation-iteration-count: 1;
+    animation-name: kfopacity;
+  }
+
+  .bgicon:first-child {
+    margin-left: 0 !important;
+  }
+
+  .border-icon {
+    border: solid 2px #188e9b;
+  }
 
   .icon {
-    width: 60px;
-    height: 60px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
     display: grid;
     justify-content: center;
-    // border: 2px solid #8bc6cd;
-    margin: 0 10px;
+    margin: 0 17px 0;
     position: relative;
     z-index: 1;
     cursor: pointer;
@@ -19,6 +50,9 @@
     }
 
     span {
+      color: rgb(255, 255, 255);
+      font-size: 14px;
+      font-weight: 900;
       position: absolute;
       top: 0;
       right: 0;
@@ -31,49 +65,8 @@
     }
   }
 
-  .bgicon:first-child {
-    margin-left: 0 !important;
-  }
-
   .icon:nth-child(1n) {
     margin-left: 0 !important;
-  }
-
-  .paused {
-    animation-play-state: paused;
-  }
-
-  .bgicon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    // display: grid;
-    justify-content: center;
-    border: 2px solid #8bc6cd;
-    margin: 0 10px;
-    // position: relative;
-    // cursor: pointer;
-    z-index: 0;
-  }
-
-  .border-icon {
-    border: solid 2px #188e9b;
-  }
-
-  .bgicon:hover {
-    // border: 2px solid #9b184a;
-  }
-
-  .bgicon:first-child {
-    // border: 2px solid #90c4ca;
-  }
-
-  .bgicon-opacity {
-    animation-duration: 1s;
-    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
-    animation-delay: 0.5s;
-    animation-iteration-count: 1;
-    animation-name: kfopacity;
   }
 
   .icon-move {
@@ -94,10 +87,6 @@
 
   .icon-pause {
     animation-fill-mode: forwards;
-  }
-
-  .display-none {
-    display: none;
   }
 
   @keyframes kfopacity {

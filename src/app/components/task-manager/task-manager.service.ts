@@ -1,25 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import * as TaskManagerModel from '@components/task-manager/models/task-manager.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskManagerService {
-  private categoriesUrl = 'http://192.168.2.120:8080/api/category';
+  private categoriesUrl = 'https://peax-demo.herokuapp.com/api/category';
 
   constructor(private http: HttpClient) {}
 
   getAllCategories(): Observable<TaskManagerModel.CategoryModel[]> {
     return this.http
       .get<TaskManagerModel.CategoryModel[]>(this.categoriesUrl)
-      .pipe(
-        tap((data) => console.log(JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(err: any) {

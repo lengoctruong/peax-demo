@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "nodemon server.js",
     "build": "ng build",
     "test": "jest",
     "test-watch": "jest --watch",
@@ -26,7 +26,9 @@
     "@ngrx/effects": "^11.1.0",
     "@ngrx/store": "^11.1.0",
     "@ngrx/store-devtools": "^11.1.0",
+    "express": "^4.17.1",
     "jest-cli": "^26.6.3",
+    "nodemon": "^2.0.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

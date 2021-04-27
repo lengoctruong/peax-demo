@@ -1,5 +1,7 @@
+@import "src/theme/theme-variables.scss";
+
 .task-content {
-  width: 65%;
+  width: 100%;
   float: right;
   height: 400px;
   position: relative;
@@ -11,6 +13,7 @@
     position: absolute;
     top: 0;
     width: 100%;
+    text-align: center;
 
     .task-content__paraph {
       text-overflow: ellipsis;
@@ -25,20 +28,8 @@
     }
   }
 
-  .task-content__button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-
-    .btn-primary-action {
-      width: 110px;
-      border-radius: 20px;
-      background: #8bc6cd;
-    }
-  }
   .activation-code-form {
     height: 58px;
-    width: 484px;
     margin: auto;
 
     input {
@@ -90,5 +81,19 @@
   input[type="number"]:focus {
     outline: none;
     border: 2px solid #188e9b;
+  }
+}
+
+@media screen and (max-width: $viewport-md) {
+  .task-content {
+    .task-content_card {
+      background: transparent;
+    }
+  }
+}
+
+@media screen and (min-width: $viewport-md + 1) {
+  .task-content {
+    width: 65%;
   }
 }

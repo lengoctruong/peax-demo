@@ -4,6 +4,9 @@ import {
   AfterViewInit,
   Input,
   OnChanges,
+  ViewChild,
+  ElementRef,
+  // Renderer2,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -26,6 +29,9 @@ import * as TaskManagerActions from '@components/task-manager/state/task-manager
 // Enums
 import { TaskIndicator } from '@app/@shared/enums/task-indicator.enum';
 
+// Animations
+import * as Animations from '@shared/animations';
+
 @Component({
   selector: 'app-task-indicator',
   templateUrl: './task-indicator.component.html',
@@ -36,26 +42,54 @@ export class TaskIndicatorComponent
   // TODO: ngOnChanges not able to triggered if remove Input
   @Input() currentTask: CategoryData = { id: 0, data: [] };
 
-  currentCategoryData$: Observable<CategoryData> = of({ id: 0, data: [] });
+  @ViewChild('taskIndicator') taskIndicator!: ElementRef;
+
+  currentCategoryData$: Observable<CategoryData> = of();
+  currentCategoryData: CategoryData = { id: 0, data: [] };
   progress;
 
   // UI variables
   LastItem = TaskIndicator.LastItem;
   ItemWithTitle = TaskIndicator.ItemWithTitle;
 
-  constructor(private appState: Store<TaskManagerState.State>) {}
+  Icon = 'icon';
+  Flex0 = 'flex-0';
+  Active = 'active';
+  Passed = 'passed';
+  BGIcon = 'bgicon';
+  BGGrey = 'bg-grey';
+  MoveLeft = 'move-left';
+  MoveRight = 'move-right';
+  BorderIcon = 'border-icon';
+  ProgressBar = 'progress-bar';
+  DisplayNone = 'display-none';
+  ProgressValue = 'progress-value';
 
-  ngOnInit() {
-    this.currentCategoryData$ = this.appState.select(
-      TaskManagerSelectors.getCurrentCategoryDataSelector
-    );
-  }
+  // TransX
+  // count = 1;
+  // transX;
+
+  constructor(
+    private appState: Store<TaskManagerState.State> // private renderer: Renderer2
+  ) {}
+
+  ngOnInit() {}
 
   ngOnChanges(change) {
     if (change) {
+      this.currentCategoryData$ = this.appState.select(
+        TaskManagerSelectors.getCurrentCategoryDataSelector
+      );
+      this.currentCategoryData$.subscribe(
+        (res) => (this.currentCategoryData = res)
+      );
+
       this.focusIcon();
 
       setTimeout(() => {
+        if (this.currentCategoryData.data.length > TaskIndicator.LastItem) {
+          this.hideLastItem();
+        }
         this.runAnimation();
       }, 100);
     }
@@ -69,21 +103,21 @@ export class TaskIndicatorComponent
     if (index === 9) {
       return;
     }
-    const idTemp = 'progress-bar_';
-    const classElement = this.getElementWithClass('progress-bar');
+    const idTemp = this.ProgressBar.concat('_');
+    const classElement = this.getElementWithClass(this.ProgressBar);
     const classLength = classElement.length;
     const item: Element[] = [];
 
     for (let i = 0; i < classLength; i++) {
       // Reset style
-      this.removeClass(classElement[i], 'bg-grey');
+      this.removeClass(classElement[i], this.BGGrey);
 
       // Find elements to run animation
       if (parseInt(classElement[i].id.replace(idTemp, ''), 0) >= index) {
         item.push(classElement[i].children[0]);
       } else {
         // Add background color for elements, which do not run animation
-        this.addClass(classElement[i], 'bg-grey');
+        this.addClass(classElement[i], this.BGGrey);
       }
     }
 
@@ -93,11 +127,15 @@ export class TaskIndicatorComponent
     );
   }
 
+  scrollLeft() {
+    Animations.scrollLeft(this.ProgressBar, this.Flex0, this.DisplayNone);
+  }
+
   private runAnimation(currentElement: Element[] = []) {
     this.progress =
       currentElement.length > 0
         ? currentElement
-        : Array.from(document.querySelectorAll('.progress-value'));
+        : Array.from(document.querySelectorAll('.'.concat(this.ProgressValue)));
 
     this.playNext();
     this.progress.map((el) => {
@@ -113,13 +151,13 @@ export class TaskIndicatorComponent
       if (currentIndex < this.progress.length) {
         next = this.progress[currentIndex + 1];
       }
-      this.removeClass(current, 'active');
-      this.addClass(current, 'passed');
+      this.removeClass(current, this.Active);
+      this.addClass(current, this.Passed);
       if (currentIndex === this.progress.length - 1 && e !== undefined) {
         let id = 0;
         this.currentCategoryData$.subscribe((item) => (id = item.id));
         if (id) {
-          const iconId = 'icon-' + (id + 1);
+          const iconId = this.Icon.concat('-') + (id + 1);
           setTimeout(() => {
             this.getElementWithId(iconId)?.click();
           }, 200);
@@ -130,7 +168,7 @@ export class TaskIndicatorComponent
       next = this.removeAnimation();
     }
     if (next) {
-      this.addClass(next, 'active');
+      this.addClass(next, this.Active);
       // Get task content
       setTimeout(() => {
         // Fix: Expression has changed after it was checked
@@ -141,8 +179,8 @@ export class TaskIndicatorComponent
 
   private removeAnimation() {
     this.progress.map((el) => {
-      this.removeClass(el, 'active');
-      this.removeClass(el, 'passed');
+      this.removeClass(el, this.Active);
+      this.removeClass(el, this.Passed);
     });
     return this.progress[0];
   }
@@ -151,18 +189,18 @@ export class TaskIndicatorComponent
     let id = 0;
     this.currentCategoryData$.subscribe((item) => (id = item.id));
     if (id) {
-      const iconId = 'bgicon-' + id;
+      const iconId = this.BGIcon.concat('-') + id;
       const element = this.getElementWithId(iconId);
 
       // Remove focus
-      const bgIcon = document.querySelectorAll('.bgicon') as any;
+      const bgIcon = document.querySelectorAll('.'.concat(this.BGIcon)) as any;
       if (bgIcon.length > 0) {
-        bgIcon.forEach((ele) => this.removeClass(ele, 'border-icon'));
+        bgIcon.forEach((ele) => this.removeClass(ele, this.BorderIcon));
       }
 
       // Add focus to active category
       if (element) {
-        this.addClass(element, 'border-icon');
+        this.addClass(element, this.BorderIcon);
       }
     }
   }
@@ -191,5 +229,43 @@ export class TaskIndicatorComponent
 
   private getElementWithClass(className: string) {
     return document.getElementsByClassName(className);
+  }
+
+  private slideLeft() {
+    // Animation is triggered when a task done
+    Animations.slideLeftLastItem(
+      this.ProgressBar,
+      this.MoveRight,
+      this.MoveLeft
+    );
+  }
+
+  // moveTaskIndicator() {
+  //   // const taskIndicatorContainer = document.querySelector('#task-indicatior');
+
+  //   const progressbar: HTMLParagraphElement = this.renderer.createElement(
+  //     'div'
+  //   );
+  //   const progressvalue: HTMLParagraphElement = this.renderer.createElement(
+  //     'div'
+  //   );
+  //   this.addClass(progressvalue, 'task-indicator-count');
+  //   this.renderer.appendChild(this.taskIndicator.nativeElement, progressbar);
+  //   progressbar.appendChild(progressvalue);
+  //   // Count move left
+  //   this.transX = -112 * this.count;
+  //   this.count++;
+  //   // Add width into task container
+  //   const widthTaskContainer = this.taskIndicator.nativeElement.offsetWidth;
+  //   const increaseContainer = widthTaskContainer + 112;
+  //   this.renderer.setStyle(
+  //     this.taskIndicator.nativeElement,
+  //     'width',
+  //     increaseContainer + 'px'
+  //   );
+  // }
+
+  private hideLastItem() {
+    Animations.hideLastItem(this.ProgressBar, this.Flex0);
   }
 }

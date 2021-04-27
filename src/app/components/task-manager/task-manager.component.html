@@ -6,7 +6,7 @@
     ></app-category>
 
     <div *ngIf="categories.length === 0">
-      <img src="../assets/icons/Nothing.png" alt="Nothing" />
+      <img src="/assets/images/nothing.png" alt="Nothing" />
     </div>
   </ng-container>
 
@@ -17,7 +17,6 @@
     ></app-task-indicator>
   </ng-container>
 </div>
-<div *ngIf="errorMessage$ | async as errorMessage"
-     class="alert alert-danger">
+<div *ngIf="errorMessage$ | async as errorMessage" class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>
