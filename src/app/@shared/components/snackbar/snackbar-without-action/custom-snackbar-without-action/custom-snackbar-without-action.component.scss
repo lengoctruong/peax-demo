@@ -1,0 +1,25 @@
+.bookFont-container {
+    padding-left: 18px; 
+    padding-right: 0px;
+    .bookFont-container__bookFont {
+        font-family: "AvenirLTStd-Book";
+        font-size: 15px;
+        font-weight: 300;
+        color: rgb(28, 28, 28);
+        height: 22px;
+        letter-spacing: 0px;
+        line-height: 22px;
+    }
+}
+
+.icon {
+    padding-right: 0px;
+    padding-left: 16px;
+    max-width: 42px;
+    align-self: center;
+    img {
+        width: 26px;
+        height: 26px;
+        border-radius: 0px;
+    }
+}
