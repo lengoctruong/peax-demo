@@ -9,7 +9,7 @@ import * as TaskManagerModel from '@components/task-manager/models/task-manager.
   providedIn: 'root',
 })
 export class TaskManagerService {
-  private categoriesUrl = 'http://192.168.2.120:8080/api/category';
+  private categoriesUrl = 'https://peax-demo.herokuapp.com/api/category';
 
   constructor(private http: HttpClient) {}
 
