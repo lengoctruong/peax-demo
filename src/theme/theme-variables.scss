@@ -32,12 +32,16 @@ $primary-yellow-focus: #ffd200;
 $primary-green-enabled: #7ed321;
 $primary-green-disabled: #eafad7;
 $primary-green-hover: #69b516;
-$primary-green-focus: #5B9C14;
+$primary-green-focus: #5b9c14;
 
 $primary-red-enabled: #d0021b;
 $primary-red-disabled: #ec9aa4;
 $primary-red-hover: #ba0118;
 $primary-red-focus: #8b0112;
+
+$black-1: #1c1c1c;
+
+$white-1: #ffffff;
 
 // Font Awesome
 @mixin fontawesome-config {
