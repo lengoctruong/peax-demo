@@ -95,11 +95,7 @@ export class TaskManagerBoxComponent implements OnInit {
         );
 
         this.removeTask(currentCategoryData.id, currentTask.id);
-        Animations.slideLeftLastItem(
-          this.ProgressBar,
-          this.MoveRight,
-          this.MoveLeft
-        );
+        this.slideLeft();
 
         this.appState.dispatch(
           TaskManagerActions.setCurrentCategoryData({
@@ -114,11 +110,7 @@ export class TaskManagerBoxComponent implements OnInit {
         // (1) - Remove current task
         this.removeTask(currentCategoryData.id, currentTask.id);
 
-        Animations.slideLeftLastItem(
-          this.ProgressBar,
-          this.MoveRight,
-          this.MoveLeft
-        );
+        this.slideLeft();
 
         // Next task
         this.setCurrentTask(currentCategoryData.data[taskIndex]);
@@ -158,6 +150,14 @@ export class TaskManagerBoxComponent implements OnInit {
 
   private findTaskIndex(id: string, data: Task[]) {
     return data.findIndex((item) => item.id === id);
+  }
+
+  private slideLeft() {
+    Animations.slideLeftLastItem(
+      this.ProgressBar,
+      this.MoveRight,
+      this.MoveLeft
+    );
   }
 
   private getElementWithClass(className: string) {
