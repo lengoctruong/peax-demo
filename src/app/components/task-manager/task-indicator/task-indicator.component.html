@@ -20,7 +20,7 @@
         <div
           *ngIf="i === currentCategoryData.data.length - 1 && i >= LastItem"
           id="progress-bar_{{ i }}"
-          class="progress-bar"
+          class="progress-bar mg-r"
           (click)="selectTask(task, i)"
         >
           <div class="progress-value" id="{{ task.id }}"></div>

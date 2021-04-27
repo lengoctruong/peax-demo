@@ -110,11 +110,14 @@
       .no-click {
         text-align: center;
         border-radius: 10px;
-        margin: 0 0 0 5px;
         background-color: rgba(255, 255, 255, 0.5);
       }
     }
   }
+}
+
+.mg-r {
+  margin-right: 0 !important;
 }
 
 // .task-indicator-count {
