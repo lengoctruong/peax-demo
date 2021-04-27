@@ -23,7 +23,7 @@ export class TaskContentComponent implements OnInit {
   @HostListener('keyup', ['$event']) onKeyDown(e: any) {
     const key = e.keyCode || e.charCode;
     const previous: any = e.srcElement.previousSibling;
-    if (key === 8 || key === 46) {
+    if (key === 8) {
       if (previous != null) {
         previous.focus();
         return;
