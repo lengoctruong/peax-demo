@@ -34,16 +34,17 @@ export class TaskManagerBoxComponent implements OnInit {
   ProgressBar = 'progress-bar';
   MoveLeft = 'move-left';
   MoveRight = 'move-right';
+  TaskIndicator = 'task-indicator';
 
   constructor(private appState: Store<TaskManagerState.State>) {}
 
   @HostListener('mouseover') onMouseOver() {
-    const element = document.querySelector('.task-indicator');
+    const element = document.querySelector('.'.concat(this.TaskIndicator));
     element?.classList.add('pause');
   }
 
   @HostListener('mouseout') onMouseOut() {
-    const element = document.querySelector('.task-indicator');
+    const element = document.querySelector('.'.concat(this.TaskIndicator));
     element?.classList.remove('pause');
   }
 
@@ -158,23 +159,5 @@ export class TaskManagerBoxComponent implements OnInit {
       this.MoveRight,
       this.MoveLeft
     );
-  }
-
-  private getElementWithClass(className: string) {
-    return document.getElementsByClassName(className);
-  }
-
-  private removeClass(element: HTMLElement | Element, className: string = '') {
-    if (!element) {
-      return;
-    }
-    element.classList.remove(className);
-  }
-
-  private addClass(element: HTMLElement | Element, className: string = '') {
-    if (!element) {
-      return;
-    }
-    element.classList.add(className);
   }
 }
