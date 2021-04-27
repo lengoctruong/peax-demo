@@ -1,10 +1,7 @@
 <ng-container *ngIf="category.length > 0">
   <div class="row" #categoryContainer>
     <div *ngFor="let item of category">
-      <div class="bgicon paused" 
-        style="position: absolute" 
-        id="bgicon-{{item.id}}"
-      ></div>      
+      <div class="bgicon paused" id="bgicon-{{ item.id }}"></div>
       <div
         id="icon-{{ item.id }}"
         *ngIf="item.pendingTask > 0"
@@ -15,7 +12,8 @@
         <img src="{{ getIcon(item.id) }}" alt="Category" />
         <span>{{ item.pendingTask }}</span>
       </div>
-      <div id="icon-{{ item.id }}"
+      <div
+        id="icon-{{ item.id }}"
         *ngIf="item.pendingTask === 0"
         class="icon paused"
         matTooltip="{{ item.name }}"
