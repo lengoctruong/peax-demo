@@ -1,5 +1,7 @@
+@import "src/theme/theme-variables.scss";
+
 .task-title {
-  width: 30%;
+  width: 100%;
   display: inline-block;
   cursor: pointer;
   .task-title_card {
@@ -27,5 +29,24 @@
         margin-left: 0;
       }
     }
+  }
+}
+
+@media screen and (max-width: $viewport-md) {
+  .task-title {
+    .task-title_card {
+      height: auto;
+      background: transparent;
+
+      .task-title__button {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $viewport-md + 1) {
+  .task-title {
+    width: 30%;
   }
 }

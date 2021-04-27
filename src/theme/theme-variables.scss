@@ -1,18 +1,19 @@
 /*
  * Application global variables.
  */
-//  Primeng view ports
-$viewport-sm: 576px !default; // mobile phones
-$viewport-md: 768px !default; // tablets
-$viewport-lg: 992px !default; // desktops
-$viewport-xl: 1200px !default;
+//  Peax frontify view ports
+$viewport-md: 875px !default; // tablets
+$viewport-lg: 1051px !default; // desktops
+$viewport-xl: 1291px !default; // large desktops
+$viewport-xxl: 1356px !default; // super large desktops
 
 // For margins & paddings
 $space-8: 8px;
 $space-16: 16px;
+$space-20: 20px;
 $space-24: 24px;
 $space-32: 32px;
-$space-40: 40px;
+$space-42: 42px;
 $space-48: 48px;
 $space-56: 56px;
 $space-64: 64px;

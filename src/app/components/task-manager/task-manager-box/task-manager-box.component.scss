@@ -1,4 +1,5 @@
 @import "@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import "src/theme/theme-variables.scss";
 
 .task-manager-box {
   position: relative;
@@ -27,5 +28,11 @@
       display: inline-block;
       width: 320px;
     }
+  }
+}
+
+@media screen and (max-width: $viewport-md) {
+  .task-manager-box_button {
+    display: none;
   }
 }
