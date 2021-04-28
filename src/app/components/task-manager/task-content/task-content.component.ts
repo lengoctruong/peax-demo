@@ -23,14 +23,16 @@ export class TaskContentComponent implements OnInit {
   // UI Variables
   Error = 'error';
   ActivationCode = 'activation-code';
+  index;
 
   @HostListener('keyup', ['$event']) onKeyDown(e: any) {
     const key = e.keyCode || e.charCode;
     const previous: any = e.srcElement.previousSibling;
     if (key === 8) {
       if (previous != null) {
-        previous.focus();
-        return;
+      previous.focus();
+      previous.value = '';
+      return;
       }
     }
     if (e.srcElement.maxLength === e.srcElement.value.length) {
@@ -84,5 +86,17 @@ export class TaskContentComponent implements OnInit {
       child.value = '';
     }
     children[0].focus();
+  }
+
+  focusCursor(index){
+    const children = this.activationCode.nativeElement.children;
+    const activationCode = new Array();
+    for (const child of children) {
+      if (child.value !== ''){
+        activationCode.push(child.value);
+      }
+    }
+    const indexOfFocus = activationCode.length;
+    children[indexOfFocus].focus();
   }
 }
