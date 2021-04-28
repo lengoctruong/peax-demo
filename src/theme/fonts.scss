@@ -1,5 +1,9 @@
 /* Define custom fonts here */
-// @font-face {
-//   font-family: SFProDisplayRegular;
-//   src: url("/assets/fonts/SFPro/SF-Pro-Display-Regular.otf");
-// }
+@font-face {
+    font-family: 'AvenirLTStd-Book';
+    src: url('~assets/fonts/35E713_0_0.eot');
+    src: url('~assets/fonts/35E713_0_0.eot?#iefix') format('embedded-opentype'),
+        url('~assets/fonts/35E713_0_0.woff2') format('woff2'),
+        url('~assets/fonts/35E713_0_0.woff') format('woff'),
+        url('~assets/fonts/35E713_0_0.ttf') format('truetype');
+    }
