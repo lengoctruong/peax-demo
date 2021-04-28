@@ -1,9 +1,9 @@
 <div class="task-content">
   <div class="task-content_card">
     <p class="task-content__paraph">{{ content }}</p>
-    <div class="activation-code-form" id="activation-code-id" #activationCode>
+    <div class="activation-code-form" id="activation-code-id" #activationCode (click)="focusCursor()">
       <input
-        *ngFor="let number of numbers"
+        *ngFor="let number of numbers; let i = index"
         class="activation-code"
         type="number"
         maxlength="1"
