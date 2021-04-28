@@ -6,6 +6,9 @@ import {
   ViewChild,
 } from '@angular/core';
 
+// Animations
+import * as Animations from '@app/@shared/animations';
+
 @Component({
   selector: 'app-task-content',
   templateUrl: './task-content.component.html',
@@ -58,12 +61,10 @@ export class TaskContentComponent implements OnInit {
   ngOnInit() {}
 
   private addError() {
-    const numberArray = document.querySelectorAll(
-      '.'.concat(this.ActivationCode)
-    );
+    const numberArray = Animations.queryAll(this.activationCode, '.');
 
     numberArray.forEach((element) => {
-      element.classList.add(this.Error);
+      Animations.addClass(element, this.Error);
     });
     setTimeout(() => {
       this.removeError(numberArray);
@@ -73,7 +74,7 @@ export class TaskContentComponent implements OnInit {
 
   private removeError(numberArray: any) {
     numberArray.forEach((element) => {
-      element.classList.remove(this.Error);
+      Animations.removeClass(element, this.Error);
     });
   }
 

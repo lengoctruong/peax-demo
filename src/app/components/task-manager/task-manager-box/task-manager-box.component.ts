@@ -17,7 +17,7 @@ import * as TaskManagerSelectors from '@components/task-manager/state/task-manag
 import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
 
 // Animations
-import * as Animations from '@shared/animations';
+import * as Animations from '@app/@shared/animations';
 
 @Component({
   selector: 'app-task-manager-box',
@@ -35,17 +35,22 @@ export class TaskManagerBoxComponent implements OnInit {
   MoveLeft = 'move-left';
   MoveRight = 'move-right';
   TaskIndicator = 'task-indicator';
+  Pause = 'pause';
 
   constructor(private appState: Store<TaskManagerState.State>) {}
 
   @HostListener('mouseover') onMouseOver() {
-    const element = document.querySelector('.'.concat(this.TaskIndicator));
-    element?.classList.add('pause');
+    const element = Animations.query(this.TaskIndicator, '.');
+    if (element) {
+      Animations.addClass(element, this.Pause);
+    }
   }
 
   @HostListener('mouseout') onMouseOut() {
-    const element = document.querySelector('.'.concat(this.TaskIndicator));
-    element?.classList.remove('pause');
+    const element = Animations.query(this.TaskIndicator, '.');
+    if (element) {
+      Animations.removeClass(element, this.Pause);
+    }
   }
 
   ngOnInit() {

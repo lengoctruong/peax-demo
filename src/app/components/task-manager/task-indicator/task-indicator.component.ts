@@ -30,7 +30,7 @@ import * as TaskManagerActions from '@components/task-manager/state/task-manager
 import { TaskIndicator } from '@app/@shared/enums/task-indicator.enum';
 
 // Animations
-import * as Animations from '@shared/animations';
+import * as Animations from '@app/@shared/animations';
 
 @Component({
   selector: 'app-task-indicator',
@@ -56,8 +56,8 @@ export class TaskIndicatorComponent
   Flex0 = 'flex-0';
   Active = 'active';
   Passed = 'passed';
-  BGIcon = 'bgicon';
-  BGGrey = 'bg-grey';
+  BgIcon = 'bgicon';
+  BgGrey = 'bg-grey';
   MoveLeft = 'move-left';
   MoveRight = 'move-right';
   BorderIcon = 'border-icon';
@@ -103,21 +103,21 @@ export class TaskIndicatorComponent
     if (index === 9) {
       return;
     }
-    const idTemp = this.ProgressBar.concat('_');
-    const classElement = this.getElementWithClass(this.ProgressBar);
+    const idTemp = Animations.concatClassName(this.ProgressBar, '', '_');
+    const classElement = Animations.getElementWithClass(this.ProgressBar);
     const classLength = classElement.length;
     const item: Element[] = [];
 
     for (let i = 0; i < classLength; i++) {
       // Reset style
-      this.removeClass(classElement[i], this.BGGrey);
+      Animations.removeClass(classElement[i], this.BgGrey);
 
       // Find elements to run animation
       if (parseInt(classElement[i].id.replace(idTemp, ''), 0) >= index) {
         item.push(classElement[i].children[0]);
       } else {
         // Add background color for elements, which do not run animation
-        this.addClass(classElement[i], this.BGGrey);
+        Animations.addClass(classElement[i], this.BgGrey);
       }
     }
 
@@ -135,7 +135,7 @@ export class TaskIndicatorComponent
     this.progress =
       currentElement.length > 0
         ? currentElement
-        : Array.from(document.querySelectorAll('.'.concat(this.ProgressValue)));
+        : Array.from(Animations.queryAll(this.ProgressValue, '.'));
 
     this.playNext();
     this.progress.map((el) => {
@@ -146,29 +146,34 @@ export class TaskIndicatorComponent
   private playNext = (e?: any) => {
     const current = e && e.target;
     let next;
+
     if (current) {
       const currentIndex = this.progress.indexOf(current);
+
       if (currentIndex < this.progress.length) {
         next = this.progress[currentIndex + 1];
       }
-      this.removeClass(current, this.Active);
-      this.addClass(current, this.Passed);
+
+      Animations.removeClass(current, this.Active);
+      Animations.addClass(current, this.Passed);
+
       if (currentIndex === this.progress.length - 1 && e !== undefined) {
         let id = 0;
         this.currentCategoryData$.subscribe((item) => (id = item.id));
+
         if (id) {
           const iconId = this.Icon.concat('-') + (id + 1);
           setTimeout(() => {
-            this.getElementWithId(iconId)?.click();
+            Animations.getElementWithId(iconId)?.click();
           }, 200);
         }
       }
     }
     if (!next) {
-      next = this.removeAnimation();
+      next = this.removeState();
     }
     if (next) {
-      this.addClass(next, this.Active);
+      Animations.addClass(next, this.Active);
       // Get task content
       setTimeout(() => {
         // Fix: Expression has changed after it was checked
@@ -177,10 +182,10 @@ export class TaskIndicatorComponent
     }
   };
 
-  private removeAnimation() {
+  private removeState() {
     this.progress.map((el) => {
-      this.removeClass(el, this.Active);
-      this.removeClass(el, this.Passed);
+      Animations.removeClass(el, this.Active);
+      Animations.removeClass(el, this.Passed);
     });
     return this.progress[0];
   }
@@ -189,46 +194,12 @@ export class TaskIndicatorComponent
     let id = 0;
     this.currentCategoryData$.subscribe((item) => (id = item.id));
     if (id) {
-      const iconId = this.BGIcon.concat('-') + id;
-      const element = this.getElementWithId(iconId);
-
-      // Remove focus
-      const bgIcon = document.querySelectorAll('.'.concat(this.BGIcon)) as any;
-      if (bgIcon.length > 0) {
-        bgIcon.forEach((ele) => this.removeClass(ele, this.BorderIcon));
-      }
-
-      // Add focus to active category
-      if (element) {
-        this.addClass(element, this.BorderIcon);
-      }
+      Animations.focusIcon(id, this.BgIcon, this.BorderIcon);
     }
   }
 
   private getTaskContent(id: string) {
     this.appState.dispatch(TaskManagerActions.getCurrentTaskById({ id }));
-  }
-
-  private removeClass(element: HTMLElement | Element, className: string = '') {
-    if (!element) {
-      return;
-    }
-    element.classList.remove(className);
-  }
-
-  private addClass(element: HTMLElement | Element, className: string = '') {
-    if (!element) {
-      return;
-    }
-    element.classList.add(className);
-  }
-
-  private getElementWithId(id: string) {
-    return document.getElementById(id);
-  }
-
-  private getElementWithClass(className: string) {
-    return document.getElementsByClassName(className);
   }
 
   private slideLeft() {

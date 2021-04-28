@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 // Models
@@ -16,12 +10,15 @@ import * as TaskManagerState from '@components/task-manager/state/task-manager.s
 // Actions
 import * as TaskManagerActions from '@components/task-manager/state/task-manager.action';
 
+// Animations
+import * as Animations from '@app/@shared/animations';
+
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
 })
-export class CategoryComponent implements OnInit, AfterViewInit {
+export class CategoryComponent implements OnInit {
   private readonly ONE_CATEGORY: number = 1;
   private readonly DELIMITER: string = '-';
 
@@ -52,8 +49,6 @@ export class CategoryComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-  ngAfterViewInit() {}
-
   getIcon(id: number) {
     switch (id) {
       case 1:
@@ -76,24 +71,29 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   removeItem(item: Category) {
-    const catElement: any = this.getCategoryElementById(item.id);
+    const catElement = this.getCategoryElementById(item.id);
     if (!catElement) {
       return;
     }
 
     const icon: any = catElement.lastElementChild;
-    icon.children[1].classList.add(this.DisplayNone);
+    Animations.addClass(icon.children[1], this.DisplayNone);
 
-    icon.children[0].classList.remove(this.Paused);
+    Animations.removeClass(icon.children[0], this.Paused);
+
     this.iconEventListener = () => this.onIconAnimationEnd(item);
+
     icon.children[0].addEventListener('animationend', this.iconEventListener);
-    icon.children[0].classList.add(this.IconMove);
+
+    Animations.addClass(icon.children[0], this.IconMove);
 
     const bgIcon: any = catElement.firstElementChild;
-    bgIcon.classList.remove(this.Paused);
+    Animations.removeClass(bgIcon, this.Paused);
+
     this.bgiconEventListener = () => this.onBgiconAnimationEnd(item);
     bgIcon.addEventListener('animationend', this.bgiconEventListener);
-    bgIcon.classList.add(this.BgiconOpacity);
+
+    Animations.addClass(bgIcon, this.BgiconOpacity);
   }
 
   private onIconAnimationEnd(item: Category) {
@@ -106,8 +106,9 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       'animationend',
       this.iconEventListener
     );
-    icon.children[0].classList.remove(this.IconMove);
-    icon.children[0].classList.add(this.DisplayNone);
+
+    Animations.removeClass(icon.children[0], this.IconMove);
+    Animations.addClass(icon.children[0], this.DisplayNone);
   }
 
   private onBgiconAnimationEnd(item: Category) {
@@ -117,8 +118,9 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     }
     const bgIcon: any = catElement.firstElementChild;
     bgIcon.removeEventListener('animationend', this.bgiconEventListener);
-    bgIcon.classList.remove(this.BgiconOpacity);
-    bgIcon.classList.add(this.DisplayNone);
+
+    Animations.removeClass(bgIcon, this.BgiconOpacity);
+    Animations.addClass(bgIcon, this.DisplayNone);
 
     //  If category item is not last category, move all right categories of that item
     if (
@@ -151,27 +153,34 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         rightCategories.findIndex((cat) => cat.id === Number(id[1])) > -1
       ) {
         this.moveLeftBgIconCount++;
+
         //  icon
-        element.lastElementChild.classList.remove(this.Paused);
+        Animations.removeClass(element.lastElementChild, this.Paused);
+
         this.iconMoveLeftEventListener.set(element.lastElementChild.id, () =>
           this.onIconMoveLeftAnimationEnd(element.lastElementChild)
         );
+
         element.lastElementChild.addEventListener(
           'animationend',
           this.iconMoveLeftEventListener.get(element.lastElementChild.id)
         );
-        element.lastElementChild.classList.add(this.IconBgiconMoveLeft);
+
+        Animations.addClass(element.lastElementChild, this.IconBgiconMoveLeft);
 
         //  bgIcon
-        element.firstElementChild.classList.remove(this.Paused);
+        Animations.removeClass(element.firstElementChild, this.Paused);
+
         this.bgiconMoveLeftEventListener.set(elementId, () =>
           this.onBgiconMoveLeftAnimationEnd(element.firstElementChild, item)
         );
+
         element.firstElementChild.addEventListener(
           'animationend',
           this.bgiconMoveLeftEventListener.get(elementId)
         );
-        element.firstElementChild.classList.add(this.IconBgiconMoveLeft);
+
+        Animations.addClass(element.firstElementChild, this.IconBgiconMoveLeft);
       }
     }
   }
@@ -182,7 +191,8 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         'animationend',
         this.iconMoveLeftEventListener.get(eventTarget.id)
       );
-      eventTarget.classList.remove(this.IconBgiconMoveLeft);
+
+      Animations.removeClass(eventTarget, this.IconBgiconMoveLeft);
     }
   }
 
@@ -195,7 +205,8 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         'animationend',
         this.bgiconMoveLeftEventListener.get(eventTarget.id)
       );
-      eventTarget.classList.remove(this.IconBgiconMoveLeft);
+
+      Animations.removeClass(eventTarget, this.IconBgiconMoveLeft);
 
       this.moveLeftBgIconCount--;
       if (this.moveLeftBgIconCount === 0) {

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "nodemon server.js",
+    "start": "ng serve",
+    "server": "nodemon server.js",
     "build": "ng build",
     "test": "jest",
     "test-watch": "jest --watch",
