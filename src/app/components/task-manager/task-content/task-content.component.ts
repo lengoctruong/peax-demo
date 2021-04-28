@@ -63,7 +63,7 @@ export class TaskContentComponent implements OnInit {
   ngOnInit() {}
 
   private addError() {
-    const numberArray = Animations.queryAll(this.activationCode, '.');
+    const numberArray = Animations.queryAll(this.ActivationCode, '.');
 
     numberArray.forEach((element) => {
       Animations.addClass(element, this.Error);
@@ -88,7 +88,7 @@ export class TaskContentComponent implements OnInit {
     children[0].focus();
   }
 
-  focusCursor(index){
+  focusCursor(){
     const children = this.activationCode.nativeElement.children;
     const activationCode = new Array();
     for (const child of children) {
