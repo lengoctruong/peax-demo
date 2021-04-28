@@ -7,9 +7,10 @@
   background: #fff;
   box-sizing: border-box;
   padding: 30px;
-  border-radius: 15px;
+  border-radius: 16px;
+  margin: 0 24px;
 
-  .task-manager-box_button {
+  .task-manager-box__button {
     position: absolute;
     bottom: 30px;
     right: 30px;
@@ -29,10 +30,33 @@
       width: 320px;
     }
   }
+
+  .task-manager-box__illustration-icon {
+    width: 300px;
+    height: 235px;
+    position: absolute;
+    bottom: 42px;
+    left: 190px;
+
+    img {
+      width: 300px;
+      height: 235px;
+    }
+  }
 }
 
 @media screen and (max-width: $viewport-md) {
-  .task-manager-box_button {
+  .task-manager-box__button {
     display: none;
+  }
+}
+
+@media screen and (min-width: $viewport-md + 1) {
+  .task-manager-box {
+    margin: 0 42px;
+
+    .task-manager-box__illustration-icon {
+      left: 157px;
+    }
   }
 }

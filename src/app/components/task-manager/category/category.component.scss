@@ -1,6 +1,8 @@
+@import "src/theme/theme-variables.scss";
+
 .category {
-  box-sizing: border-box;
-  padding: 20px 20px 0 20px;
+  padding-top: 2rem;
+  margin: 0 24px;
 
   .bgicon {
     width: 62px;
@@ -121,5 +123,11 @@
     to {
       transform: translate(-70px, 0px);
     }
+  }
+}
+
+@media screen and (min-width: $viewport-md + 1) {
+  .category {
+    margin: 0 42px;
   }
 }

@@ -11,13 +11,14 @@
   }
 
   .progress-container {
-    width: 100%;
+    width: calc(100% - 48px);
     overflow: hidden;
     display: flex;
     flex-direction: row;
     padding: 14px 0;
     background: #f3f3f3;
     transition: 1s transform;
+    margin: 0 24px;
 
     .progress-bar {
       position: relative;
@@ -134,13 +135,22 @@
   0% {
     background-position: 100% 0;
     width: 0%;
-    border-radius: 25px;
+    border-radius: 10px;
     background: rgb(228, 228, 228);
   }
   100% {
     background-position: 0 0;
     width: 100%;
-    border-radius: 25px;
+    border-radius: 10px;
     background: rgb(228, 228, 228);
+  }
+}
+
+@media screen and (min-width: $viewport-md + 1) {
+  .task-indicator {
+    .progress-container {
+      width: calc(100% - 84px);
+      margin: 0 42px;
+    }
   }
 }
