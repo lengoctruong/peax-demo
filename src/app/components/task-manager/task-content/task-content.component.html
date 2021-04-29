@@ -1,7 +1,7 @@
 <div class="task-content">
   <div class="task-content_card">
     <p class="task-content__paraph">{{ content }}</p>
-    <div class="activation-code-form" id="activation-code-id" #activationCode (click)="focusCursor()">
+    <div class="activation-code-form" id="activation-code-id" #activationCode>
       <input
         *ngFor="let number of numbers; let i = index"
         class="activation-code"
@@ -10,6 +10,7 @@
         [value]="activationCode"
         (keydown.arrowup)="(false)" (keydown.arrowdown)="(false)"  (keydown.+)="(false)"  (keydown.-)="(false)"  (keydown.dot)="(false)"
         onKeyPress="if(this.value.length==1) return false;"
+        (click)='focusCursor()'
       />
     </div>
   </div>

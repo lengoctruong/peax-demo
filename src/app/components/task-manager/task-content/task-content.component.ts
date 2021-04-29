@@ -85,7 +85,10 @@ export class TaskContentComponent implements OnInit {
     for (const child of children) {
       child.value = '';
     }
-    children[0].focus();
+    // deplay focus on first input box.
+    setTimeout(() => {
+      children[0].focus();
+    }, 800);
   }
 
   focusCursor(){
@@ -99,4 +102,5 @@ export class TaskContentComponent implements OnInit {
     const indexOfFocus = activationCode.length;
     children[indexOfFocus].focus();
   }
+
 }
