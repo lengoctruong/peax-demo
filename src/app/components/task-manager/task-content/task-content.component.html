@@ -9,7 +9,7 @@
         maxlength="1"
         [value]="activationCode"
         (keydown.arrowup)="(false)" (keydown.arrowdown)="(false)"  (keydown.+)="(false)"  (keydown.-)="(false)"  (keydown.dot)="(false)"  (keydown.shift.+)="(false)"
-        (keydown.e)="(false)" 
+        (keydown.e)="(false)" (keydown.shift.e)="(false)"  (keydown.shift.-)="(false)"
         onKeyPress="if(this.value.length==1) return false;"
         (click)='focusCursor()'
       />
